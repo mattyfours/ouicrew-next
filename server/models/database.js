@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize'
 import pg from 'pg'
 import Team from './Team.js'
+import User from './User.js'
 
 //  models
 const { Op } = Sequelize
@@ -43,6 +44,7 @@ sequelize =
     })
 
 db.Team = Team(sequelize, Op)
+db.User = User(sequelize, Op)
 // db.Certificate = Certificate(sequelize, DataTypes, Op)
 // db.Error = Error(sequelize, DataTypes, Op)
 // db.Receipt = Receipt(sequelize, DataTypes, Op)

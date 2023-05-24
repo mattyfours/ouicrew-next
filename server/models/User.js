@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize'
 
 export default (sequelize) => {
-  const Team = sequelize.define('Team', {
+  const Name = sequelize.define('Name', {
     id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
@@ -11,13 +11,21 @@ export default (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    editor_access_code: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    viewer_access_code: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    session_token: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    session_token_expiration: {
+      type: DataTypes.BIGINT,
+      allowNull: true
     }
   })
 
@@ -29,5 +37,5 @@ export default (sequelize) => {
   //   Certificate.hasMany(Error, { onDelete: 'CASCADE', as: 'errors' })
   // }
 
-  return Team
+  return Name
 }
