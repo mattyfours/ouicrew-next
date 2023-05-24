@@ -5,7 +5,12 @@
   "repository": "https://github.com/mattyfours/ouicrew-next.git",
   "author": "Matthew Fournier <matthewfournier3@gmail.com>",
   "license": "MIT",
-  "dependencies": {
+  "scripts": {
+    "dev": "yarn server-dev & yarn frontend-dev",
+    "server-dev": "cd ./server && yarn dev",
+    "frontend-dev": "cd ./frontend && yarn dev"
+  },
+  "devDependencies": {
     "standard": "^17.0.0"
   },
   "standard": {
