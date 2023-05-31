@@ -1,13 +1,13 @@
 import { Sequelize, DataTypes } from 'sequelize'
 
 export default (sequelize) => {
-  const Name = sequelize.define('Name', {
+  const User = sequelize.define('User', {
     id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true
     },
-    name: {
+    username: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -15,7 +15,11 @@ export default (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    password: {
+    hash: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    salt: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -37,5 +41,5 @@ export default (sequelize) => {
   //   Certificate.hasMany(Error, { onDelete: 'CASCADE', as: 'errors' })
   // }
 
-  return Name
+  return User
 }

@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from 'sequelize'
+import { Sequelize } from 'sequelize'
 import pg from 'pg'
 import Team from './Team.js'
 import User from './User.js'
@@ -45,10 +45,6 @@ sequelize =
 
 db.Team = Team(sequelize, Op)
 db.User = User(sequelize, Op)
-// db.Certificate = Certificate(sequelize, DataTypes, Op)
-// db.Error = Error(sequelize, DataTypes, Op)
-// db.Receipt = Receipt(sequelize, DataTypes, Op)
-// db.ReceiptError = ReceiptError(sequelize, DataTypes, Op)
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {

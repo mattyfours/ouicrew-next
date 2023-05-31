@@ -38,5 +38,5 @@ export default async function errorHandler (res, error) {
 
   return res
     .status(errorCode)
-    .json()
+    .json({})
 }
