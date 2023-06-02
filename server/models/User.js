@@ -35,6 +35,14 @@ export default (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    reset_password_token: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    reset_password_token_expiration: {
+      type: DataTypes.BIGINT,
+      allowNull: true
     }
   })
 
