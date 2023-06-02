@@ -1,0 +1,25 @@
+:root {
+  /* Container */
+  --container-width: 1440px;
+  --container-padding: 0 16px;
+
+  /* Width */
+  --width-small: 375px;
+  --width-medium: 1020px;
+  --width-large: 1440px;
+  --width-xlarge: 1800px;
+
+  /* Colors */
+  --text-color: #000000;
+  --background-color: #ffffff;
+  --primary-color: #3f56fe;
+
+  /* Fonts */
+  --font-lato: 'Lato', sans-serif;
+
+  /* Font Weights */
+  --font-thin: 300;
+  --font-regular: 400;
+  --font-bold: 700;
+  --font-heavy: 900;
+}
