@@ -21,19 +21,15 @@ export default async function errorHandler (res, error) {
       ? error
       : error.errors[0]
 
-    errors.push([
-      {
-        path: 'SequelizeValidation',
-        message: errorToPush.message
-      }
-    ])
+    errors.push({
+      path: 'SequelizeValidation',
+      message: errorToPush.message
+    })
   } else {
-    errors.push([
-      {
-        path: error.name || null,
-        message: error.message
-      }
-    ])
+    errors.push({
+      path: error.name || null,
+      message: error.message
+    })
   }
 
   return res

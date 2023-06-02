@@ -61,7 +61,8 @@ export const postUserLogin = async (req, res) => {
         username: userToLogIn.username,
         sessionToken: userToLogIn.session_token,
         sessionTokenExpiration: userToLogIn.session_token_expiration
-      }
+      },
+      message: `Login successful for ${userToLogIn.username}`
     })
   } catch (err) {
     console.error('Error Loggin In')
@@ -119,7 +120,8 @@ export const postUserRegister = async (req, res) => {
       user: {
         email: newUser.email,
         username: newUser.username
-      }
+      },
+      message: `Hi ${newUser.username}, welcome to OuiCrew!`
     })
   } catch (err) {
     console.error('Error Registering User')
@@ -179,7 +181,7 @@ export const postUserResetPasswordRequest = async (req, res) => {
         email: userToResetPassword.email,
         username: userToResetPassword.username
       },
-      passwordResetRequest: `An email has been sent to ${userToResetPassword.email}`
+      message: `An email has been sent to ${userToResetPassword.email}`
     })
   } catch (err) {
     console.error('Error Registering User')
@@ -201,9 +203,6 @@ export const postUserResetPassword = async (req, res) => {
       password
     } = req.body
 
-    const salt = randomBytes(16).toString('hex')
-    const hash = pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
-
     const userToResetPassword = await db.User.findOne({
       where: {
         email: {
@@ -223,8 +222,10 @@ export const postUserResetPassword = async (req, res) => {
     }
 
     await userToResetPassword.update({
-      hash,
+      hash: pbkdf2Sync(password, userToResetPassword.salt, 1000, 64, 'sha512').toString('hex'),
       reset_password_token: null,
+      reset_password_token_expiration: null,
+      session_token: null,
       session_token_expiration: null
     })
 
@@ -233,7 +234,7 @@ export const postUserResetPassword = async (req, res) => {
         email: userToResetPassword.email,
         username: userToResetPassword.username
       },
-      passwordReset: 'Success, your password has been updated.'
+      message: 'Success, your password has been updated.'
     })
   } catch (err) {
     console.error('Error Registering User')
