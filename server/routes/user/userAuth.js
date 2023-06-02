@@ -3,8 +3,15 @@ import errorHandler from '../../helpers/errorHandler.js'
 import { returnErrorStatusCode, returnSuccess } from '../../helpers/returnStatus.js'
 import db from '../../models/database.js'
 import sendEmail from '../../utils/sendEmail.js'
+import { weekInMilliseconds } from '../../helpers/helpfulValues.js'
 
-export const userLogin = async (req, res) => {
+/**
+ * User Login
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const postUserLogin = async (req, res) => {
   try {
     const {
       username,
@@ -37,8 +44,6 @@ export const userLogin = async (req, res) => {
       )
     }
 
-    const weekInMilliseconds = 1000 * 60 * 60 * 24 * 7
-
     await userToLogIn.update({
       session_token: randomBytes(16).toString('hex'),
       session_token_expiration: Date.now() + weekInMilliseconds
@@ -46,6 +51,7 @@ export const userLogin = async (req, res) => {
 
     return returnSuccess(res, {
       user: {
+        userId: userToLogIn.id,
         email: userToLogIn.email,
         username: userToLogIn.username,
         sessionToken: userToLogIn.session_token,
@@ -53,16 +59,24 @@ export const userLogin = async (req, res) => {
       }
     })
   } catch (err) {
+    console.error('Error Loggin In')
     return errorHandler(res, err)
   }
 }
 
-export const userRegister = async (req, res) => {
+/**
+ * Register a new user
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const postUserRegister = async (req, res) => {
   try {
     const {
       email,
       username,
-      password
+      password,
+      agreeToTerms
     } = req.body
 
     const salt = randomBytes(16).toString('hex')
@@ -72,12 +86,12 @@ export const userRegister = async (req, res) => {
       where: db.Sequelize.or(
         {
           email: {
-            [db.Sequelize.Op.ilike]: email
+            [db.Sequelize.Op.iLike]: email
           }
         },
         {
           username: {
-            [db.Sequelize.Op.ilike]: username
+            [db.Sequelize.Op.iLike]: username
           }
         }
       ),
@@ -85,7 +99,8 @@ export const userRegister = async (req, res) => {
         email,
         username,
         salt,
-        hash
+        hash,
+        agree_to_terms: agreeToTerms
       }
     })
 
@@ -102,6 +117,7 @@ export const userRegister = async (req, res) => {
       }
     })
   } catch (err) {
+    console.error('Error Registering User')
     return errorHandler(res, err)
   }
 }

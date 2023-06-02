@@ -21,13 +21,11 @@ export default (sequelize) => {
     }
   })
 
-  // Certificate.associate = ({
-  //   Shop,
-  //   Error
-  // }) => {
-  //   Certificate.belongsTo(Shop)
-  //   Certificate.hasMany(Error, { onDelete: 'CASCADE', as: 'errors' })
-  // }
+  Team.associate = ({
+    TeamMember
+  }) => {
+    Team.hasMany(TeamMember, { onDelete: 'CASCADE', as: 'errors' })
+  }
 
   return Team
 }

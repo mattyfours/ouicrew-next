@@ -1,7 +1,10 @@
 import { Sequelize } from 'sequelize'
 import pg from 'pg'
-import Team from './Team.js'
+
+// Model Imports
 import User from './User.js'
+import Team from './Team.js'
+import TeamMember from './TeamMember.js'
 
 //  models
 const { Op } = Sequelize
@@ -45,6 +48,7 @@ sequelize =
 
 db.Team = Team(sequelize, Op)
 db.User = User(sequelize, Op)
+db.TeamMember = TeamMember(sequelize, Op)
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {

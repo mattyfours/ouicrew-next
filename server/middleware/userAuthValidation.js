@@ -2,12 +2,19 @@ import errorHandler from '../helpers/errorHandler.js'
 import validator from 'validator'
 import { returnErrorStatusCode } from '../helpers/returnStatus.js'
 
+/**
+ * Validate User Register Form
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns express next || error response
+ */
 export const userRegisterValidation = (req, res, next) => {
   try {
     const {
       email,
       username,
-      password
+      password,
+      agreeToTerms
     } = req.body
 
     const errors = []
@@ -52,6 +59,13 @@ export const userRegisterValidation = (req, res, next) => {
       })
     }
 
+    if (typeof agreeToTerms === 'undefined' || agreeToTerms !== true) {
+      errors.push({
+        path: 'agreeToTerms',
+        message: 'Must agree to terms'
+      })
+    }
+
     return errors.length > 0
       ? returnErrorStatusCode(422, res, errors)
       : next()
@@ -61,6 +75,12 @@ export const userRegisterValidation = (req, res, next) => {
   }
 }
 
+/**
+ * Validate User Login Form
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns express next || error response
+ */
 export const userLoginValidation = (req, res, next) => {
   try {
     const {

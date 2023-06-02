@@ -30,16 +30,19 @@ export default (sequelize) => {
     session_token_expiration: {
       type: DataTypes.BIGINT,
       allowNull: true
+    },
+    agree_to_terms: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   })
 
-  // Certificate.associate = ({
-  //   Shop,
-  //   Error
-  // }) => {
-  //   Certificate.belongsTo(Shop)
-  //   Certificate.hasMany(Error, { onDelete: 'CASCADE', as: 'errors' })
-  // }
+  User.associate = ({
+    TeamMember
+  }) => {
+    User.hasMany(TeamMember, { onDelete: 'CASCADE', as: 'errors' })
+  }
 
   return User
 }
