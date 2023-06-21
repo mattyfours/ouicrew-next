@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import express from 'express'
+import cors from 'cors'
 
 import db from './models/database.js'
 // import authRouter from './routes/auth/auth.js'
@@ -8,11 +9,22 @@ import userRouter from './routes/user/userRouter.js'
 import { userSessionValidation } from './middleware/userSessionValidation.js'
 
 const {
-  SERVER_PORT
+  SERVER_PORT,
+  FRONT_END_URL
 } = process.env
 
 const app = express()
 app.use(express.json())
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (typeof origin === 'undefined' || [FRONT_END_URL].includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}))
 
 // app.use('/auth', authRouter)
 app.use('/user', userRouter)

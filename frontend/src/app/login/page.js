@@ -1,15 +1,10 @@
-import LayoutAuth from '@/components/layouts/LayoutAuth'
+import PageLogin from '@/components/pages/PageLogin'
+import { t } from '@/languages/languages'
 
 export const metadata = {
-  title: 'Log In | OuiCrew'
+  title: `${t('login_page.metatitle')} | OuiCrew`
 }
 
-export default function Auth () {
-  return (
-    <LayoutAuth>
-
-      <h1>hi</h1>
-
-    </LayoutAuth>
-  )
+export default async function Auth () {
+  return <PageLogin />
 }

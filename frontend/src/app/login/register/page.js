@@ -1,7 +1,10 @@
-export default function Auth () {
-  return (
-    <>
-      <h1>Hello, Dashboard Page!</h1>
-    </>
-  )
+import PageRegister from '@/components/pages/PageRegister'
+import { t } from '@/languages/languages'
+
+export const metadata = {
+  title: `${t('register_page.metatitle')} | OuiCrew`
+}
+
+export default async function Auth () {
+  return <PageRegister />
 }

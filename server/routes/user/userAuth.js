@@ -6,7 +6,7 @@ import sendEmail from '../../utils/sendEmail.js'
 import { thirtyMinutesInMilliseconds, weekInMilliseconds } from '../../helpers/helpfulValues.js'
 
 const {
-  FONT_END_DOMAIN,
+  FRONT_END_URL,
   SEND_GRID_TEMPLATE_RESET_PASSWORD
 } = process.env
 
@@ -88,7 +88,7 @@ export const postUserRegister = async (req, res) => {
     const salt = randomBytes(16).toString('hex')
     const hash = pbkdf2Sync(password, salt, 1000, 64, 'sha512').toString('hex')
 
-    const [newUser, createdNewUser] = await db.User.findOrCreate({
+    const findExistingUser = await db.User.findOne({
       where: db.Sequelize.or(
         {
           email: {
@@ -100,19 +100,20 @@ export const postUserRegister = async (req, res) => {
             [db.Sequelize.Op.iLike]: username
           }
         }
-      ),
-      defaults: {
-        email,
-        username,
-        salt,
-        hash,
-        agree_to_terms: agreeToTerms
-      }
+      )
     })
 
-    if (createdNewUser === false) {
+    if (findExistingUser !== null) {
       return returnErrorStatusCode(422, res, [{ path: 'username || email', message: 'An account already exists with the username or email' }])
     }
+
+    const newUser = await db.User.create({
+      email,
+      username,
+      salt,
+      hash,
+      agree_to_terms: agreeToTerms
+    })
 
     // await sendEmail(email)
 
@@ -170,7 +171,7 @@ export const postUserResetPasswordRequest = async (req, res) => {
       userToResetPassword.email,
       SEND_GRID_TEMPLATE_RESET_PASSWORD,
       {
-        resetUrl: `${FONT_END_DOMAIN}/resetPassword/${userToResetPassword.reset_password_token}`,
+        resetUrl: `${FRONT_END_URL}/resetPassword/${userToResetPassword.reset_password_token}`,
         username: userToResetPassword.username,
         resetPasswordToken: userToResetPassword.reset_password_token
       }

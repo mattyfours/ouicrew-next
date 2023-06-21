@@ -1,6 +1,6 @@
 #ENV
 NODE_ENV='development'
-FONT_END_DOMAIN='https://ouicrew.com'
+FRONT_END_URL='https://ouicrew.com'
 
 #SERVER
 SERVER_PORT='3031'
