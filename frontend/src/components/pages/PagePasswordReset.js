@@ -8,10 +8,15 @@ import { t } from '@/languages/languages'
 import Button from '../formElements/Button'
 import Link from 'next/link'
 import axios from 'axios'
+import { useSearchParams } from 'next/navigation'
 
 export default function PagePasswordRequest () {
+  const urlParams = useSearchParams()
+  const resetToken = urlParams.get('reset-token')
+
   // States
   const [usernameInputValue, setUsernameInputValue] = useState('')
+  const [passwordInputValue, setPasswordInputValue] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
 
@@ -22,7 +27,9 @@ export default function PagePasswordRequest () {
 
       await axios.post(url,
         {
-          username: usernameInputValue
+          username: usernameInputValue,
+          password: passwordInputValue,
+          resetToken
         },
         {
           headers: {
@@ -54,6 +61,14 @@ export default function PagePasswordRequest () {
           type='text'
           value={usernameInputValue}
           setter={setUsernameInputValue}
+        />
+
+        <SingleLineInput
+          label={t('forms.new_password')}
+          name='password'
+          type='password'
+          value={passwordInputValue}
+          setter={setPasswordInputValue}
         />
 
         <Button type='submit' centered>{t('forms.submit')}</Button>

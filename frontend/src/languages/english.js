@@ -7,7 +7,11 @@ export default {
     password: 'Password',
     username: 'Username',
     submit: 'Submit',
-    error: 'Error'
+    error: 'Error',
+    new_password: 'New Password'
+  },
+  dashboard: {
+    metatitle: 'Account'
   },
   login_page: {
     metatitle: 'Log In',
@@ -32,9 +36,9 @@ export default {
   },
   password_reset_page: {
     metatitle: 'Request Password Reset',
-    title: 'Forgot you password?',
+    title: 'Change your password',
     login_prompt: 'Log in to your account',
     register_prompt: 'Register for an account',
-    success: 'A password reset link has been sent to your email.'
+    success: 'Success, your password has been changed. Please return to the log in page to sign in.'
   }
 }

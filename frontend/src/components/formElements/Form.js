@@ -52,7 +52,7 @@ export default function Form ({
       {
         errorMessage &&
           <div className='form-error-message'>
-            <strong>{t('forms.error')}:</strong> {errorMessage}
+            {errorMessage}
           </div>
       }
 

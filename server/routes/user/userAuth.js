@@ -171,7 +171,7 @@ export const postUserResetPasswordRequest = async (req, res) => {
       userToResetPassword.email,
       SEND_GRID_TEMPLATE_RESET_PASSWORD,
       {
-        resetUrl: `${FRONT_END_URL}/resetPassword/${userToResetPassword.reset_password_token}`,
+        resetUrl: `${FRONT_END_URL}/login/password-reset?reset-token=${userToResetPassword.reset_password_token}`,
         username: userToResetPassword.username,
         resetPasswordToken: userToResetPassword.reset_password_token
       }
@@ -199,15 +199,15 @@ export const postUserResetPasswordRequest = async (req, res) => {
 export const postUserResetPassword = async (req, res) => {
   try {
     const {
-      email,
+      username,
       resetToken,
       password
     } = req.body
 
     const userToResetPassword = await db.User.findOne({
       where: {
-        email: {
-          [db.Sequelize.Op.iLike]: email
+        username: {
+          [db.Sequelize.Op.iLike]: username
         },
         reset_password_token: {
           [db.Sequelize.Op.iLike]: resetToken
