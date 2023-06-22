@@ -1,12 +1,10 @@
-import Head from 'next/head'
+import PagePasswordRequest from '@/components/pages/PagePasswordReset'
+import { t } from '@/languages/languages'
 
-export default function Auth () {
-  return (
-    <>
-      <Head>
-        <title>Password Reset | OuiCrew</title>
-      </Head>
-      <h1>Hello, Dashboard Page!</h1>
-    </>
-  )
+export const metadata = {
+  title: `${t('password_reset_page.metatitle')} | OuiCrew`
+}
+
+export default async function Auth () {
+  return <PagePasswordRequest />
 }

@@ -10,12 +10,13 @@
   --width-xlarge: 1800px;
 
   /* Colors */
-  --text-color: #f1f1f1;
+  --text-color: #080808;
   --background-color: #ffffff;
-  --primary-color: #9effe4;
-  --primary-color-hover: #75dfc1;
-  --background-color: #181818;
+  --primary-color: #309db6;
+  --primary-color-hover: #1e788d;
   --error-color: #c53663;
+  --success-color: #2daf63;
+  --background-gradient: linear-gradient(0deg, rgb(215, 244, 244) 0%, rgba(219,255,244,1) 33%, rgba(221,255,255,1) 66%, rgba(219,255,244,1) 100%);
 
   /* Fonts */
   --font-lato: 'Lato', sans-serif;

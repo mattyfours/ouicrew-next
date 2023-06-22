@@ -22,5 +22,19 @@ export default {
     password_prompt: 'Forgot Password',
     terms_agree: 'I agree to the tems and conditions',
     success: 'Success! Your account has been created. Please return to the log in page to sign in.'
+  },
+  password_reset_request_page: {
+    metatitle: 'Request Password Reset',
+    title: 'Forgot you password?',
+    login_prompt: 'Log in to your account',
+    register_prompt: 'Register for an account',
+    success: 'A password reset link has been sent to your email.'
+  },
+  password_reset_page: {
+    metatitle: 'Request Password Reset',
+    title: 'Forgot you password?',
+    login_prompt: 'Log in to your account',
+    register_prompt: 'Register for an account',
+    success: 'A password reset link has been sent to your email.'
   }
 }

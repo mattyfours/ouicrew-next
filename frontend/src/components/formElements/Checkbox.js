@@ -7,6 +7,7 @@ const StyledCheckbox = styled.div`
   width: 100%;
   margin: 0;
   display: flex;
+  padding: 5px 0;
   flex-direction: row-reverse;
   align-items: center;
   justify-content: center;
@@ -36,7 +37,7 @@ const StyledCheckbox = styled.div`
     min-width: 20px;
     border-radius: 4px;
     cursor: pointer;
-    background-color: var(--text-color);
+    border: 1px solid var(--text-color);
 
     &:checked {
       background-color: var(--primary-color);

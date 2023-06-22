@@ -12,7 +12,7 @@ export const t = (stringOfKeys) => {
     ? null
     : stringOfKeys
       .split('.')
-      .reduce((nestedObject, currentKey) => nestedObject[currentKey], languageObject)
+      .reduce((nestedObject, currentKey) => nestedObject?.[currentKey], languageObject)
 
   return (typeof langValue === 'undefined' || !langValue)
     ? `Missing Translation: ${stringOfKeys}`

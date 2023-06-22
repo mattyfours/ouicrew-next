@@ -6,8 +6,9 @@ const StyledButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: 0.05rem;
+  font-weight: 700;
   text-transform: uppercase;
   border-radius: 4px;
   background-color: var(--primary-color);

@@ -3,12 +3,14 @@
 import { minScreen, screenSizes } from '@/helpers/screen'
 import { t } from '@/languages/languages'
 import styled from 'styled-components'
+import GradientBackground from '../animations/GradientBackground'
 
 const StyledLayoutAuth = styled.div`
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: auto;
+  background: var(--background-gradient);
 
   @media ${minScreen(screenSizes.medium)} {
     display: flex;
@@ -23,7 +25,10 @@ const StyledLayoutAuth = styled.div`
     border-radius: 4px;
 
     @media ${minScreen(screenSizes.medium)} {
+      backdrop-filter: blur(4px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
       border: 1px solid var(--text-color);
+      background-color: rgba(255, 255, 255, 0.75);
       padding: 64px;
     }
   }
@@ -59,6 +64,7 @@ const StyledLayoutAuth = styled.div`
 function LayoutAuth ({ children }) {
   return (
     <StyledLayoutAuth>
+      <GradientBackground />
       <div className='auth-container'>
         <span className='heading-logo'>{t('general.ouicrew')}</span>
         {children}

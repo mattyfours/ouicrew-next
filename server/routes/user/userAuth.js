@@ -26,7 +26,7 @@ export const postUserLogin = async (req, res) => {
     const userToLogIn = await db.User.findOne({
       where: {
         username: {
-          [db.Sequelize.Op.like]: username
+          [db.Sequelize.Op.iLike]: username
         }
       }
     })

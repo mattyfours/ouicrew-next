@@ -7,34 +7,57 @@ import LayoutAuth from '@/components/layouts/LayoutAuth'
 import { t } from '@/languages/languages'
 import Button from '../formElements/Button'
 import Link from 'next/link'
+import axios from 'axios'
 
-export default function PageLogin () {
+export default function PageRegister () {
   // States
-  const [emailInputValue, setEmailInputValue] = useState('')
   const [passwordInputValue, setPasswordInputValue] = useState('')
+  const [usernameInputValue, setUsernameInputValue] = useState('')
+
+  const [errorMessage, setErrorMessage] = useState('')
 
   // Submit Handler
-  const handleFormSubmit = useCallback(() => {
-    console.log('d')
-  }, [emailInputValue])
+  const handleFormSubmit = useCallback(async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/login`
+
+      await axios.post(url,
+        {
+          username: usernameInputValue,
+          password: passwordInputValue
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+
+      setErrorMessage()
+    } catch (err) {
+      setErrorMessage(
+        typeof err.response?.data?.error?.[0] === 'undefined'
+          ? t('general.unexpected_error')
+          : err.response.data.error[0].message
+      )
+    }
+  }, [errorMessage, usernameInputValue, passwordInputValue])
 
   return (
     <LayoutAuth>
       <h1 className='heading-small'>{t('login_page.title')}</h1>
 
-      <Form onSubmit={handleFormSubmit}>
+      <Form onSubmit={handleFormSubmit} errorMessage={errorMessage}>
         <SingleLineInput
-          label={t('forms.email')}
-          placeholder={t('forms.email')}
-          name='email'
-          type='email'
-          value={emailInputValue}
-          setter={setEmailInputValue}
+          label={t('forms.username')}
+          name='username'
+          type='text'
+          value={usernameInputValue}
+          setter={setUsernameInputValue}
         />
 
         <SingleLineInput
           label={t('forms.password')}
-          placeholder={t('forms.password')}
           name='password'
           type='password'
           value={passwordInputValue}

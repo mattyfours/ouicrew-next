@@ -12,14 +12,14 @@ const StyledForm = styled.form`
   .form-error-message {
     background-color: var(--error-color);
     width: 100%;
-    color: var(--text-color);
+    color: var(--background-color);
     text-align: center;
     padding: 5px 10px;
     border-radius: 4px;
   }
 
   .form-success-message {
-    background-color: var(--primary-color);
+    background-color: var(--success-color);
     width: 100%;
     color: var(--background-color);
     text-align: center;
