@@ -1,9 +1,12 @@
 'use client'
 
+import { useCallback, useState } from 'react'
 import { t } from '@/languages/languages'
 import Link from 'next/link'
 import { styled } from 'styled-components'
 import Button from '../formElements/Button'
+import Modal from '../utils/Modal'
+import NewTeamForm from '../forms/NewTeamForm'
 
 const StyledDashboardNoTeam = styled.nav`
   position: relative;
@@ -25,13 +28,27 @@ const StyledDashboardNoTeam = styled.nav`
 `
 
 export default function DashboardNoTeam ({ data }) {
+  const [isCreateTeamModalOpen, setIsCreateTeamModalOpen] = useState(false)
+
+  const handleTogleCreateTeamModal = useCallback((value) => {
+    setIsCreateTeamModalOpen(value)
+  }, [])
+
   return (
     <StyledDashboardNoTeam>
       <h2 className='heading-small'>{t('dashboard.no_teams_joined')}</h2>
 
-      <Button>
+      <Button onClick={() => handleTogleCreateTeamModal(true)}>
         {t('dashboard.create_new_team')}
       </Button>
+
+      <Modal
+        title={t('dashboard.create_new_team')}
+        active={isCreateTeamModalOpen}
+        onClose={() => handleTogleCreateTeamModal(false)}
+      >
+        <NewTeamForm />
+      </Modal>
 
     </StyledDashboardNoTeam>
   )

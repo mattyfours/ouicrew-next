@@ -35,7 +35,7 @@ export default function LoginForm () {
         }
       )
 
-      setErrorMessage()
+      setErrorMessage('')
       localStorage.setItem('userSessionToken', data.user.sessionToken)
       localStorage.setItem('userEmail', data.user.email)
       localStorage.setItem('userUsername', data.user.username)

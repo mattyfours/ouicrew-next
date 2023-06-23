@@ -72,10 +72,21 @@ export const userSessionValidation = async (req, res, next) => {
       }
     })
 
-    req.userTeamIds = userTeams.map(userTeam => ({
-      teamId: userTeam.TeamId,
-      isTeamAdmin: userTeam.is_admin
-    }))
+    req.userTeams = await Promise.all(
+      userTeams.map(async userTeam => {
+        const team = await db.Team.findOne({
+          where: {
+            id: userTeam.TeamId
+          }
+        })
+
+        return {
+          teamId: userTeam.TeamId,
+          isTeamAdmin: userTeam.is_admin,
+          teamName: team.name
+        }
+      })
+    )
 
     return errors.length > 0
       ? returnErrorStatusCode(422, res, errors)

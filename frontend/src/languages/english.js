@@ -10,7 +10,10 @@ export default {
     username: 'Username',
     submit: 'Submit',
     error: 'Error',
-    new_password: 'New Password'
+    new_password: 'New Password',
+    editor_access_code: 'Editor Access Code',
+    viewer_access_code: ' Viewer Access Code',
+    team_name: 'Team Name'
   },
   dashboard: {
     metatitle: 'Account',

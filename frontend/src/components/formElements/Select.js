@@ -3,7 +3,7 @@
 import { useCallback, useId, useState } from 'react'
 import { styled } from 'styled-components'
 
-const StyledSingleLineInput = styled.div`
+const StyledSelect = styled.div`
   position: relative;
   width: 100%;
   margin: 0;
@@ -28,7 +28,8 @@ const StyledSingleLineInput = styled.div`
     pointer-events: none;
   }
 
-  input {
+  select {
+    appearance: none;
     padding: 20px 0 3px;
     color: var(--text-color);
     opacity: 1;
@@ -37,7 +38,11 @@ const StyledSingleLineInput = styled.div`
     border-radius: 0;
     background-color: transparent;
     border-bottom: 1px solid var(--text-color);
-    cursor: text;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-size: 24px;
+    background-position: 100% 15px;
+    cursor: pointer;
 
     &::placeholder {
       display: none;
@@ -45,12 +50,12 @@ const StyledSingleLineInput = styled.div`
   }
 `
 
-export default function SingleLineInput ({
-  type,
+export default function Select ({
   label,
   value,
   name,
-  setter
+  setter,
+  options
 }) {
   const [isFocused, setIsFocused] = useState(false)
   const inputId = useId()
@@ -64,17 +69,27 @@ export default function SingleLineInput ({
   }, [setIsFocused])
 
   return (
-    <StyledSingleLineInput className={`${(value.length !== 0 || isFocused) && 'active'}`}>
+    <StyledSelect className={`${(value.length !== 0 || isFocused) && 'active'}`}>
       <label htmlFor={inputId}>{label || name}</label>
-      <input
+      <select
         id={inputId}
-        type={type || 'text'}
         name={name}
         value={value}
         onChange={handleInputChange}
         onFocus={() => handleFocusState(true)}
         onBlur={() => handleFocusState(false)}
-      />
-    </StyledSingleLineInput>
+      >
+        {
+          options.map((option, index) => (
+            <option
+              key={`${inputId}--${index}`}
+              value={option.value}
+            >
+              {option.label}
+            </option>
+          ))
+        }
+      </select>
+    </StyledSelect>
   )
 }

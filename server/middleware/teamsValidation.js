@@ -13,7 +13,8 @@ export const teamsCreateNewValidation = (req, res, next) => {
     const {
       name,
       editorAccessCode,
-      viewerAccessCode
+      viewerAccessCode,
+      racingStandard
     } = req.body
 
     const errors = []
@@ -36,6 +37,13 @@ export const teamsCreateNewValidation = (req, res, next) => {
       errors.push({
         path: 'viewerAccessCode',
         message: 'Missing team viewer access code'
+      })
+    }
+
+    if (typeof racingStandard !== 'undefined' && !validator.isAlphanumeric(racingStandard)) {
+      errors.push({
+        path: 'racingStandard',
+        message: 'Invalid racing standard'
       })
     }
 

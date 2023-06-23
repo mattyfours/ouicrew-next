@@ -10,16 +10,14 @@ import db from '../../models/database.js'
  */
 export const getUserTeams = async (req, res) => {
   try {
-    const { user } = req
+    const { user, userTeams } = req
 
     return returnSuccess(res, {
       user: {
         email: user.email,
         username: user.username
       },
-      teams: [
-
-      ]
+      teams: userTeams
     })
   } catch (err) {
     console.error('Error Viewing User Teams')
@@ -41,7 +39,7 @@ export const postCreateUserTeam = async (req, res) => {
       name,
       editorAccessCode,
       viewerAccessCode,
-      racingStandardsSport
+      racingStandards
     } = req.body
 
     const [team, createdNewTeam] = await db.Team.findOrCreate({
