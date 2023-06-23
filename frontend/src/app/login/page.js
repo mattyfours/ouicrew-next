@@ -1,4 +1,4 @@
-import PageLogin from '@/components/pages/PageLogin'
+import LoginForm from '@/components/forms/LoginForm'
 import { t } from '@/languages/languages'
 
 export const metadata = {
@@ -6,5 +6,5 @@ export const metadata = {
 }
 
 export default async function Auth () {
-  return <PageLogin />
+  return <LoginForm />
 }

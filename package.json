@@ -22,7 +22,8 @@
       "alert",
       "Swiper",
       "HTMLElement",
-      "IntersectionObserver"
+      "IntersectionObserver",
+      "localStorage"
     ],
     "ignore": [
       "node_modules/**",

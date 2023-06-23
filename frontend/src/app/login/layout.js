@@ -1,9 +1,9 @@
 'use client'
 
+import GradientBackground from '@/components/animations/GradientBackground'
 import { minScreen, screenSizes } from '@/helpers/screen'
 import { t } from '@/languages/languages'
-import styled from 'styled-components'
-import GradientBackground from '../animations/GradientBackground'
+import { styled } from 'styled-components'
 
 const StyledLayoutAuth = styled.div`
   position: relative;
@@ -61,7 +61,7 @@ const StyledLayoutAuth = styled.div`
   }
 `
 
-function LayoutAuth ({ children }) {
+export default function LoginLayout ({ children }) {
   return (
     <StyledLayoutAuth>
       <GradientBackground />
@@ -72,5 +72,3 @@ function LayoutAuth ({ children }) {
     </StyledLayoutAuth>
   )
 }
-
-export default LayoutAuth
