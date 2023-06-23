@@ -3,12 +3,12 @@
 import { styled } from 'styled-components'
 
 const StyledButton = styled.button`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 1.6rem;
   letter-spacing: 0.05rem;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   border-radius: 4px;
   background-color: var(--primary-color);

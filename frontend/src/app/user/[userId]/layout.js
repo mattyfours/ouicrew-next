@@ -5,8 +5,13 @@ import ErrorPage from '@/components/pages/ErrorPage'
 import axios from 'axios'
 import { styled } from 'styled-components'
 import { useParams } from 'next/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSliders } from '@fortawesome/free-solid-svg-icons'
+import DashboardNav from '@/components/dashboard/DashboardNav'
+import DashboardNoTeam from '@/components/dashboard/DashboardNoTeam'
 
 const StyledUserDashboardLayout = styled.div`
+
 `
 
 const getData = async (userId) => {
@@ -49,6 +54,17 @@ export default function UserDashboardLayout ({ children }) {
 
   return (
     <StyledUserDashboardLayout>
+      <DashboardNav data={data} />
+
+      <div className='container'>
+        {
+          data.teams?.length === 0
+            ? <DashboardNoTeam />
+            : 'Has Teams'
+        }
+      </div>
+
+      <FontAwesomeIcon icon={faSliders} />
       {data.user.username}
     </StyledUserDashboardLayout>
   )

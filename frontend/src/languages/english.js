@@ -13,7 +13,10 @@ export default {
     new_password: 'New Password'
   },
   dashboard: {
-    metatitle: 'Account'
+    metatitle: 'Account',
+    no_teams_joined: 'No teams joined',
+    join_a_team: 'Join an existing team',
+    create_new_team: 'Create a new team'
   },
   login_page: {
     metatitle: 'Log In',

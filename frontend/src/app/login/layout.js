@@ -10,7 +10,6 @@ const StyledLayoutAuth = styled.div`
   width: 100%;
   height: 100vh;
   overflow: auto;
-  background: var(--background-gradient);
 
   @media ${minScreen(screenSizes.medium)} {
     display: flex;
@@ -22,12 +21,11 @@ const StyledLayoutAuth = styled.div`
     position: relative;
     max-width: ${screenSizes.medium};
     padding: 24px;
-    border-radius: 4px;
 
     @media ${minScreen(screenSizes.medium)} {
       backdrop-filter: blur(4px);
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      border: 1px solid var(--text-color);
+      border: 2px solid var(--text-color);
       background-color: rgba(255, 255, 255, 0.75);
       padding: 64px;
     }
