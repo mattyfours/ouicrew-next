@@ -2,7 +2,7 @@ import PasswordResetRequestForm from '@/components/forms/PasswordResetRequestFor
 import { t } from '@/languages/languages'
 
 export const metadata = {
-  title: `${t('password_reset_page.metatitle')} | OuiCrew`
+  title: `${t('password_reset_page.metatitle')} | ${t('general.ouicrew')}`
 }
 
 export default async function PagePasswordResetRequest () {

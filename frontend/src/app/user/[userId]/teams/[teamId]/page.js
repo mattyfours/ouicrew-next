@@ -2,7 +2,7 @@ import UserTeamDashboardPage from '@/components/pages/UserTeamDashboardPage'
 import { t } from '@/languages/languages'
 
 export const metadata = {
-  title: `${t('dashboard.metatitle')} | OuiCrew`
+  title: `${t('dashboard.metatitle')} | ${t('general.ouicrew')}`
 }
 
 export default async function DashboardTeam ({ params, req, res }) {
