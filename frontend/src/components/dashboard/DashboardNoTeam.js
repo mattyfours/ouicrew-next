@@ -2,7 +2,6 @@
 
 import { useCallback, useState } from 'react'
 import { t } from '@/languages/languages'
-import Link from 'next/link'
 import { styled } from 'styled-components'
 import Button from '../formElements/Button'
 import Modal from '../utils/Modal'
@@ -11,7 +10,7 @@ import NewTeamForm from '../forms/NewTeamForm'
 const StyledDashboardNoTeam = styled.nav`
   position: relative;
   text-align: center;
-  max-width: 500px;
+  max-width: var(--width-modal);
   margin: 64px auto 0;
 
   .logo-link {
@@ -27,7 +26,7 @@ const StyledDashboardNoTeam = styled.nav`
   }
 `
 
-export default function DashboardNoTeam ({ data }) {
+export default function DashboardNoTeam ({ datam, refetch }) {
   const [isCreateTeamModalOpen, setIsCreateTeamModalOpen] = useState(false)
 
   const handleTogleCreateTeamModal = useCallback((value) => {
@@ -47,7 +46,7 @@ export default function DashboardNoTeam ({ data }) {
         active={isCreateTeamModalOpen}
         onClose={() => handleTogleCreateTeamModal(false)}
       >
-        <NewTeamForm />
+        <NewTeamForm refetch={refetch} />
       </Modal>
 
     </StyledDashboardNoTeam>

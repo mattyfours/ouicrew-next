@@ -79,7 +79,7 @@ export default function RegisterForm () {
         />
 
         <Checkbox
-          label={<Link href='/'>{t('register_page.terms_agree')}</Link>}
+          label={<Link href='/' target='_blank'>{t('register_page.terms_agree')}</Link>}
           name='password'
           value={termsInputValue}
           setter={setTermsInputValue}

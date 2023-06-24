@@ -10,12 +10,10 @@ import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import Select from '../formElements/Select'
 
-export default function NewTeamForm () {
+export default function NewTeamForm ({ refetch }) {
   const { userId } = useParams()
 
-  console.log(userId)
-
-  const router = useRouter()
+  // const router = useRouter()
 
   // States
   const [nameInput, setNameInput] = useState('')
@@ -24,6 +22,7 @@ export default function NewTeamForm () {
   const [racingStandardInput, setRacingStandardInput] = useState('none')
 
   const [errorMessage, setErrorMessage] = useState('')
+  const [succesMessage, setSuccessMessage] = useState('')
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
@@ -46,6 +45,15 @@ export default function NewTeamForm () {
       )
 
       setErrorMessage('')
+      setNameInput('')
+      setEditorAccessCodeInput('')
+      setViewerAccessCodeInput('')
+      setRacingStandardInput('none')
+      setSuccessMessage(data.message)
+
+      if (typeof refetch !== 'undefined') {
+        await refetch()
+      }
       // router.push(`/user/${userId}`)
     } catch (err) {
       console.error(err)
@@ -65,7 +73,11 @@ export default function NewTeamForm () {
 
   return (
     <>
-      <Form onSubmit={handleFormSubmit} errorMessage={errorMessage}>
+      <Form
+        onSubmit={handleFormSubmit}
+        errorMessage={errorMessage}
+        succesMessage={succesMessage}
+      >
         <SingleLineInput
           label={t('forms.team_name')}
           name='teamName'

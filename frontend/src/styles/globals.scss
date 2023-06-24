@@ -39,7 +39,8 @@ img {
 /* Buttons & Links */
 
 a,
-a:visited {
+a:visited,
+button {
   text-decoration: none;
   color: var(--text-color);
   cursor: pointer;

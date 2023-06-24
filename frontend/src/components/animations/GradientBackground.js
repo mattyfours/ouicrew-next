@@ -53,8 +53,7 @@ const StyledGradientBackground = styled.div`
     height: auto;
 
     path {
-      fill: var(--primary-color);
-      opacity: 0.15;
+      fill: var(--primary-color-light);
       animation: ${waveAnimation} 20s linear infinite;
     }
   }

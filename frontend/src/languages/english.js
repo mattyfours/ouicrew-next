@@ -14,13 +14,17 @@ export default {
     new_password: 'New Password',
     editor_access_code: 'Editor Access Code',
     viewer_access_code: ' Viewer Access Code',
-    team_name: 'Team Name'
+    team_name: 'Team Name',
+    select_team: 'Select Teams',
+    access_code: 'Team Access Code'
   },
   dashboard: {
     metatitle: 'Account',
     no_teams_joined: 'No teams joined',
-    join_a_team: 'Join an existing team',
-    create_new_team: 'Create a new team'
+    join_a_team: 'Join team',
+    create_new_team: 'Create team',
+    my_teams: 'My teams',
+    welcome: 'Welcome'
   },
   login_page: {
     metatitle: 'Log In',

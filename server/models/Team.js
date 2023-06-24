@@ -22,9 +22,11 @@ export default (sequelize) => {
   })
 
   Team.associate = ({
-    TeamMember
+    TeamMember,
+    Team
   }) => {
-    Team.hasMany(TeamMember, { onDelete: 'CASCADE', as: 'errors' })
+    Team.hasMany(TeamMember, { onDelete: 'CASCADE', as: 'TeamMembers' })
+    Team.hasMany(TeamMember, { onDelete: 'CASCADE', as: 'Teams' })
   }
 
   return Team

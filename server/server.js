@@ -6,6 +6,7 @@ import db from './models/database.js'
 // import authRouter from './routes/auth/auth.js'
 import teamRouter from './routes/userTeams/userTeamsRouter.js'
 import userRouter from './routes/user/userRouter.js'
+import teamsRouter from './routes/teams/teamsRouter.js'
 import { userSessionValidation } from './middleware/userSessionValidation.js'
 
 const {
@@ -28,8 +29,8 @@ app.use(cors({
 
 // app.use('/auth', authRouter)
 app.use('/user', userRouter)
-
 app.use('/user/:userId/teams', userSessionValidation, teamRouter)
+app.use('/teams', teamsRouter)
 
 // sync database
 db.sequelize
@@ -39,6 +40,6 @@ db.sequelize
     () => console.log(`Server Running On localhost:${SERVER_PORT}`)
   ))
   .catch((error) => {
-    console.log(error)
+    console.error(error)
     return process.exit(0)
   })

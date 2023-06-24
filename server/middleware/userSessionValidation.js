@@ -83,6 +83,7 @@ export const userSessionValidation = async (req, res, next) => {
         return {
           teamId: userTeam.TeamId,
           isTeamAdmin: userTeam.is_admin,
+          isTeamEditor: userTeam.is_editor,
           teamName: team.name
         }
       })

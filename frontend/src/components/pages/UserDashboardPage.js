@@ -1,26 +1,27 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import ErrorPage from '@/components/pages/ErrorPage'
 import axios from 'axios'
 import { styled } from 'styled-components'
 import { useParams } from 'next/navigation'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSliders } from '@fortawesome/free-solid-svg-icons'
 import DashboardNav from '@/components/dashboard/DashboardNav'
 import DashboardNoTeam from '@/components/dashboard/DashboardNoTeam'
+import DashboardTeamList from '@/components/dashboard/DashboardTeamList'
+import { t } from '@/languages/languages'
 
-const StyledUserDashboardLayout = styled.div`
+const StyledUserDashboardPage = styled.div`
+  .main-title {
+    text-align: center;
+    margin: 64px 0 0;
 
+  }
 `
 
-const getData = async (userId) => {
-
-}
-
-export default function UserDashboardLayout ({ children }) {
+export default function UserDashboardPage ({ children }) {
   const { userId } = useParams()
   const [data, setData] = useState(null)
+  const [refetchData, setRefetchData] = useState(1)
 
   useEffect(() => {
     (async () => {
@@ -40,9 +41,11 @@ export default function UserDashboardLayout ({ children }) {
         setData({ error: err })
       }
     })()
-  }, [])
+  }, [refetchData])
 
-  console.log(data)
+  const refetch = useCallback(() => {
+    setRefetchData(refetchData + 1)
+  }, [refetchData])
 
   if (data === null) {
     return <h1>Loading</h1>
@@ -53,19 +56,13 @@ export default function UserDashboardLayout ({ children }) {
   }
 
   return (
-    <StyledUserDashboardLayout>
+    <StyledUserDashboardPage>
       <DashboardNav data={data} />
 
       <div className='container'>
-        {
-          data.teams?.length === 0
-            ? <DashboardNoTeam />
-            : 'Has Teams'
-        }
+        <h2 className='heading-large main-title'>{t('dashboard.welcome')} {data.user.username}</h2>
+        <DashboardTeamList data={data} refetch={refetch} />
       </div>
-
-      <FontAwesomeIcon icon={faSliders} />
-      {data.user.username}
-    </StyledUserDashboardLayout>
+    </StyledUserDashboardPage>
   )
 }

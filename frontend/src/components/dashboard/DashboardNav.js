@@ -26,8 +26,11 @@ const StyledDashboardNav = styled.nav`
 
   .nav-utils {
     width: max-content;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 400;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 16px;
   }
 `
 
@@ -60,8 +63,11 @@ export default function DashboardNav ({ data }) {
       </Link>
 
       <div className='nav-utils'>
-        Teams
-
+        <Link
+          href={`/user/${userId}`}
+        >
+          {data.user.username}
+        </Link>
         <button
           onClick={handleLogOut}
         >

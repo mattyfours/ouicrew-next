@@ -1,3 +1,4 @@
+import UserDashboardPage from '@/components/pages/UserDashboardPage'
 import { t } from '@/languages/languages'
 
 export const metadata = {
@@ -5,9 +6,5 @@ export const metadata = {
 }
 
 export default async function Dashboard ({ params, req, res }) {
-  return (
-    <>
-      <h1>hi</h1>
-    </>
-  )
+  return <UserDashboardPage />
 }

@@ -84,6 +84,7 @@ export default function Select ({
             <option
               key={`${inputId}--${index}`}
               value={option.value}
+              disabled={option.value === '-'}
             >
               {option.label}
             </option>
