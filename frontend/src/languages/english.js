@@ -24,7 +24,8 @@ export default {
     join_a_team: 'Join team',
     create_new_team: 'Create team',
     my_teams: 'My teams',
-    welcome: 'Welcome'
+    welcome: 'Welcome',
+    dashboard: 'Dashboard'
   },
   login_page: {
     metatitle: 'Log In',

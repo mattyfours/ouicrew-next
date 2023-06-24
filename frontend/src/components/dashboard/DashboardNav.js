@@ -66,7 +66,7 @@ export default function DashboardNav ({ data }) {
         <Link
           href={`/user/${userId}`}
         >
-          {data.user.username}
+          {t('dashboard.dashboard')}
         </Link>
         <button
           onClick={handleLogOut}
