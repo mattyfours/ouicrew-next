@@ -49,10 +49,15 @@ export const postUserLogin = async (req, res) => {
       )
     }
 
-    await userToLogIn.update({
-      session_token: randomBytes(16).toString('hex'),
-      session_token_expiration: Date.now() + weekInMilliseconds
-    })
+    if (
+      userToLogIn.session_token === null ||
+      userToLogIn.session_token_expiration < Date.now()
+    ) {
+      await userToLogIn.update({
+        session_token: randomBytes(16).toString('hex'),
+        session_token_expiration: Date.now() + weekInMilliseconds
+      })
+    }
 
     return returnSuccess(res, {
       user: {
@@ -66,6 +71,30 @@ export const postUserLogin = async (req, res) => {
     })
   } catch (err) {
     console.error('Error Loggin In')
+    return errorHandler(res, err)
+  }
+}
+
+/**
+ * Log Out
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const postUserLogOut = async (req, res) => {
+  try {
+    const { user } = req
+
+    await user.update({
+      session_token: null,
+      session_token_expiration: null
+    })
+
+    return returnSuccess(res, {
+      message: 'Success, user has been logged out'
+    })
+  } catch (err) {
+    console.error('Error Registering User')
     return errorHandler(res, err)
   }
 }

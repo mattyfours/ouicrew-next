@@ -1,7 +1,10 @@
 'use client'
 
 import { t } from '@/languages/languages'
+import axios from 'axios'
 import Link from 'next/link'
+import { useParams, useRouter } from 'next/navigation'
+import { useCallback } from 'react'
 import { styled } from 'styled-components'
 
 const StyledDashboardNav = styled.nav`
@@ -29,6 +32,27 @@ const StyledDashboardNav = styled.nav`
 `
 
 export default function DashboardNav ({ data }) {
+  const { userId } = useParams()
+  const router = useRouter()
+
+  const handleLogOut = useCallback(async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/logout`
+      await axios.post(url, {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-ouicrew-session-token': localStorage.getItem('userSessionToken')
+          }
+        }
+      )
+
+      router.push('/')
+    } catch (err) {
+      console.error(err)
+    }
+  }, [])
+
   return (
     <StyledDashboardNav>
       <Link href='/dashboard' className='logo-link'>
@@ -37,6 +61,12 @@ export default function DashboardNav ({ data }) {
 
       <div className='nav-utils'>
         Teams
+
+        <button
+          onClick={handleLogOut}
+        >
+          {t('general.log_out')}
+        </button>
       </div>
     </StyledDashboardNav>
   )

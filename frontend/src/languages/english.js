@@ -2,7 +2,8 @@ export default {
   general: {
     ouicrew: 'OuiCrew',
     unexpected_error: 'An unexpected error has occured. Please try again.',
-    return_home: 'Return Home'
+    return_home: 'Return Home',
+    log_out: 'Log Out'
   },
   forms: {
     email: 'Email Address',

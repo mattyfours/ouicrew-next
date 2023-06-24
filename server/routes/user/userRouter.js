@@ -1,5 +1,6 @@
 import express from 'express'
 import {
+  postUserLogOut,
   postUserLogin,
   postUserRegister,
   postUserResetPassword,
@@ -21,7 +22,7 @@ userRouter.post('/register', userRegisterValidation, postUserRegister)
 userRouter.post('/login', userLoginValidation, postUserLogin)
 userRouter.post('/reset-password-request', userResetPasswordRequestValidation, postUserResetPasswordRequest)
 userRouter.post('/reset-password', userResetPasswordValidation, postUserResetPassword)
-// userRouter.get('/login', teamLogin)
+userRouter.post('/:userId/logout', userSessionValidation, postUserLogOut)
 
 // User Info
 userRouter.get('/:userId', userSessionValidation, getUserinfo)
