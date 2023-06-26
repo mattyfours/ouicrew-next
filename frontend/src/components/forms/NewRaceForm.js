@@ -12,6 +12,7 @@ import Select from '../formElements/Select'
 import Grid from '../displayElements/Grid'
 import TextArea from '../formElements/TextArea'
 import Checkbox from '../formElements/Checkbox'
+import { toDateInputFormat } from '@/helpers/dateFormater'
 
 export default function NewRaceForm ({ refetch }) {
   const { userId, teamId } = useParams()
@@ -20,7 +21,7 @@ export default function NewRaceForm ({ refetch }) {
 
   // States
   const [raceTitleInput, setRaceTitleInput] = useState('')
-  const [startTimeInput, setStartTimeInput] = useState(Date.now())
+  const [startTimeInput, setStartTimeInput] = useState(toDateInputFormat(Date.now()))
   const [distanceInput, setDistanceInput] = useState(2000)
   const [checkpointsInput, setCheckpointsInput] = useState(0)
   const [notesInput, setNotesInput] = useState('')
@@ -55,7 +56,7 @@ export default function NewRaceForm ({ refetch }) {
       setIsLoading(false)
       setErrorMessage('')
       setRaceTitleInput('')
-      setStartTimeInput(Date.now())
+      setStartTimeInput(toDateInputFormat(Date.now()))
       setDistanceInput(2000)
       setCheckpointsInput(0)
       setNotesInput('')

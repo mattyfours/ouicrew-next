@@ -14,3 +14,9 @@ export const serverDateTimeToReadable = (dateString) => {
 
   return `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()} @ ${time}`
 }
+
+export const toDateInputFormat = (dateToConvert) => {
+  const date = new Date(dateToConvert)
+  date.setMinutes(date.getMinutes() - date.getTimezoneOffset())
+  return date.toISOString().slice(0, 16)
+}

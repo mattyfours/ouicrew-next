@@ -82,8 +82,6 @@ export const postCreateUserTeam = async (req, res) => {
       const standardsCategories = Object.keys(sportStandards)
       for (const standardsCategory of standardsCategories) {
         for (const standard of sportStandards[standardsCategory]) {
-          console.log(standard)
-
           db.TeamRacingStandard.create({
             TeamId: team.id,
             category: standardsCategory,
@@ -94,8 +92,6 @@ export const postCreateUserTeam = async (req, res) => {
         }
       }
     }
-
-    console.log(racingStandard)
 
     return returnSuccess(res, {
       team: {

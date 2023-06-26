@@ -22,9 +22,8 @@ export const raceCreateNewValidation = (req, res, next) => {
     const errors = []
 
     if (
-      typeof raceTitle === 'undefined' ||
-      raceTitle.length === 0 ||
-      !validator.isAlphanumeric(raceTitle)
+      typeof raceTitle !== 'string' ||
+      raceTitle.length === 0
     ) {
       errors.push({
         path: 'raceTitle',
