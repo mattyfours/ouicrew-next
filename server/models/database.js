@@ -6,6 +6,8 @@ import User from './User.js'
 import Team from './Team.js'
 import TeamMember from './TeamMember.js'
 import Race from './Race.js'
+import RaceEntry from './RaceEntry.js'
+import TeamRacingStandard from './TeamRacingStandard.js'
 
 //  models
 const { Op } = Sequelize
@@ -51,6 +53,8 @@ db.Team = Team(sequelize, Op)
 db.User = User(sequelize, Op)
 db.TeamMember = TeamMember(sequelize, Op)
 db.Race = Race(sequelize, Op)
+db.RaceEntry = RaceEntry(sequelize, Op)
+db.TeamRacingStandard = TeamRacingStandard(sequelize, Op)
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {

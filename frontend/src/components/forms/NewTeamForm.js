@@ -23,12 +23,13 @@ export default function NewTeamForm ({ refetch }) {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
+      setIsLoading(true)
       const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams`
-
       const { data } = await axios.post(url,
         {
           name: nameInput,
@@ -44,6 +45,7 @@ export default function NewTeamForm ({ refetch }) {
         }
       )
 
+      setIsLoading(false)
       setErrorMessage('')
       setNameInput('')
       setEditorAccessCodeInput('')
@@ -56,6 +58,7 @@ export default function NewTeamForm ({ refetch }) {
       }
       // router.push(`/user/${userId}`)
     } catch (err) {
+      setIsLoading(false)
       console.error(err)
       setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'
@@ -68,7 +71,8 @@ export default function NewTeamForm ({ refetch }) {
     nameInput,
     editorAccessCodeInput,
     viewerAccessCodeInput,
-    racingStandardInput
+    racingStandardInput,
+    setIsLoading
   ])
 
   return (
@@ -77,6 +81,7 @@ export default function NewTeamForm ({ refetch }) {
         onSubmit={handleFormSubmit}
         errorMessage={errorMessage}
         succesMessage={succesMessage}
+        loading={isLoading}
       >
         <SingleLineInput
           label={t('forms.team_name')}
@@ -103,7 +108,7 @@ export default function NewTeamForm ({ refetch }) {
         />
 
         <Select
-          label={t('forms.viewer_access_code')}
+          label={t('forms.racing_standard_defaults')}
           name='viewerAccessCode'
           value={racingStandardInput}
           setter={setRacingStandardInput}

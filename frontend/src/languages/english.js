@@ -21,7 +21,10 @@ export default {
     start_time: 'Start Time',
     distance: 'Distance (meters)',
     create_race: 'Create Race',
-    checkpoints: 'Checkpoints'
+    checkpoints: 'Checkpoints',
+    racing_standard_defaults: 'Racing Standard Defaults',
+    notes: 'Notes',
+    is_public_race: 'Race is viewable by the public'
   },
   dashboard: {
     metatitle: 'Account',
@@ -62,5 +65,8 @@ export default {
     login_prompt: 'Log in to your account',
     register_prompt: 'Register for an account',
     success: 'Success, your password has been changed. Please return to the log in page to sign in.'
+  },
+  dates: {
+    monthList: 'January, February, March, April, May, June, July, August, September, November, December'
   }
 }

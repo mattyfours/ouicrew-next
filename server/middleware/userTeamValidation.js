@@ -63,3 +63,30 @@ export const userTeamValidation = async (req, res, next) => {
     return errorHandler(res, err)
   }
 }
+
+export const userTeamsIsEditorValidation = (req, res, next) => {
+  try {
+    const {
+      teamInfo
+    } = req
+
+    const errors = []
+
+    if (
+      typeof teamInfo?.isTeamEditor === 'undefined' ||
+      teamInfo.isTeamEditor === false
+    ) {
+      errors.push({
+        path: 'teamInfo',
+        message: 'Invalid Team'
+      })
+    }
+
+    return errors.length > 0
+      ? returnErrorStatusCode(422, res, errors)
+      : next()
+  } catch (err) {
+    console.error(err)
+    return errorHandler(res, err)
+  }
+}

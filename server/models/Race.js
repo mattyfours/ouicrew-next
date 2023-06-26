@@ -40,9 +40,11 @@ export default (sequelize) => {
   })
 
   Race.associate = ({
-    Team
+    Team,
+    RaceEntry
   }) => {
     Race.belongsTo(Team)
+    Team.hasMany(RaceEntry, { onDelete: 'CASCADE', as: 'RaceEntries' })
   }
 
   return Race

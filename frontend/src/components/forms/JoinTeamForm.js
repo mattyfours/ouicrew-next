@@ -19,6 +19,7 @@ export default function JoinTeamForm ({ refetch }) {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const [teamListData, setTeamListData] = useState(null)
 
@@ -44,8 +45,8 @@ export default function JoinTeamForm ({ refetch }) {
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
+      setIsLoading(true)
       const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams/join`
-
       const { data } = await axios.post(url,
         {
           teamId: teamIdInput,
@@ -59,6 +60,7 @@ export default function JoinTeamForm ({ refetch }) {
         }
       )
 
+      setIsLoading(false)
       setErrorMessage('')
       setTeamIdInput('-')
       setAccessCodeInput('')
@@ -68,6 +70,7 @@ export default function JoinTeamForm ({ refetch }) {
         await refetch()
       }
     } catch (err) {
+      setIsLoading(false)
       console.error(err)
       setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'
@@ -78,7 +81,8 @@ export default function JoinTeamForm ({ refetch }) {
   }, [
     errorMessage,
     teamIdInput,
-    accessCodeInput
+    accessCodeInput,
+    setIsLoading
   ])
 
   if (!teamListData) {
@@ -91,6 +95,7 @@ export default function JoinTeamForm ({ refetch }) {
         onSubmit={handleFormSubmit}
         errorMessage={errorMessage}
         succesMessage={succesMessage}
+        loading={isLoading}
       >
         <Select
           label={t('forms.select_team')}

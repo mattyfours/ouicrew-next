@@ -9,6 +9,9 @@ import Link from 'next/link'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import Select from '../formElements/Select'
+import Grid from '../displayElements/Grid'
+import TextArea from '../formElements/TextArea'
+import Checkbox from '../formElements/Checkbox'
 
 export default function NewRaceForm ({ refetch }) {
   const { userId, teamId } = useParams()
@@ -19,19 +22,27 @@ export default function NewRaceForm ({ refetch }) {
   const [raceTitleInput, setRaceTitleInput] = useState('')
   const [startTimeInput, setStartTimeInput] = useState(Date.now())
   const [distanceInput, setDistanceInput] = useState(2000)
-  const [checkpointInput, setCheckpointInput] = useState(0)
+  const [checkpointsInput, setCheckpointsInput] = useState(0)
+  const [notesInput, setNotesInput] = useState('')
+  const [isPublicInput, setIsPublicInput] = useState(false)
 
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
+      setIsLoading(true)
       const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams/${teamId}/race`
-
       const { data } = await axios.post(url,
         {
-          raceTitle: raceTitleInput
+          raceTitle: raceTitleInput,
+          startTime: startTimeInput,
+          distance: distanceInput,
+          checkpoints: checkpointsInput,
+          notes: notesInput,
+          isPublic: isPublicInput
         },
         {
           headers: {
@@ -41,11 +52,14 @@ export default function NewRaceForm ({ refetch }) {
         }
       )
 
+      setIsLoading(false)
       setErrorMessage('')
-      raceTitleInput('')
+      setRaceTitleInput('')
       setStartTimeInput(Date.now())
       setDistanceInput(2000)
-      setCheckpointInput(0)
+      setCheckpointsInput(0)
+      setNotesInput('')
+      setIsPublicInput(false)
       setSuccessMessage(data.message)
 
       if (typeof refetch !== 'undefined') {
@@ -53,6 +67,8 @@ export default function NewRaceForm ({ refetch }) {
       }
       // router.push(`/user/${userId}`)
     } catch (err) {
+      setIsLoading(false)
+      setSuccessMessage('')
       console.error(err)
       setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'
@@ -65,7 +81,10 @@ export default function NewRaceForm ({ refetch }) {
     raceTitleInput,
     startTimeInput,
     distanceInput,
-    checkpointInput
+    checkpointsInput,
+    notesInput,
+    isPublicInput,
+    setIsLoading
   ])
 
   return (
@@ -74,10 +93,11 @@ export default function NewRaceForm ({ refetch }) {
         onSubmit={handleFormSubmit}
         errorMessage={errorMessage}
         succesMessage={succesMessage}
+        loading={isLoading}
       >
         <SingleLineInput
           label={t('forms.race_title')}
-          name='teamName'
+          name='raceTitle'
           type='text'
           value={raceTitleInput}
           setter={setRaceTitleInput}
@@ -85,26 +105,43 @@ export default function NewRaceForm ({ refetch }) {
 
         <SingleLineInput
           label={t('forms.start_time')}
-          name='editorAccessCode'
+          name='startTime'
           type='datetime-local'
           value={startTimeInput}
           setter={setStartTimeInput}
         />
 
-        <SingleLineInput
-          label={t('forms.distance')}
-          name='viewerAccessCode'
-          type='number'
-          value={distanceInput}
-          setter={setDistanceInput}
+        <Grid>
+          <SingleLineInput
+            label={t('forms.distance')}
+            name='distance'
+            type='number'
+            value={distanceInput}
+            setter={setDistanceInput}
+          />
+
+          <SingleLineInput
+            label={t('forms.checkpoints')}
+            name='checkpoints'
+            type='number'
+            value={checkpointsInput}
+            setter={setCheckpointsInput}
+          />
+        </Grid>
+
+        <TextArea
+          label={t('forms.notes')}
+          name='teamNotes'
+          value={notesInput}
+          setter={setNotesInput}
         />
 
-        <SingleLineInput
-          label={t('forms.checkpoints')}
-          name='viewerAccessCode'
-          type='number'
-          value={checkpointInput}
-          setter={setCheckpointInput}
+        <Checkbox
+          label={t('forms.is_public_race')}
+          name='ispublic'
+          type='checkbox'
+          value={isPublicInput}
+          setter={setIsPublicInput}
         />
 
         <Button type='submit' centered>{t('forms.create_race')}</Button>

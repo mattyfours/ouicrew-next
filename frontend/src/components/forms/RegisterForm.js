@@ -15,14 +15,16 @@ export default function RegisterForm () {
   const [passwordInputValue, setPasswordInputValue] = useState('')
   const [usernameInputValue, setUsernameInputValue] = useState('')
   const [termsInputValue, setTermsInputValue] = useState(false)
+
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
+      setIsLoading(true)
       const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/register`
-
       await axios.post(url,
         {
           username: usernameInputValue,
@@ -37,9 +39,11 @@ export default function RegisterForm () {
         }
       )
 
+      setIsLoading(false)
       setErrorMessage()
       setSuccessMessage(t('register_page.success'))
     } catch (err) {
+      setIsLoading(false)
       setSuccessMessage('')
       setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'
@@ -47,13 +51,25 @@ export default function RegisterForm () {
           : err.response.data.error[0].message
       )
     }
-  }, [errorMessage, usernameInputValue, emailInputValue, passwordInputValue, termsInputValue])
+  }, [
+    errorMessage,
+    usernameInputValue,
+    emailInputValue,
+    passwordInputValue,
+    termsInputValue,
+    setIsLoading
+  ])
 
   return (
     <>
       <h1 className='heading-small'>{t('register_page.title')}</h1>
 
-      <Form onSubmit={handleFormSubmit} errorMessage={errorMessage} succesMessage={succesMessage}>
+      <Form
+        onSubmit={handleFormSubmit}
+        errorMessage={errorMessage}
+        succesMessage={succesMessage}
+        loading={isLoading}
+      >
         <SingleLineInput
           label={t('forms.username')}
           name='username'

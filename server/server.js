@@ -8,6 +8,8 @@ import teamRouter from './routes/userTeams/userTeamsRouter.js'
 import userRouter from './routes/user/userRouter.js'
 import teamsRouter from './routes/teams/teamsRouter.js'
 import { userSessionValidation } from './middleware/userSessionValidation.js'
+import userTeamsRaceRouter from './routes/userTeamsRace/userTeamsRaceRouter.js'
+import { userTeamValidation } from './middleware/userTeamValidation.js'
 
 const {
   SERVER_PORT,
@@ -28,9 +30,28 @@ app.use(cors({
 }))
 
 // app.use('/auth', authRouter)
-app.use('/user', userRouter)
-app.use('/user/:userId/teams', userSessionValidation, teamRouter)
-app.use('/teams', teamsRouter)
+app.use(
+  '/user',
+  userRouter
+)
+
+app.use(
+  '/user/:userId/teams',
+  userSessionValidation,
+  teamRouter
+)
+
+app.use(
+  '/user/:userId/teams/:teamId/race',
+  userSessionValidation,
+  userTeamValidation,
+  userTeamsRaceRouter
+)
+
+app.use(
+  '/teams',
+  teamsRouter
+)
 
 // sync database
 db.sequelize

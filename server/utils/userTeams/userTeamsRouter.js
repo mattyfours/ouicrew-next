@@ -12,6 +12,7 @@ import { userTeamValidation } from '../../middleware/userTeamValidation.js'
 
 const userTeamsRouter = express.Router()
 
+// Auth Routes
 userTeamsRouter.get('/', getUserTeams)
 userTeamsRouter.post('/', teamsCreateNewValidation, postCreateUserTeam)
 userTeamsRouter.post('/join', teamsJoinValidation, postJoinATeam)

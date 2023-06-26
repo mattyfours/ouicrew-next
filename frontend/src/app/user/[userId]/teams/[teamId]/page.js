@@ -15,6 +15,7 @@ import Button from '@/components/formElements/Button'
 import Modal from '@/components/utils/Modal'
 import JoinTeamForm from '@/components/forms/JoinTeamForm'
 import NewRaceForm from '@/components/forms/NewRaceForm'
+import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -105,21 +106,24 @@ export default function UserTeamPage ({ children }) {
             : (
               <ResponsiveTable
                 headings={[
-                  'Team Name',
-                  'Membership'
+                  'Race Title',
+                  'Event Time',
+                  'Distance'
                 ]}
               >
                 {
-                  data.teams.map((team, index) => (
-                    <ResponsiveTable.Row key={`teamlist-${team.teamId}`}>
+                  data.races.map((race, index) => (
+                    <ResponsiveTable.Row key={`teamlist-${race.teamId}`}>
                       <ResponsiveTable.Item>
-                        <Link href={`/user/${userId}/teams/${team.teamId}`} className='view-link'>
-                          {team.teamName} <FontAwesomeIcon icon={faRightLong} />
+                        <Link href={`/user/${userId}/teams/${race.teamId}/race/${race.id}`} className='view-link'>
+                          {race.title} <FontAwesomeIcon icon={faRightLong} />
                         </Link>
                       </ResponsiveTable.Item>
                       <ResponsiveTable.Item>
-                        {team.isTeamAdmin ? 'Admin' : 'Member'}|
-                        {team.isTeamEditor ? 'Editor' : 'Viewer'}
+                        {serverDateTimeToReadable(race.event_time)}
+                      </ResponsiveTable.Item>
+                      <ResponsiveTable.Item>
+                        {race.distance}m
                       </ResponsiveTable.Item>
                     </ResponsiveTable.Row>
                   ))
@@ -129,10 +133,7 @@ export default function UserTeamPage ({ children }) {
         }
 
         {
-          (
-            data.team.isTeamAdmin === true ||
-            data.team.isTeamEditor === true
-          ) &&
+          data.team.isTeamEditor === true &&
             <>
               <div className='action-buttons'>
                 <Button className='new-team-button' size='small' onClick={() => handleToogleNewRaceModal(true)}>
@@ -147,7 +148,6 @@ export default function UserTeamPage ({ children }) {
               >
                 <NewRaceForm refetch={refetch} />
               </Modal>
-
             </>
         }
 

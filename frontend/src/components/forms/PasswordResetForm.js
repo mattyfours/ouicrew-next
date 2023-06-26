@@ -16,14 +16,16 @@ export default function PasswordResetForm () {
   // States
   const [usernameInputValue, setUsernameInputValue] = useState('')
   const [passwordInputValue, setPasswordInputValue] = useState('')
+
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
+      setIsLoading(true)
       const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/reset-password-request`
-
       await axios.post(url,
         {
           username: usernameInputValue,
@@ -37,9 +39,11 @@ export default function PasswordResetForm () {
         }
       )
 
+      setIsLoading(false)
       setErrorMessage()
       setSuccessMessage(t('password_reset_page.success'))
     } catch (err) {
+      setIsLoading(false)
       setSuccessMessage('')
       setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'
@@ -47,13 +51,18 @@ export default function PasswordResetForm () {
           : err.response.data.error[0].message
       )
     }
-  }, [errorMessage, usernameInputValue])
+  }, [errorMessage, usernameInputValue, setIsLoading])
 
   return (
     <>
       <h1 className='heading-small'>{t('password_reset_page.title')}</h1>
 
-      <Form onSubmit={handleFormSubmit} errorMessage={errorMessage} succesMessage={succesMessage}>
+      <Form
+        onSubmit={handleFormSubmit}
+        errorMessage={errorMessage}
+        succesMessage={succesMessage}
+        loading={isLoading}
+      >
         <SingleLineInput
           label={t('forms.username')}
           name='username'

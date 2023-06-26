@@ -1,3 +1,11 @@
+export const racingStandardTimeToMs = (time) => {
+  const s = time.s * 1000
+  const m = time.m * (60 * 1000)
+  const h = time.h * (60 * 60 * 1000)
+
+  return time.ms + s + m + h
+}
+
 export const RacingStandardsMasterList = {
   rowing: {
     Men: [

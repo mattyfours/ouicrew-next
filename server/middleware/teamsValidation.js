@@ -19,7 +19,10 @@ export const teamsCreateNewValidation = (req, res, next) => {
 
     const errors = []
 
-    if (typeof name === 'undefined' || name.length === 0) {
+    if (
+      typeof name !== 'string' ||
+      name.length === 0
+    ) {
       errors.push({
         path: 'name',
         message: 'Missing team name'
@@ -48,7 +51,10 @@ export const teamsCreateNewValidation = (req, res, next) => {
       })
     }
 
-    if (typeof racingStandard !== 'undefined' && !validator.isAlphanumeric(racingStandard)) {
+    if (
+      typeof racingStandard !== 'undefined' &&
+      !validator.isAlphanumeric(racingStandard)
+    ) {
       errors.push({
         path: 'racingStandard',
         message: 'Invalid racing standard'
