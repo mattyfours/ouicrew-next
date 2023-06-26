@@ -16,7 +16,12 @@ export default {
     viewer_access_code: ' Viewer Access Code',
     team_name: 'Team Name',
     select_team: 'Select Teams',
-    access_code: 'Team Access Code'
+    access_code: 'Team Access Code',
+    race_title: 'Race Title',
+    start_time: 'Start Time',
+    distance: 'Distance (meters)',
+    create_race: 'Create Race',
+    checkpoints: 'Checkpoints'
   },
   dashboard: {
     metatitle: 'Account',
@@ -27,7 +32,8 @@ export default {
     welcome: 'Welcome',
     dashboard: 'Dashboard',
     new_race: 'New Race',
-    no_races_found: 'No races found'
+    no_races_found: 'No races found',
+    race_list: 'Race List'
   },
   login_page: {
     metatitle: 'Log In',

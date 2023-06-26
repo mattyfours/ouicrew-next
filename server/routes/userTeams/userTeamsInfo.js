@@ -134,8 +134,6 @@ export const postJoinATeam = async (req, res) => {
       }
     })
 
-    console.log(createdNewTeamMember)
-
     if (createdNewTeamMember === false) {
       await teamMember.update({ is_editor: accessCode === team.editor_access_code })
     }
@@ -169,8 +167,6 @@ export const getUserTeam = async (req, res) => {
         TeamId: teamInfo.teamId
       }
     })
-
-    console.log(races)
 
     return returnSuccess(res, {
       user: {

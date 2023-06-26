@@ -113,7 +113,7 @@ export default function JoinTeamForm ({ refetch }) {
           setter={setAccessCodeInput}
         />
 
-        <Button type='submit' centered>{t('forms.submit')}</Button>
+        <Button type='submit' centered>{t('dashboard.join_a_team')}</Button>
       </Form>
     </>
   )

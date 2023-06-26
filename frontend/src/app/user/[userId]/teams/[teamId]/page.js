@@ -14,6 +14,7 @@ import Link from 'next/link'
 import Button from '@/components/formElements/Button'
 import Modal from '@/components/utils/Modal'
 import JoinTeamForm from '@/components/forms/JoinTeamForm'
+import NewRaceForm from '@/components/forms/NewRaceForm'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -96,7 +97,7 @@ export default function UserTeamPage ({ children }) {
   return (
     <>
       <StyledDashboardTeamList>
-        <h2 className='heading-small'>{t('dashboard.my_teams')}</h2>
+        <h2 className='heading-small'>{t('dashboard.race_list')}</h2>
 
         {
           data.races?.length === 0
@@ -127,19 +128,28 @@ export default function UserTeamPage ({ children }) {
               )
         }
 
-        <div className='action-buttons'>
-          <Button className='new-team-button' size='small' onClick={() => handleToogleNewRaceModal(true)}>
-            {t('dashboard.new_race')}
-          </Button>
-        </div>
+        {
+          (
+            data.team.isTeamAdmin === true ||
+            data.team.isTeamEditor === true
+          ) &&
+            <>
+              <div className='action-buttons'>
+                <Button className='new-team-button' size='small' onClick={() => handleToogleNewRaceModal(true)}>
+                  {t('dashboard.new_race')}
+                </Button>
+              </div>
 
-        <Modal
-          title={t('dashboard.join_a_team')}
-          active={isNewRaceModelOpen}
-          onClose={() => handleToogleNewRaceModal(false)}
-        >
-          <JoinTeamForm refetch={refetch} />
-        </Modal>
+              <Modal
+                title={t('dashboard.new_race')}
+                active={isNewRaceModelOpen}
+                onClose={() => handleToogleNewRaceModal(false)}
+              >
+                <NewRaceForm refetch={refetch} />
+              </Modal>
+
+            </>
+        }
 
       </StyledDashboardTeamList>
     </>

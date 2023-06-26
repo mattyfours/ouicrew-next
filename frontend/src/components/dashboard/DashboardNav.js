@@ -12,11 +12,14 @@ const StyledDashboardNav = styled.nav`
   top: 0;
   left: 0;
   width: 100%;
-  padding: 12px 24px;
+  padding: 12px 0;
   border-bottom: 2px solid var(--text-color);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   .logo-link {
     display: block;
@@ -58,21 +61,23 @@ export default function DashboardNav ({ data }) {
 
   return (
     <StyledDashboardNav>
-      <Link href='/dashboard' className='logo-link'>
-        <h1 className='heading-logo'>{t('general.ouicrew')}</h1>
-      </Link>
-
-      <div className='nav-utils'>
-        <Link
-          href={`/user/${userId}`}
-        >
-          {t('dashboard.dashboard')}
+      <div className='container'>
+        <Link href='/dashboard' className='logo-link'>
+          <h1 className='heading-logo'>{t('general.ouicrew')}</h1>
         </Link>
-        <button
-          onClick={handleLogOut}
-        >
-          {t('general.log_out')}
-        </button>
+
+        <div className='nav-utils'>
+          <Link
+            href={`/user/${userId}`}
+          >
+            {t('dashboard.dashboard')}
+          </Link>
+          <button
+            onClick={handleLogOut}
+          >
+            {t('general.log_out')}
+          </button>
+        </div>
       </div>
     </StyledDashboardNav>
   )

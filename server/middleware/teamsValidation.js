@@ -77,8 +77,6 @@ export const teamsJoinValidation = (req, res, next) => {
       accessCode
     } = req.body
 
-    console.log(teamId)
-
     const errors = []
 
     if (typeof teamId === 'undefined' || !validator.isUUID(teamId)) {

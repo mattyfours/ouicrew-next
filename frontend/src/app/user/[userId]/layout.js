@@ -2,6 +2,7 @@
 
 import DashboardNav from '@/components/dashboard/DashboardNav'
 import ErrorPage from '@/components/pages/ErrorPage'
+import { minScreen, screenSizes } from '@/helpers/screen'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { useDynamicFetch } from '@/hooks/useDynamicFetch'
 import { t } from '@/languages/languages'
@@ -14,9 +15,13 @@ const StyledUserDashboardPage = styled.div`
     max-width: var(--width-modal);
   }
 
-  .container {
-    margin-top: 64px;
+  .main-container {
+    margin-top: 32px;
     max-width: var(--width-modal);
+
+    @media ${minScreen(screenSizes.large)} {
+      margin-top: 64px;
+    }
   }
 
   .main-title {
@@ -57,7 +62,7 @@ export default function UserLayout ({ children }) {
     <StyledUserDashboardPage>
       <DashboardNav data={data} />
 
-      <div className='container'>
+      <div className='container main-container'>
         {children}
       </div>
     </StyledUserDashboardPage>

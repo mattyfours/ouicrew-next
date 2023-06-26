@@ -10,16 +10,16 @@ import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import Select from '../formElements/Select'
 
-export default function NewTeamForm ({ refetch }) {
-  const { userId } = useParams()
+export default function NewRaceForm ({ refetch }) {
+  const { userId, teamId } = useParams()
 
   // const router = useRouter()
 
   // States
-  const [nameInput, setNameInput] = useState('')
-  const [editorAccessCodeInput, setEditorAccessCodeInput] = useState('')
-  const [viewerAccessCodeInput, setViewerAccessCodeInput] = useState('')
-  const [racingStandardInput, setRacingStandardInput] = useState('none')
+  const [raceTitleInput, setRaceTitleInput] = useState('')
+  const [startTimeInput, setStartTimeInput] = useState(Date.now())
+  const [distanceInput, setDistanceInput] = useState(2000)
+  const [checkpointInput, setCheckpointInput] = useState(0)
 
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
@@ -27,14 +27,11 @@ export default function NewTeamForm ({ refetch }) {
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
-      const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams`
+      const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams/${teamId}/race`
 
       const { data } = await axios.post(url,
         {
-          name: nameInput,
-          editorAccessCode: editorAccessCodeInput,
-          viewerAccessCode: viewerAccessCodeInput,
-          racingStandard: racingStandardInput
+          raceTitle: raceTitleInput
         },
         {
           headers: {
@@ -45,10 +42,10 @@ export default function NewTeamForm ({ refetch }) {
       )
 
       setErrorMessage('')
-      setNameInput('')
-      setEditorAccessCodeInput('')
-      setViewerAccessCodeInput('')
-      setRacingStandardInput('none')
+      raceTitleInput('')
+      setStartTimeInput(Date.now())
+      setDistanceInput(2000)
+      setCheckpointInput(0)
       setSuccessMessage(data.message)
 
       if (typeof refetch !== 'undefined') {
@@ -65,10 +62,10 @@ export default function NewTeamForm ({ refetch }) {
     }
   }, [
     errorMessage,
-    nameInput,
-    editorAccessCodeInput,
-    viewerAccessCodeInput,
-    racingStandardInput
+    raceTitleInput,
+    startTimeInput,
+    distanceInput,
+    checkpointInput
   ])
 
   return (
@@ -79,41 +76,38 @@ export default function NewTeamForm ({ refetch }) {
         succesMessage={succesMessage}
       >
         <SingleLineInput
-          label={t('forms.team_name')}
+          label={t('forms.race_title')}
           name='teamName'
           type='text'
-          value={nameInput}
-          setter={setNameInput}
+          value={raceTitleInput}
+          setter={setRaceTitleInput}
         />
 
         <SingleLineInput
-          label={t('forms.editor_access_code')}
+          label={t('forms.start_time')}
           name='editorAccessCode'
-          type='text'
-          value={editorAccessCodeInput}
-          setter={setEditorAccessCodeInput}
+          type='datetime-local'
+          value={startTimeInput}
+          setter={setStartTimeInput}
         />
 
         <SingleLineInput
-          label={t('forms.viewer_access_code')}
+          label={t('forms.distance')}
           name='viewerAccessCode'
-          type='text'
-          value={viewerAccessCodeInput}
-          setter={setViewerAccessCodeInput}
+          type='number'
+          value={distanceInput}
+          setter={setDistanceInput}
         />
 
-        <Select
-          label={t('forms.viewer_access_code')}
+        <SingleLineInput
+          label={t('forms.checkpoints')}
           name='viewerAccessCode'
-          value={racingStandardInput}
-          setter={setRacingStandardInput}
-          options={[
-            { label: 'None', value: 'none' },
-            { label: 'Rowing', value: 'rowing' }
-          ]}
+          type='number'
+          value={checkpointInput}
+          setter={setCheckpointInput}
         />
 
-        <Button type='submit' centered>{t('dashboard.create_new_team')}</Button>
+        <Button type='submit' centered>{t('forms.create_race')}</Button>
       </Form>
     </>
   )

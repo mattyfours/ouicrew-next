@@ -7,11 +7,11 @@ export default (sequelize) => {
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true
     },
-    event_time: {
-      type: DataTypes.BIGINT,
+    title: {
+      type: DataTypes.STRING,
       allowNull: false
     },
-    event_date: {
+    event_time: {
       type: DataTypes.DATE,
       allowNull: false
     },
@@ -32,6 +32,10 @@ export default (sequelize) => {
     start_time: {
       type: DataTypes.BIGINT,
       allowNull: false
+    },
+    notes: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   })
 

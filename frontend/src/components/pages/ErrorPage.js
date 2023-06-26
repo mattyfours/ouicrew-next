@@ -6,7 +6,10 @@ import Link from 'next/link'
 import { t } from '@/languages/languages'
 
 const StyledErrorPage = styled.div`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000000;
   width: 100%;
   height: 100vh;
   overflow: auto;
@@ -14,6 +17,7 @@ const StyledErrorPage = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  background-color: var(--background-color);
 
   h1 {
     margin: 0 0 32px;
