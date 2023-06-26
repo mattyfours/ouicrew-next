@@ -134,8 +134,10 @@ export const postJoinATeam = async (req, res) => {
       }
     })
 
-    if (createdNewTeamMember) {
-      await teamMember.update({ is_admin: accessCode === team.editor_access_code })
+    console.log(createdNewTeamMember)
+
+    if (createdNewTeamMember === false) {
+      await teamMember.update({ is_editor: accessCode === team.editor_access_code })
     }
 
     return returnSuccess(res, {
@@ -162,11 +164,13 @@ export const getUserTeam = async (req, res) => {
     const { user, teamInfo } = req
 
     // TODO: Add Pagination
-    const races = db.Race.findAll({
+    const races = await db.Race.findAll({
       where: {
         TeamId: teamInfo.teamId
       }
     })
+
+    console.log(races)
 
     return returnSuccess(res, {
       user: {

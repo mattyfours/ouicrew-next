@@ -25,7 +25,9 @@ export default {
     create_new_team: 'Create team',
     my_teams: 'My teams',
     welcome: 'Welcome',
-    dashboard: 'Dashboard'
+    dashboard: 'Dashboard',
+    new_race: 'New Race',
+    no_races_found: 'No races found'
   },
   login_page: {
     metatitle: 'Log In',
