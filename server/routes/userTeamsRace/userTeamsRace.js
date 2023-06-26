@@ -40,3 +40,49 @@ export const postCreateRace = async (req, res) => {
     return errorHandler(res, err)
   }
 }
+
+/**
+ * Get Race Info
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const getRaceInfo = async (req, res) => {
+  try {
+    const { raceId } = req.params
+    const { user, teamInfo } = req
+
+    const race = await db.Race.findOne({
+      where: {
+        id: raceId
+      }
+    })
+
+    if (!race) {
+      return returnErrorStatusCode(
+        422,
+        res,
+        [{ path: 'raceId', message: 'Invalid race id' }]
+      )
+    }
+
+    const entries = await db.RaceEntry.findAll({
+      where: {
+        RaceId: raceId
+      }
+    })
+
+    return returnSuccess(res, {
+      user: {
+        email: user.email,
+        username: user.username
+      },
+      team: teamInfo,
+      entries,
+      race
+    })
+  } catch (err) {
+    console.error('Error Creating New Race')
+    return errorHandler(res, err)
+  }
+}

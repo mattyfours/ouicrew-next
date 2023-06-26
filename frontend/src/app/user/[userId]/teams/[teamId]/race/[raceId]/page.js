@@ -16,8 +16,8 @@ import Modal from '@/components/utils/Modal'
 import JoinTeamForm from '@/components/forms/JoinTeamForm'
 import NewRaceForm from '@/components/forms/NewRaceForm'
 import { serverDateTimeToReadable } from '@/helpers/dateFormater'
-import StyledTeamBar from '@/components/styed/StyledTeamBar'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
+import StyledTeamBar from '@/components/styed/StyledTeamBar'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -65,13 +65,13 @@ const StyledDashboardTeamList = styled.nav`
 `
 
 export default function UserTeamPage ({ children }) {
-  const { userId, teamId } = useParams()
+  const { userId, teamId, raceId } = useParams()
 
   const {
     data,
     refetch
   } = useDynamicFetch(async () => {
-    const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams/${teamId}`
+    const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams/${teamId}/race/${raceId}`
     const { data } = await axios.get(url,
       {
         headers: {
@@ -103,14 +103,22 @@ export default function UserTeamPage ({ children }) {
   return (
     <>
       <StyledTeamBar>
-        <h2>{data.team.teamName}</h2>
+        <h2>
+          <Link
+            href={`/user/${userId}/teams/${teamId}`}
+          >
+            {data.team.teamName}
+          </Link>
+          <span>/</span>
+          {data.race.title}
+        </h2>
       </StyledTeamBar>
 
       <StyledDashboardTeamList>
         <h2 className='heading-small'>{t('dashboard.race_list')}</h2>
 
         {
-          data.races?.length === 0
+          data.entries?.length === 0
             ? (<p className='no-team-notice'><small>{t('dashboard.no_races_found')}</small></p>)
             : (
               <ResponsiveTable
@@ -124,7 +132,7 @@ export default function UserTeamPage ({ children }) {
                   data.races.map((race, index) => (
                     <ResponsiveTable.Row key={`teamlist-${race.teamId}`}>
                       <ResponsiveTable.Item>
-                        <Link href={`/user/${userId}/teams/${teamId}/race/${race.id}`} className='view-link'>
+                        <Link href={`/user/${userId}/teams/${race.teamId}/race/${race.id}`} className='view-link'>
                           {race.title} <FontAwesomeIcon icon={faRightLong} />
                         </Link>
                       </ResponsiveTable.Item>

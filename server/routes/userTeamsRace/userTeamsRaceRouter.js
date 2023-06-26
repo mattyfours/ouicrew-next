@@ -1,5 +1,6 @@
 import express from 'express'
 import {
+  getRaceInfo,
   postCreateRace
 } from './userTeamsRace.js'
 
@@ -12,6 +13,10 @@ userTeamsRaceRouter.post('/',
   userTeamsIsEditorValidation,
   raceCreateNewValidation,
   postCreateRace
+)
+
+userTeamsRaceRouter.get('/:raceId',
+  getRaceInfo
 )
 
 export default userTeamsRaceRouter
