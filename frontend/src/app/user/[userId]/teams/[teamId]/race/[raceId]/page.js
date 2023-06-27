@@ -18,6 +18,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 import StyledTeamBar from '@/components/styed/StyledTeamBar'
 import RaceMenuBar from '@/components/race/RaceMenuBar'
 import NewRaceEntryForm from '@/components/forms/NewRaceEntryForm'
+import ConfirmActionButton from '@/components/utils/ConfirmActionButton'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -119,26 +120,34 @@ export default function UserTeamPage ({ children }) {
               >
                 {
                   data.entries.map((entry, index) => (
-                    <ResponsiveTable.Row key={`entrylist-${entry.teamId}`}>
+                    <ResponsiveTable.Row key={`entrylist-${entry.id}`}>
                       <ResponsiveTable.Item>
-                        <button
-                          className='view-link'
-                        >
-                          <FontAwesomeIcon icon={faPencil} />
-                          {entry.name}
-                        </button>
-
+                        {
+                          data.team.is_team_editor === true
+                            ? (
+                              <button
+                                className='view-link'
+                              >
+                                <FontAwesomeIcon icon={faPencil} />
+                                {entry.name}
+                              </button>
+                              )
+                            : entry.name
+                        }
                       </ResponsiveTable.Item>
+
                       <ResponsiveTable.Item>
                         {entry.racing_standard_name}
                       </ResponsiveTable.Item>
+
                       {
                         data.team.is_team_editor === true && (
                           <ResponsiveTable.Item>
-                            <button className='view-link'>
+
+                            <ConfirmActionButton className='view-link'>
                               <FontAwesomeIcon icon={faTrash} />
                               {t('dashboard.remove')}
-                            </button>
+                            </ConfirmActionButton>
                           </ResponsiveTable.Item>
                         )
                       }

@@ -3,7 +3,8 @@ export default {
     ouicrew: 'OuiCrew',
     unexpected_error: 'An unexpected error has occured. Please try again.',
     return_home: 'Return Home',
-    log_out: 'Log Out'
+    log_out: 'Log Out',
+    confirm: 'Confirm'
   },
   forms: {
     email: 'Email Address',
