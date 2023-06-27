@@ -68,7 +68,6 @@ export default function NewRaceEntryForm ({ refetch }) {
         '/entry'
       ].join('')
 
-      console.log(url)
       const { data } = await axios.post(url,
         {
           racingStandardId: racingStandardInput,

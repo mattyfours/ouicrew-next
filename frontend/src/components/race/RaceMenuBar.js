@@ -31,8 +31,6 @@ export default function RaceMenuBar ({ data }) {
   const { userId, teamId, raceId } = useParams()
   const path = usePathname()
 
-  console.log(data)
-
   return (
     <StyledRaceMenuBar>
       {

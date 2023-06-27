@@ -85,8 +85,6 @@ export default function UserTeamPage ({ children }) {
     return <ErrorPage error={data.error?.response?.data?.error?.[0]} />
   }
 
-  console.log(data)
-
   return (
     <>
       <StyledTeamBar>
