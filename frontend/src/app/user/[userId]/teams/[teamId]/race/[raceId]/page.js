@@ -144,7 +144,10 @@ export default function UserTeamPage ({ children }) {
                         data.team.is_team_editor === true && (
                           <ResponsiveTable.Item>
 
-                            <ConfirmActionButton className='view-link'>
+                            <ConfirmActionButton
+                              className='view-link'
+                              message={`Remove ${entry.name} entry from ${data.race.title}?`}
+                            >
                               <FontAwesomeIcon icon={faTrash} />
                               {t('dashboard.remove')}
                             </ConfirmActionButton>

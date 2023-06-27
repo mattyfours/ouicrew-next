@@ -4,7 +4,8 @@ export default {
     unexpected_error: 'An unexpected error has occured. Please try again.',
     return_home: 'Return Home',
     log_out: 'Log Out',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    cancel: 'Cancel'
   },
   forms: {
     email: 'Email Address',

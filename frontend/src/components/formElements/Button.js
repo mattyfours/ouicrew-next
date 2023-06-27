@@ -33,6 +33,16 @@ const StyledButton = styled.button`
     background-color: var(--primary-color-hover);
     color: var(--background-color);
   }
+
+  &.secondary {
+    background-color: var(--dark-grey-color);
+    color: var(--text-color);
+
+    &:hover {
+      background-color: var(--dark-grey-color-hover);
+      color: var(--text-color);
+    }
+  }
 `
 
 export default function Button ({
@@ -41,13 +51,19 @@ export default function Button ({
   children,
   centered,
   size,
-  className
+  className,
+  secondary
 }) {
   return (
     <StyledButton
       onClick={onClick}
       type={type}
-      className={`${centered && 'centered'} ${size && `size-${size}`} ${className}`}
+      className={`
+        ${centered && 'centered'}
+        ${size && `size-${size}`}
+        ${secondary && 'secondary'}
+        ${className}
+      `}
     >
       {children}
 
