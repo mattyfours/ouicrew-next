@@ -13,11 +13,11 @@ import { faRightLong } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import Button from '@/components/formElements/Button'
 import Modal from '@/components/utils/Modal'
-import JoinTeamForm from '@/components/forms/JoinTeamForm'
-import NewRaceForm from '@/components/forms/NewRaceForm'
 import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import StyledTeamBar from '@/components/styed/StyledTeamBar'
+import RaceMenuBar from '@/components/race/RaceMenuBar'
+import NewRaceEntryForm from '@/components/forms/NewRaceEntryForm'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -114,12 +114,14 @@ export default function UserTeamPage ({ children }) {
         </h2>
       </StyledTeamBar>
 
+      <RaceMenuBar data={data} />
+
       <StyledDashboardTeamList>
-        <h2 className='heading-small'>{t('dashboard.race_list')}</h2>
+        <h2 className='heading-small'>{t('dashboard.entries')}</h2>
 
         {
           data.entries?.length === 0
-            ? (<p className='no-team-notice'><small>{t('dashboard.no_races_found')}</small></p>)
+            ? (<p className='no-team-notice'><small>{t('dashboard.no_entries_found')}</small></p>)
             : (
               <ResponsiveTable
                 headings={[
@@ -154,16 +156,16 @@ export default function UserTeamPage ({ children }) {
             <>
               <div className='action-buttons'>
                 <Button className='new-team-button' size='small' onClick={() => handleToogleNewRaceModal(true)}>
-                  {t('dashboard.new_race')}
+                  {t('dashboard.add_entry')}
                 </Button>
               </div>
 
               <Modal
-                title={t('dashboard.new_race')}
+                title={t('dashboard.add_entry')}
                 active={isNewRaceModelOpen}
                 onClose={() => handleToogleNewRaceModal(false)}
               >
-                <NewRaceForm refetch={refetch} />
+                <NewRaceEntryForm refetch={refetch} />
               </Modal>
             </>
         }

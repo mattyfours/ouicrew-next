@@ -17,7 +17,7 @@ import { toDateInputFormat } from '@/helpers/dateFormater'
 export default function NewRaceForm ({ refetch }) {
   const { userId, teamId } = useParams()
 
-  // const router = useRouter()
+  const router = useRouter()
 
   // States
   const [raceTitleInput, setRaceTitleInput] = useState('')
@@ -66,7 +66,7 @@ export default function NewRaceForm ({ refetch }) {
       if (typeof refetch !== 'undefined') {
         await refetch()
       }
-      // router.push(`/user/${userId}`)
+      router.push(`/user/${userId}/teams/${teamId}/race/${data.race.id}`)
     } catch (err) {
       setIsLoading(false)
       setSuccessMessage('')

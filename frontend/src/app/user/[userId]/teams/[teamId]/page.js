@@ -122,7 +122,7 @@ export default function UserTeamPage ({ children }) {
               >
                 {
                   data.races.map((race, index) => (
-                    <ResponsiveTable.Row key={`teamlist-${race.teamId}`}>
+                    <ResponsiveTable.Row key={`teamlist-${race.id}`}>
                       <ResponsiveTable.Item>
                         <Link href={`/user/${userId}/teams/${teamId}/race/${race.id}`} className='view-link'>
                           {race.title} <FontAwesomeIcon icon={faRightLong} />

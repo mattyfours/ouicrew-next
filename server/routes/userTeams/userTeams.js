@@ -198,3 +198,30 @@ export const getUserTeam = async (req, res) => {
     return errorHandler(res, err)
   }
 }
+
+/**
+ * Get Info For a Certain Team
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const getRacingStandards = async (req, res) => {
+  try {
+    const { teamInfo } = req
+
+    console.log(teamInfo)
+
+    const standards = await db.TeamRacingStandard.findAll({
+      where: {
+        TeamId: teamInfo.teamId
+      }
+    })
+
+    return returnSuccess(res, {
+      standards
+    })
+  } catch (err) {
+    console.error('Error Viewing User Team')
+    return errorHandler(res, err)
+  }
+}

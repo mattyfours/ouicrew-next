@@ -60,12 +60,12 @@ export default function Select ({
   const [isFocused, setIsFocused] = useState(false)
   const inputId = useId()
 
-  const handleInputChange = useCallback(({ target: { value: evtValue } }) => {
+  const handleInputChange = useCallback(async ({ target: { value: evtValue } }) => {
     return setter(evtValue)
   }, [setter])
 
   const handleFocusState = useCallback((value) => {
-    setIsFocused(value)
+    return setIsFocused(value)
   }, [setIsFocused])
 
   return (

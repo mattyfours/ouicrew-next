@@ -1,5 +1,6 @@
 import express from 'express'
 import {
+  getRacingStandards,
   getUserTeam,
   getUserTeams,
   postCreateUserTeam,
@@ -16,5 +17,6 @@ userTeamsRouter.get('/', getUserTeams)
 userTeamsRouter.post('/', teamsCreateNewValidation, postCreateUserTeam)
 userTeamsRouter.post('/join', teamsJoinValidation, postJoinATeam)
 userTeamsRouter.get('/:teamId', userTeamValidation, getUserTeam)
+userTeamsRouter.get('/:teamId/racing-standards', userTeamValidation, getRacingStandards)
 
 export default userTeamsRouter

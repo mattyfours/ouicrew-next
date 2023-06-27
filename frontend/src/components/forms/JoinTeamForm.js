@@ -9,6 +9,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import Select from '../formElements/Select'
+import { useDynamicFetch } from '@/hooks/useDynamicFetch'
 
 export default function JoinTeamForm ({ refetch }) {
   const { userId } = useParams()
@@ -21,26 +22,19 @@ export default function JoinTeamForm ({ refetch }) {
   const [succesMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
-  const [teamListData, setTeamListData] = useState(null)
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/teams`
-        const { data } = await axios.get(url,
-          {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          }
-        )
-
-        setTeamListData(data)
-      } catch (err) {
-        setTeamListData({ error: err })
+  const {
+    data: teamListData
+  } = useDynamicFetch(async () => {
+    const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/teams`
+    const { data } = await axios.get(url,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
-    })()
-  }, [])
+    )
+    return data
+  })
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
@@ -97,7 +91,7 @@ export default function JoinTeamForm ({ refetch }) {
         succesMessage={succesMessage}
         loading={isLoading}
       >
-        <Select
+        {/* <Select
           label={t('forms.select_team')}
           name='team'
           value={teamIdInput}
@@ -108,7 +102,7 @@ export default function JoinTeamForm ({ refetch }) {
               label: team.name, value: team.id
             }))
           ]}
-        />
+        /> */}
 
         <SingleLineInput
           label={t('forms.access_code')}

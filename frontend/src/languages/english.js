@@ -24,7 +24,10 @@ export default {
     checkpoints: 'Checkpoints',
     racing_standard_defaults: 'Racing Standard Defaults',
     notes: 'Notes',
-    is_public_race: 'Race is viewable by the public'
+    is_public_race: 'Race is viewable by the public',
+    racing_standard_category: 'Racing Standard Category',
+    racing_standard: 'Racing Standard',
+    entry_name: 'Entry Name'
   },
   dashboard: {
     metatitle: 'Account',
@@ -36,7 +39,13 @@ export default {
     dashboard: 'Dashboard',
     new_race: 'New Race',
     no_races_found: 'No races found',
-    race_list: 'Race List'
+    race_list: 'Race List',
+    entries: 'Entries',
+    no_entries_found: 'No entries found',
+    add_entry: 'Add Entry',
+    overview: 'Overview',
+    results: 'Results',
+    officiate: 'Officiate'
   },
   login_page: {
     metatitle: 'Log In',
