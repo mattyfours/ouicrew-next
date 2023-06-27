@@ -55,7 +55,8 @@ export default function Select ({
   value,
   name,
   setter,
-  options
+  options,
+  onChange
 }) {
   const [isFocused, setIsFocused] = useState(false)
   const inputId = useId()
@@ -75,9 +76,13 @@ export default function Select ({
         id={inputId}
         name={name}
         value={value}
-        onChange={handleInputChange}
         onFocus={() => handleFocusState(true)}
         onBlur={() => handleFocusState(false)}
+        onChange={
+          typeof onChange === 'undefined'
+            ? handleInputChange
+            : onChange
+        }
       >
         {
           options.map((option, index) => (

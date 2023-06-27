@@ -81,10 +81,10 @@ export const userSessionValidation = async (req, res, next) => {
         })
 
         return {
-          teamId: userTeam.TeamId,
-          isTeamAdmin: userTeam.is_admin,
-          isTeamEditor: userTeam.is_editor,
-          teamName: team.name
+          id: team.id,
+          is_team_admin: userTeam.is_admin,
+          is_team_editor: userTeam.is_editor,
+          name: team.name
         }
       })
     )

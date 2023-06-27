@@ -84,8 +84,8 @@ export default function NewTeamForm ({ refetch }) {
         loading={isLoading}
       >
         <SingleLineInput
-          label={t('forms.team_name')}
-          name='teamName'
+          label={t('forms.name')}
+          name='name'
           type='text'
           value={nameInput}
           setter={setNameInput}

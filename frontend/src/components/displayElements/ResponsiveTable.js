@@ -37,11 +37,13 @@ function ResponsiveTable ({ children, headings }) {
         <thead>
           <tr>
             {
-              headings.map((heading, index) => (
-                <th key={`table-heading-${tableId}-${index}`}>
-                  {heading}
-                </th>
-              ))
+              headings
+                .filter(heading => heading !== null)
+                .map((heading, index) => (
+                  <th key={`table-heading-${tableId}-${index}`}>
+                    {heading}
+                  </th>
+                ))
             }
           </tr>
         </thead>

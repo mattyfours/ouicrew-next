@@ -1,22 +1,17 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import Form from '@/components/formElements/Form'
 import SingleLineInput from '@/components/formElements/SingleLineInput'
 import { t } from '@/languages/languages'
 import Button from '../formElements/Button'
-import Link from 'next/link'
 import axios from 'axios'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import Select from '../formElements/Select'
-import Grid from '../displayElements/Grid'
-import TextArea from '../formElements/TextArea'
-import Checkbox from '../formElements/Checkbox'
-import { toDateInputFormat } from '@/helpers/dateFormater'
 import { useDynamicFetch } from '@/hooks/useDynamicFetch'
 
 export default function NewRaceEntryForm ({ refetch }) {
-  const { userId, teamId } = useParams()
+  const { userId, teamId, raceId } = useParams()
 
   // States
   const [nameInput, setNameInput] = useState('')
@@ -30,6 +25,7 @@ export default function NewRaceEntryForm ({ refetch }) {
   const [succesMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  // Main Data Fetch
   const {
     data: racingStandardList
   } = useDynamicFetch(async () => {
@@ -56,19 +52,27 @@ export default function NewRaceEntryForm ({ refetch }) {
     setCategoryList(categoryList)
     setStandardsList(racingStandardList)
     setRacingStandardCategoryInput(categoryList[0])
-    setRacingStandardInput(racingStandardList[0])
+    setRacingStandardInput(racingStandardList[0].id)
     return data
   })
-
-  console.log(racingStandardList)
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
       setIsLoading(true)
-      const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams/${teamId}/race`
+      const url = [
+        process.env.NEXT_PUBLIC_SERVER_URL_BASE,
+        `/user/${userId}`,
+        `/teams/${teamId}`,
+        `/race/${raceId}`,
+        '/entry'
+      ].join('')
+
+      console.log(url)
       const { data } = await axios.post(url,
         {
+          racingStandardId: racingStandardInput,
+          name: nameInput
         },
         {
           headers: {
@@ -80,12 +84,12 @@ export default function NewRaceEntryForm ({ refetch }) {
 
       setIsLoading(false)
       setErrorMessage('')
+      setNameInput('')
       setSuccessMessage(data.message)
 
       if (typeof refetch !== 'undefined') {
         await refetch()
       }
-      // router.push(`/user/${userId}`)
     } catch (err) {
       setIsLoading(false)
       setSuccessMessage('')
@@ -97,19 +101,20 @@ export default function NewRaceEntryForm ({ refetch }) {
       )
     }
   }, [
+    nameInput,
+    racingStandardInput,
     errorMessage,
     setIsLoading
   ])
 
   // Category Change Handler
-  useEffect(() => {
-    if (racingStandardList) {
-      const list = racingStandardList.standards
-        .filter(standard => standard.category === racingStandardCategoryInput)
+  const handleCategoryChange = useCallback(({ target: { value: evtValue } }) => {
+    setRacingStandardCategoryInput(evtValue)
+    const list = racingStandardList.standards
+      .filter(standard => standard.category === evtValue)
 
-      setRacingStandardInput(list[0])
-      setStandardsList(list)
-    }
+    setRacingStandardInput(list[0].id)
+    setStandardsList(list)
   }, [
     racingStandardList,
     racingStandardCategoryInput
@@ -140,7 +145,7 @@ export default function NewRaceEntryForm ({ refetch }) {
           label={t('forms.racing_standard_category')}
           name='racingStandardCategory'
           value={racingStandardCategoryInput}
-          setter={setRacingStandardCategoryInput}
+          onChange={handleCategoryChange}
           options={categoryList.map(category => ({
             value: category,
             label: category
@@ -158,7 +163,7 @@ export default function NewRaceEntryForm ({ refetch }) {
           }))}
         />
 
-        <Button type='submit' centered>{t('forms.create_race')}</Button>
+        <Button type='submit' centered>{t('forms.add_entry')}</Button>
       </Form>
     </>
   )

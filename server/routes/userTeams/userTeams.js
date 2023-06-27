@@ -176,12 +176,12 @@ export const postJoinATeam = async (req, res) => {
  */
 export const getUserTeam = async (req, res) => {
   try {
-    const { user, teamInfo } = req
+    const { user, team } = req
 
     // TODO: Add Pagination
     const races = await db.Race.findAll({
       where: {
-        TeamId: teamInfo.teamId
+        TeamId: team.id
       }
     })
 
@@ -190,7 +190,7 @@ export const getUserTeam = async (req, res) => {
         email: user.email,
         username: user.username
       },
-      team: teamInfo,
+      team,
       races
     })
   } catch (err) {
@@ -207,13 +207,11 @@ export const getUserTeam = async (req, res) => {
  */
 export const getRacingStandards = async (req, res) => {
   try {
-    const { teamInfo } = req
-
-    console.log(teamInfo)
+    const { team } = req
 
     const standards = await db.TeamRacingStandard.findAll({
       where: {
-        TeamId: teamInfo.teamId
+        TeamId: team.id
       }
     })
 

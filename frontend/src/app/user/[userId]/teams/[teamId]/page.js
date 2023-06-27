@@ -29,21 +29,6 @@ const StyledDashboardTeamList = styled.nav`
     margin: 0 0 8px;
   }
 
-  .view-link {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    svg {
-      position: relative;
-      top: 1px;
-      margin: 0 0 0 5px;
-      font-size: 1.0rem;
-      width: max-content;
-      display: inline-block;
-    }
-  }
-
   .new-team-button {
     display: flex;
     margin: 10px 0 0 auto;
@@ -83,8 +68,8 @@ export default function UserTeamPage ({ children }) {
     return data
   })
 
-  const team = data?.teams?.find(team => teamId === team.teamId) || {}
-  useDocumentTitle(team.teamName || t('dashboard.metatitle'), [data])
+  const team = data?.teams?.find(team => teamId === team.id) || {}
+  useDocumentTitle(team.name || t('dashboard.metatitle'), [data])
 
   const [isNewRaceModelOpen, setIsNewRaceModelOpen] = useState(false)
 
@@ -103,7 +88,7 @@ export default function UserTeamPage ({ children }) {
   return (
     <>
       <StyledTeamBar>
-        <h2>{data.team.teamName}</h2>
+        <h2>{data.team.name}</h2>
       </StyledTeamBar>
 
       <StyledDashboardTeamList>
@@ -142,7 +127,7 @@ export default function UserTeamPage ({ children }) {
         }
 
         {
-          data.team.isTeamEditor === true &&
+          data.team.is_team_editor === true &&
             <>
               <div className='action-buttons'>
                 <Button className='new-team-button' size='small' onClick={() => handleToogleNewRaceModal(true)}>

@@ -10,7 +10,7 @@ import db from '../../models/database.js'
  */
 export const postCreateRace = async (req, res) => {
   try {
-    const { teamInfo } = req
+    const { team } = req
     const {
       raceTitle,
       startTime,
@@ -21,7 +21,7 @@ export const postCreateRace = async (req, res) => {
     } = req.body
 
     const newRace = await db.Race.create({
-      TeamId: teamInfo.teamId,
+      TeamId: team.id,
       title: raceTitle,
       event_time: new Date(startTime),
       notes: notes || null,
@@ -49,26 +49,24 @@ export const postCreateRace = async (req, res) => {
  */
 export const getRaceInfo = async (req, res) => {
   try {
-    const { raceId } = req.params
-    const { user, teamInfo } = req
-
-    const race = await db.Race.findOne({
-      where: {
-        id: raceId
-      }
-    })
-
-    if (!race) {
-      return returnErrorStatusCode(
-        422,
-        res,
-        [{ path: 'raceId', message: 'Invalid race id' }]
-      )
-    }
+    const { user, team, race } = req
 
     const entries = await db.RaceEntry.findAll({
       where: {
-        RaceId: raceId
+        RaceId: race.id
+      },
+      attributes: {
+        include: [
+          [
+            db.sequelize.literal(`(
+              SELECT name
+                FROM "TeamRacingStandards" AS standard
+                WHERE
+                    standard.id = "RaceEntry".racing_standard_id
+            )`),
+            'racing_standard_name'
+          ]
+        ]
       }
     })
 
@@ -77,9 +75,57 @@ export const getRaceInfo = async (req, res) => {
         email: user.email,
         username: user.username
       },
-      team: teamInfo,
+      team,
       entries,
       race
+    })
+  } catch (err) {
+    console.error('Error Creating New Race')
+    return errorHandler(res, err)
+  }
+}
+
+/**
+ * Create a new race entry
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const postRaceEntry = async (req, res) => {
+  try {
+    const { race } = req
+
+    const {
+      name,
+      racingStandardId
+    } = req.body
+
+    const racingStandard = await db.TeamRacingStandard.findOne({
+      where: {
+        id: racingStandardId
+      }
+    })
+
+    if (racingStandard === null) {
+      return returnErrorStatusCode(
+        422,
+        res,
+        [{
+          path: 'racingStandardId',
+          message: 'invalid racing standard'
+        }]
+      )
+    }
+
+    const newEntry = await db.RaceEntry.create({
+      RaceId: race.id,
+      name,
+      racing_standard_id: racingStandardId
+    })
+
+    return returnSuccess(res, {
+      entry: newEntry,
+      message: `${name} entry has been added to the race`
     })
   } catch (err) {
     console.error('Error Creating New Race')

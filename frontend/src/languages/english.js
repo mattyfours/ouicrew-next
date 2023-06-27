@@ -14,7 +14,7 @@ export default {
     new_password: 'New Password',
     editor_access_code: 'Editor Access Code',
     viewer_access_code: ' Viewer Access Code',
-    team_name: 'Team Name',
+    name: 'Team Name',
     select_team: 'Select Teams',
     access_code: 'Team Access Code',
     race_title: 'Race Title',
@@ -27,7 +27,8 @@ export default {
     is_public_race: 'Race is viewable by the public',
     racing_standard_category: 'Racing Standard Category',
     racing_standard: 'Racing Standard',
-    entry_name: 'Entry Name'
+    entry_name: 'Entry Name',
+    add_entry: 'Add Entry'
   },
   dashboard: {
     metatitle: 'Account',
@@ -45,7 +46,8 @@ export default {
     add_entry: 'Add Entry',
     overview: 'Overview',
     results: 'Results',
-    officiate: 'Officiate'
+    officiate: 'Officiate',
+    remove: 'Remove'
   },
   login_page: {
     metatitle: 'Log In',

@@ -9,7 +9,7 @@ import { useDynamicFetch } from '@/hooks/useDynamicFetch'
 import { useCallback, useState } from 'react'
 import ResponsiveTable from '@/components/displayElements/ResponsiveTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faRightLong } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faRightLong, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import Button from '@/components/formElements/Button'
 import Modal from '@/components/utils/Modal'
@@ -27,21 +27,6 @@ const StyledDashboardTeamList = styled.nav`
 
   h2 {
     margin: 0 0 8px;
-  }
-
-  .view-link {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    svg {
-      position: relative;
-      top: 1px;
-      margin: 0 0 0 5px;
-      font-size: 1.0rem;
-      width: max-content;
-      display: inline-block;
-    }
   }
 
   .new-team-button {
@@ -83,8 +68,8 @@ export default function UserTeamPage ({ children }) {
     return data
   })
 
-  const team = data?.teams?.find(team => teamId === team.teamId) || {}
-  useDocumentTitle(team.teamName || t('dashboard.metatitle'), [data])
+  const team = data?.teams?.find(team => teamId === team.id) || {}
+  useDocumentTitle(team.name || t('dashboard.metatitle'), [data])
 
   const [isNewRaceModelOpen, setIsNewRaceModelOpen] = useState(false)
 
@@ -100,6 +85,8 @@ export default function UserTeamPage ({ children }) {
     return <ErrorPage error={data.error?.response?.data?.error?.[0]} />
   }
 
+  console.log(data)
+
   return (
     <>
       <StyledTeamBar>
@@ -107,7 +94,7 @@ export default function UserTeamPage ({ children }) {
           <Link
             href={`/user/${userId}/teams/${teamId}`}
           >
-            {data.team.teamName}
+            {data.team.name}
           </Link>
           <span>/</span>
           {data.race.title}
@@ -125,25 +112,38 @@ export default function UserTeamPage ({ children }) {
             : (
               <ResponsiveTable
                 headings={[
-                  'Race Title',
-                  'Event Time',
-                  'Distance'
+                  'Entry Name',
+                  'Standard',
+                  data.team.is_team_editor === true
+                    ? ''
+                    : null
                 ]}
               >
                 {
-                  data.races.map((race, index) => (
-                    <ResponsiveTable.Row key={`teamlist-${race.teamId}`}>
+                  data.entries.map((entry, index) => (
+                    <ResponsiveTable.Row key={`entrylist-${entry.teamId}`}>
                       <ResponsiveTable.Item>
-                        <Link href={`/user/${userId}/teams/${race.teamId}/race/${race.id}`} className='view-link'>
-                          {race.title} <FontAwesomeIcon icon={faRightLong} />
-                        </Link>
+                        <button
+                          className='view-link'
+                        >
+                          <FontAwesomeIcon icon={faPencil} />
+                          {entry.name}
+                        </button>
+
                       </ResponsiveTable.Item>
                       <ResponsiveTable.Item>
-                        {serverDateTimeToReadable(race.event_time)}
+                        {entry.racing_standard_name}
                       </ResponsiveTable.Item>
-                      <ResponsiveTable.Item>
-                        {race.distance}m
-                      </ResponsiveTable.Item>
+                      {
+                        data.team.is_team_editor === true && (
+                          <ResponsiveTable.Item>
+                            <button className='view-link'>
+                              <FontAwesomeIcon icon={faTrash} />
+                              {t('dashboard.remove')}
+                            </button>
+                          </ResponsiveTable.Item>
+                        )
+                      }
                     </ResponsiveTable.Row>
                   ))
                 }
@@ -152,7 +152,7 @@ export default function UserTeamPage ({ children }) {
         }
 
         {
-          data.team.isTeamEditor === true &&
+          data.team.is_team_editor === true &&
             <>
               <div className='action-buttons'>
                 <Button className='new-team-button' size='small' onClick={() => handleToogleNewRaceModal(true)}>

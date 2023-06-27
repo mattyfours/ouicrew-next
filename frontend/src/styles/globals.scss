@@ -37,7 +37,6 @@ img {
 }
 
 /* Buttons & Links */
-
 a,
 a:visited,
 button {
@@ -59,6 +58,22 @@ button {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+
+.view-link {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 5px;
+  align-items: center;
+  justify-content: flex-start;
+
+  svg {
+    position: relative;
+    margin: 0;
+    font-size: 1.0rem;
+    width: max-content;
+    display: inline-block;
+  }
 }
 
 .container {

@@ -1,6 +1,7 @@
 import errorHandler from '../helpers/errorHandler.js'
 import validator from 'validator'
 import { returnErrorStatusCode } from '../helpers/returnStatus.js'
+import db from '../models/database.js'
 
 /**
  * Create a new team
@@ -83,6 +84,35 @@ export const raceCreateNewValidation = (req, res, next) => {
         message: 'Must set if public or not'
       })
     }
+
+    return errors.length > 0
+      ? returnErrorStatusCode(422, res, errors)
+      : next()
+  } catch (err) {
+    console.error(err)
+    return errorHandler(res, err)
+  }
+}
+
+export const raceIdValidation = async (req, res, next) => {
+  try {
+    const { raceId } = req.params
+    const race = await db.Race.findOne({
+      where: {
+        id: raceId
+      }
+    })
+
+    const errors = []
+
+    if (!race) {
+      errors.push({
+        path: 'raceId',
+        message: 'InvalidRaceId'
+      })
+    }
+
+    req.race = race
 
     return errors.length > 0
       ? returnErrorStatusCode(422, res, errors)

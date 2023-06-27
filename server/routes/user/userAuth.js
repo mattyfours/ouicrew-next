@@ -133,7 +133,14 @@ export const postUserRegister = async (req, res) => {
     })
 
     if (findExistingUser !== null) {
-      return returnErrorStatusCode(422, res, [{ path: 'username || email', message: 'An account already exists with the username or email' }])
+      return returnErrorStatusCode(
+        422,
+        res,
+        [{
+          path: 'username || email',
+          message: 'An account already exists with the username or email'
+        }]
+      )
     }
 
     const newUser = await db.User.create({

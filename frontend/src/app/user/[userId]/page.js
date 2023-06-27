@@ -29,21 +29,6 @@ const StyledDashboardTeamList = styled.nav`
     margin: 0 0 8px;
   }
 
-  .view-link {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    svg {
-      position: relative;
-      top: 1px;
-      margin: 0 0 0 5px;
-      font-size: 1.0rem;
-      width: max-content;
-      display: inline-block;
-    }
-  }
-
   .new-team-button {
     display: flex;
     margin: 10px 0 0 auto;
@@ -123,15 +108,15 @@ export default function UserPage ({ children }) {
               >
                 {
                   data.teams.map((team, index) => (
-                    <ResponsiveTable.Row key={`teamlist-${team.teamId}`}>
+                    <ResponsiveTable.Row key={`teamlist-${team.id}`}>
                       <ResponsiveTable.Item>
-                        <Link href={`/user/${userId}/teams/${team.teamId}`} className='view-link'>
-                          {team.teamName} <FontAwesomeIcon icon={faRightLong} />
+                        <Link href={`/user/${userId}/teams/${team.id}`} className='view-link'>
+                          {team.name} <FontAwesomeIcon icon={faRightLong} />
                         </Link>
                       </ResponsiveTable.Item>
                       <ResponsiveTable.Item>
-                        {team.isTeamAdmin ? 'Admin' : 'Member'}|
-                        {team.isTeamEditor ? 'Editor' : 'Viewer'}
+                        {team.is_team_admin ? 'Admin' : 'Member'}|
+                        {team.is_team_editor ? 'Editor' : 'Viewer'}
                       </ResponsiveTable.Item>
                     </ResponsiveTable.Row>
                   ))

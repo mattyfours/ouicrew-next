@@ -54,7 +54,7 @@ export default function RaceMenuBar ({ data }) {
           }
         ].map((link, index) => (
           link.editorOnly === true &&
-          data.team.isTeamEditor === false
+          data.team.is_team_editor === false
         )
           ? null
           : (

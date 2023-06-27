@@ -37,7 +37,7 @@ export const userTeamValidation = async (req, res, next) => {
       }
     })
 
-    const teamInUserTeams = userTeams.find(findTeam => findTeam.teamId === team?.id)
+    const teamInUserTeams = userTeams.find(findTeam => findTeam.id === team?.id)
 
     // If user is not found, early return with invalid session error
     if (!team || typeof teamInUserTeams === 'undefined') {
@@ -48,11 +48,11 @@ export const userTeamValidation = async (req, res, next) => {
       return returnErrorStatusCode(422, res, errors)
     }
 
-    req.teamInfo = {
-      isTeamAdmin: teamInUserTeams.isTeamAdmin,
-      isTeamEditor: teamInUserTeams.isTeamEditor,
-      teamId: team.id,
-      teamName: team.name
+    req.team = {
+      is_team_admin: teamInUserTeams.is_team_admin,
+      is_team_editor: teamInUserTeams.is_team_editor,
+      id: team.id,
+      name: team.name
     }
 
     return errors.length > 0
@@ -67,17 +67,17 @@ export const userTeamValidation = async (req, res, next) => {
 export const userTeamsIsEditorValidation = (req, res, next) => {
   try {
     const {
-      teamInfo
+      team
     } = req
 
     const errors = []
 
     if (
-      typeof teamInfo?.isTeamEditor === 'undefined' ||
-      teamInfo.isTeamEditor === false
+      typeof team?.is_team_editor === 'undefined' ||
+      team.is_team_editor === false
     ) {
       errors.push({
-        path: 'teamInfo',
+        path: 'team',
         message: 'Invalid Team'
       })
     }
