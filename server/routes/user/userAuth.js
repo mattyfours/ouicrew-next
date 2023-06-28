@@ -64,8 +64,8 @@ export const postUserLogin = async (req, res) => {
         userId: userToLogIn.id,
         email: userToLogIn.email,
         username: userToLogIn.username,
-        sessionToken: userToLogIn.session_token,
-        sessionTokenExpiration: userToLogIn.session_token_expiration
+        session_token: userToLogIn.session_token,
+        session_token_expiration: userToLogIn.session_token_expiration
       },
       message: `Login successful for ${userToLogIn.username}`
     })

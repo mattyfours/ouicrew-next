@@ -10,10 +10,12 @@ const StyledConfirmModal = styled.div`
   text-align: center;
 
   p {
+    width: 100%;
     font-size: 1.8rem;
   }
 
   .action-buttons {
+    width: fit-content;
     margin: 24px auto 0;
   }
 `

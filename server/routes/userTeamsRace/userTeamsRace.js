@@ -132,3 +132,33 @@ export const postRaceEntry = async (req, res) => {
     return errorHandler(res, err)
   }
 }
+
+/**
+ * Delete Race Entry
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const deleteRaceEntry = async (req, res) => {
+  try {
+    const {
+      raceId,
+      entryId
+    } = req.params
+
+    const deletedEntry = await db.RaceEntry.destroy({
+      where: {
+        id: entryId,
+        RaceId: raceId
+      }
+    })
+
+    return returnSuccess(res, {
+      deleted_entry: deletedEntry,
+      message: `${deletedEntry.name} entry has been removed from the race`
+    })
+  } catch (err) {
+    console.error('Error Creating New Race')
+    return errorHandler(res, err)
+  }
+}

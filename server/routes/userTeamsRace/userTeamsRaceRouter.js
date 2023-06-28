@@ -1,5 +1,6 @@
 import express from 'express'
 import {
+  deleteRaceEntry,
   getRaceInfo,
   postCreateRace,
   postRaceEntry
@@ -26,6 +27,11 @@ userTeamsRaceRouter.post('/:raceId/entry',
   raceIdValidation,
   raceEntryCreateNewValidation,
   postRaceEntry
+)
+
+userTeamsRaceRouter.delete('/:raceId/entry/:entryId',
+  raceIdValidation,
+  deleteRaceEntry
 )
 
 export default userTeamsRaceRouter

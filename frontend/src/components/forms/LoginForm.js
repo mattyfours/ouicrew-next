@@ -38,7 +38,7 @@ export default function LoginForm () {
 
       setIsLoading(false)
       setErrorMessage('')
-      localStorage.setItem('userSessionToken', data.user.sessionToken)
+      localStorage.setItem('userSessionToken', data.user.session_token)
       localStorage.setItem('userEmail', data.user.email)
       localStorage.setItem('userUsername', data.user.username)
       localStorage.setItem('userId', data.user.userId)

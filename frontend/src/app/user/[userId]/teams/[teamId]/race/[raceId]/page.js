@@ -19,6 +19,7 @@ import StyledTeamBar from '@/components/styed/StyledTeamBar'
 import RaceMenuBar from '@/components/race/RaceMenuBar'
 import NewRaceEntryForm from '@/components/forms/NewRaceEntryForm'
 import ConfirmActionButton from '@/components/utils/ConfirmActionButton'
+import Toast from '@/components/utils/Toast'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -53,6 +54,9 @@ const StyledDashboardTeamList = styled.nav`
 export default function UserTeamPage ({ children }) {
   const { userId, teamId, raceId } = useParams()
 
+  // state
+  const [errorMessage, setErrorMessage] = useState('')
+
   const {
     data,
     refetch
@@ -69,6 +73,41 @@ export default function UserTeamPage ({ children }) {
     return data
   })
 
+  // Remove Entry
+  const handleRemoveRaceEntry = useCallback(async (raceEntryId) => {
+    try {
+      const url = [
+        process.env.NEXT_PUBLIC_SERVER_URL_BASE,
+        `/user/${userId}`,
+        `/teams/${teamId}`,
+        `/race/${raceId}`,
+        `/entry/${raceEntryId}`
+      ].join('')
+      await axios.delete(url,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-ouicrew-session-token': localStorage.getItem('userSessionToken')
+          }
+        }
+      )
+
+      setErrorMessage('')
+      if (typeof refetch !== 'undefined') {
+        await refetch()
+      }
+    } catch (err) {
+      console.error(err)
+      setErrorMessage(
+        typeof err.response?.data?.error?.[0] === 'undefined'
+          ? t('general.unexpected_error')
+          : err.response.data.error[0].message
+      )
+    }
+  }, [
+    setErrorMessage
+  ])
+
   const team = data?.teams?.find(team => teamId === team.id) || {}
   useDocumentTitle(team.name || t('dashboard.metatitle'), [data])
 
@@ -77,6 +116,10 @@ export default function UserTeamPage ({ children }) {
   const handleToogleNewRaceModal = useCallback((value) => {
     setIsNewRaceModelOpen(value)
   }, [setIsNewRaceModelOpen])
+
+  const handleCloseToast = useCallback(() => {
+    setErrorMessage('')
+  }, [setErrorMessage])
 
   if (data === null) {
     return <h1>Loading</h1>
@@ -147,6 +190,7 @@ export default function UserTeamPage ({ children }) {
                             <ConfirmActionButton
                               className='view-link'
                               message={`Remove ${entry.name} entry from ${data.race.title}?`}
+                              onAction={() => handleRemoveRaceEntry(entry.id)}
                             >
                               <FontAwesomeIcon icon={faTrash} />
                               {t('dashboard.remove')}
@@ -179,6 +223,13 @@ export default function UserTeamPage ({ children }) {
               </Modal>
             </>
         }
+
+        <Toast
+          onClose={handleCloseToast}
+          message={errorMessage}
+          type='error'
+          active={errorMessage.length !== 0}
+        />
 
       </StyledDashboardTeamList>
     </>
