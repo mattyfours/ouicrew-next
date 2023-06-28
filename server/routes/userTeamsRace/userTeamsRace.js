@@ -162,3 +162,41 @@ export const deleteRaceEntry = async (req, res) => {
     return errorHandler(res, err)
   }
 }
+
+/**
+ * Get Race Info
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const getRaceOfficiate = async (req, res) => {
+  try {
+    const { user, team, race } = req
+
+    const entries = await db.RaceEntry.findAll({
+      where: {
+        RaceId: race.id
+      }
+    })
+
+    const results = await db.EntryResult.findAll({
+      where: {
+        RaceId: race.id
+      }
+    })
+
+    return returnSuccess(res, {
+      user: {
+        email: user.email,
+        username: user.username
+      },
+      team,
+      race,
+      entries
+      // race
+    })
+  } catch (err) {
+    console.error('Error Creating New Race')
+    return errorHandler(res, err)
+  }
+}

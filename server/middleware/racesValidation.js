@@ -44,7 +44,7 @@ export const raceCreateNewValidation = (req, res, next) => {
 
     if (
       typeof distance !== 'number' ||
-      distance <= 10 ||
+      distance < 10 ||
       distance > 1000000
     ) {
       errors.push({
@@ -53,6 +53,7 @@ export const raceCreateNewValidation = (req, res, next) => {
       })
     }
 
+    console.log(Number(checkpoints))
     if (
       typeof checkpoints !== 'number' ||
       checkpoints < 0 ||

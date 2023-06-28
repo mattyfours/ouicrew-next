@@ -30,7 +30,11 @@ export default {
     racing_standard_category: 'Racing Standard Category',
     racing_standard: 'Racing Standard',
     entry_name: 'Entry Name',
-    add_entry: 'Add Entry'
+    add_entry: 'Add Entry',
+    times_to_add: 'Times to Add',
+    checkpoint: 'Checkpoint',
+    start: 'Start',
+    finish: 'Finish'
   },
   dashboard: {
     metatitle: 'Account',
@@ -49,7 +53,10 @@ export default {
     overview: 'Overview',
     results: 'Results',
     officiate: 'Officiate',
-    remove: 'Remove'
+    remove: 'Remove',
+    record_time: 'Record Time',
+    recorded_times: 'Recorded Times',
+    no_times_recorded: 'No times recorded'
   },
   login_page: {
     metatitle: 'Log In',

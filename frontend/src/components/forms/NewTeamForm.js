@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Form from '@/components/formElements/Form'
 import SingleLineInput from '@/components/formElements/SingleLineInput'
 import { t } from '@/languages/languages'
@@ -10,10 +10,10 @@ import axios from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import Select from '../formElements/Select'
 
-export default function NewTeamForm ({ refetch }) {
+export default function NewTeamForm ({ refetch, refreshOnStateChange }) {
   const { userId } = useParams()
 
-  // const router = useRouter()
+  const router = useRouter()
 
   // States
   const [nameInput, setNameInput] = useState('')
@@ -24,6 +24,16 @@ export default function NewTeamForm ({ refetch }) {
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  // Refresh On State Change State
+  useEffect(() => {
+    setNameInput('')
+    setEditorAccessCodeInput('')
+    setViewerAccessCodeInput('')
+    setRacingStandardInput('none')
+    setErrorMessage('')
+    setSuccessMessage('')
+  }, [refreshOnStateChange])
 
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
@@ -56,7 +66,8 @@ export default function NewTeamForm ({ refetch }) {
       if (typeof refetch !== 'undefined') {
         await refetch()
       }
-      // router.push(`/user/${userId}`)
+
+      router.push(`/user/${userId}/teams/${data.team.id}`)
     } catch (err) {
       setIsLoading(false)
       console.error(err)

@@ -95,7 +95,7 @@ export const postCreateUserTeam = async (req, res) => {
 
     return returnSuccess(res, {
       team: {
-        teamId: team.id,
+        id: team.id,
         name: team.name
       },
       message: `Team ${team.name} has been created`
@@ -157,7 +157,7 @@ export const postJoinATeam = async (req, res) => {
 
     return returnSuccess(res, {
       team: {
-        teamId: team.id,
+        id: team.id,
         name: team.name
       },
       message: `Success! You are now a member of ${team.name}`

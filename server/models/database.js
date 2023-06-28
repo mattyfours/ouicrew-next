@@ -7,6 +7,7 @@ import Team from './Team.js'
 import TeamMember from './TeamMember.js'
 import Race from './Race.js'
 import RaceEntry from './RaceEntry.js'
+import EntryResult from './EntryResult.js'
 import TeamRacingStandard from './TeamRacingStandard.js'
 
 //  models
@@ -54,6 +55,7 @@ db.User = User(sequelize, Op)
 db.TeamMember = TeamMember(sequelize, Op)
 db.Race = Race(sequelize, Op)
 db.RaceEntry = RaceEntry(sequelize, Op)
+db.EntryResult = EntryResult(sequelize, Op)
 db.TeamRacingStandard = TeamRacingStandard(sequelize, Op)
 
 Object.keys(db).forEach((modelName) => {

@@ -7,7 +7,6 @@
   margin: 0;
 }
 
-
 html {
   font-size: 10px;
   background-color: var(--background-color);
@@ -60,7 +59,7 @@ button {
 	outline: inherit;
 }
 
-.view-link {
+.icon-link {
   display: grid;
   grid-auto-flow: column;
   gap: 5px;

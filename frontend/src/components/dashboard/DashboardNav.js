@@ -9,11 +9,13 @@ import { styled } from 'styled-components'
 
 const StyledDashboardNav = styled.nav`
   position: sticky;
+  z-index: 1000000;
   top: 0;
   left: 0;
   width: 100%;
   padding: 12px 0;
   border-bottom: 2px solid var(--text-color);
+  background-color: var(--background-color);
 
   .container {
     display: flex;

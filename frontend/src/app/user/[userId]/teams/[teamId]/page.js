@@ -13,7 +13,6 @@ import { faRightLong } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import Button from '@/components/formElements/Button'
 import Modal from '@/components/utils/Modal'
-import JoinTeamForm from '@/components/forms/JoinTeamForm'
 import NewRaceForm from '@/components/forms/NewRaceForm'
 import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 import StyledTeamBar from '@/components/styed/StyledTeamBar'
@@ -109,7 +108,7 @@ export default function UserTeamPage ({ children }) {
                   data.races.map((race, index) => (
                     <ResponsiveTable.Row key={`teamlist-${race.id}`}>
                       <ResponsiveTable.Item>
-                        <Link href={`/user/${userId}/teams/${teamId}/race/${race.id}`} className='view-link'>
+                        <Link href={`/user/${userId}/teams/${teamId}/race/${race.id}`} className='icon-link'>
                           {race.title} <FontAwesomeIcon icon={faRightLong} />
                         </Link>
                       </ResponsiveTable.Item>
@@ -140,7 +139,10 @@ export default function UserTeamPage ({ children }) {
                 active={isNewRaceModelOpen}
                 onClose={() => handleToogleNewRaceModal(false)}
               >
-                <NewRaceForm refetch={refetch} />
+                <NewRaceForm
+                  refetch={refetch}
+                  refreshOnStateChange={isNewRaceModelOpen}
+                />
               </Modal>
             </>
         }

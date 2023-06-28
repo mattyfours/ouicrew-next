@@ -41,10 +41,12 @@ export default (sequelize) => {
 
   Race.associate = ({
     Team,
-    RaceEntry
+    RaceEntry,
+    EntryResult
   }) => {
     Race.belongsTo(Team)
-    Team.hasMany(RaceEntry, { onDelete: 'CASCADE', as: 'RaceEntries' })
+    Race.hasMany(RaceEntry, { onDelete: 'CASCADE', as: 'RaceEntries' })
+    Race.hasMany(EntryResult, { onDelete: 'CASCADE', as: 'EntryResults' })
   }
 
   return Race

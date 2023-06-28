@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Form from '@/components/formElements/Form'
 import SingleLineInput from '@/components/formElements/SingleLineInput'
 import { t } from '@/languages/languages'
@@ -14,10 +14,10 @@ import TextArea from '../formElements/TextArea'
 import Checkbox from '../formElements/Checkbox'
 import { toDateInputFormat } from '@/helpers/dateFormater'
 
-export default function NewRaceForm ({ refetch }) {
+export default function NewRaceForm ({ refetch, refreshOnStateChange }) {
   const { userId, teamId } = useParams()
 
-  const router = useRouter()
+  // const router = useRouter()
 
   // States
   const [raceTitleInput, setRaceTitleInput] = useState('')
@@ -31,6 +31,18 @@ export default function NewRaceForm ({ refetch }) {
   const [succesMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
+  // Refresh On State Change State
+  useEffect(() => {
+    setRaceTitleInput('')
+    setStartTimeInput(toDateInputFormat(Date.now()))
+    setDistanceInput(2000)
+    setCheckpointsInput(0)
+    setNotesInput('')
+    setIsPublicInput(false)
+    setErrorMessage('')
+    setSuccessMessage('')
+  }, [refreshOnStateChange])
+
   // Submit Handler
   const handleFormSubmit = useCallback(async () => {
     try {
@@ -40,8 +52,8 @@ export default function NewRaceForm ({ refetch }) {
         {
           raceTitle: raceTitleInput,
           startTime: startTimeInput,
-          distance: distanceInput,
-          checkpoints: checkpointsInput,
+          distance: Number(distanceInput),
+          checkpoints: Number(checkpointsInput),
           notes: notesInput,
           isPublic: isPublicInput
         },
@@ -66,7 +78,7 @@ export default function NewRaceForm ({ refetch }) {
       if (typeof refetch !== 'undefined') {
         await refetch()
       }
-      router.push(`/user/${userId}/teams/${teamId}/race/${data.race.id}`)
+      // router.push(`/user/${userId}/teams/${teamId}/race/${data.race.id}`)
     } catch (err) {
       setIsLoading(false)
       setSuccessMessage('')

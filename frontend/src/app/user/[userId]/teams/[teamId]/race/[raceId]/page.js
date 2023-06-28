@@ -9,11 +9,10 @@ import { useDynamicFetch } from '@/hooks/useDynamicFetch'
 import { useCallback, useState } from 'react'
 import ResponsiveTable from '@/components/displayElements/ResponsiveTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPencil, faRightLong, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faPencil, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import Button from '@/components/formElements/Button'
 import Modal from '@/components/utils/Modal'
-import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import StyledTeamBar from '@/components/styed/StyledTeamBar'
 import RaceMenuBar from '@/components/race/RaceMenuBar'
@@ -51,7 +50,7 @@ const StyledDashboardTeamList = styled.nav`
   }
 `
 
-export default function UserTeamPage ({ children }) {
+export default function UserTeamRacePage ({ children }) {
   const { userId, teamId, raceId } = useParams()
 
   // state
@@ -169,7 +168,7 @@ export default function UserTeamPage ({ children }) {
                           data.team.is_team_editor === true
                             ? (
                               <button
-                                className='view-link'
+                                className='icon-link'
                               >
                                 <FontAwesomeIcon icon={faPencil} />
                                 {entry.name}
@@ -188,7 +187,7 @@ export default function UserTeamPage ({ children }) {
                           <ResponsiveTable.Item>
 
                             <ConfirmActionButton
-                              className='view-link'
+                              className='icon-link'
                               message={`Remove ${entry.name} entry from ${data.race.title}?`}
                               onAction={() => handleRemoveRaceEntry(entry.id)}
                             >
@@ -219,7 +218,10 @@ export default function UserTeamPage ({ children }) {
                 active={isNewRaceModelOpen}
                 onClose={() => handleToogleNewRaceModal(false)}
               >
-                <NewRaceEntryForm refetch={refetch} />
+                <NewRaceEntryForm
+                  refetch={refetch}
+                  refreshOnStateChange={isNewRaceModelOpen}
+                />
               </Modal>
             </>
         }

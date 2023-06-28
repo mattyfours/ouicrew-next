@@ -20,9 +20,19 @@ const StyledRaceMenuBar = styled.div`
     color: var(--background-color);
     font-size: 1.4rem;
 
+    &:hover {
+      color: var(--background-color);
+      background-color: var(--primary-color-hover);
+    }
+
     &.active {
       background-color: var(--light-grey-color);
       color: var(--text-color);
+
+      &:hover {
+        color: var(--text-color);
+        background-color: var(--dark-grey-color);
+      }
     }
   }
 `

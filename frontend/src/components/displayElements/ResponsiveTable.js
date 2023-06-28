@@ -6,6 +6,8 @@ import { styled } from 'styled-components'
 const StyledResponsiveTable = styled.div`
   width: 100%;
   overflow: auto;
+  max-height: ${props => props.maxheight || 'none'};
+  border: 1px solid var(--text-color);
 
   table {
     width: fit-content;
@@ -16,6 +18,23 @@ const StyledResponsiveTable = styled.div`
     padding: 8px 16px;
     border: 1px solid var(--text-color);
     font-size: 1.4rem;
+
+    &:first-child {
+      border-left: none;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  tr:first-child td,
+  tr:first-child th {
+    border-top: none;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
   }
 
   th {
@@ -28,11 +47,11 @@ const StyledResponsiveTable = styled.div`
   }
 `
 
-function ResponsiveTable ({ children, headings }) {
+function ResponsiveTable ({ children, headings, maxheight }) {
   const tableId = useId()
 
   return (
-    <StyledResponsiveTable>
+    <StyledResponsiveTable maxheight={maxheight}>
       <table>
         <thead>
           <tr>

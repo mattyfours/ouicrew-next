@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Form from '@/components/formElements/Form'
 import SingleLineInput from '@/components/formElements/SingleLineInput'
 import { t } from '@/languages/languages'
@@ -10,7 +10,7 @@ import { useParams } from 'next/navigation'
 import Select from '../formElements/Select'
 import { useDynamicFetch } from '@/hooks/useDynamicFetch'
 
-export default function NewRaceEntryForm ({ refetch }) {
+export default function NewRaceEntryForm ({ refetch, refreshOnStateChange }) {
   const { userId, teamId, raceId } = useParams()
 
   // States
@@ -24,6 +24,13 @@ export default function NewRaceEntryForm ({ refetch }) {
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  // Refresh On State Change State
+  useEffect(() => {
+    setNameInput('')
+    setErrorMessage('')
+    setSuccessMessage('')
+  }, [refreshOnStateChange])
 
   // Main Data Fetch
   const {

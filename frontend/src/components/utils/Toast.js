@@ -53,14 +53,6 @@ const StyledToast = styled.div`
 `
 
 export default function Toast ({ message, active, onClose, type }) {
-  useEffect(() => {
-    window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        onClose()
-      }
-    })
-  }, [onClose])
-
   return (
     <StyledToast
       className={`

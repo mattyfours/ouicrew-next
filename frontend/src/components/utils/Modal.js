@@ -90,11 +90,15 @@ const StyledModal = styled.div`
 
 export default function Modal ({ children, active, onClose, title }) {
   useEffect(() => {
-    window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        onClose()
-      }
-    })
+    const windowEventHandler = (event) => (
+      event.key === 'Escape' &&
+      active === true
+    )
+      ? onClose()
+      : null
+
+    window.addEventListener('keydown', windowEventHandler)
+    return () => window.removeEventListener('keydown', windowEventHandler)
   }, [onClose])
 
   return (
