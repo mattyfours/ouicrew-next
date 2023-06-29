@@ -79,10 +79,17 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
 
   // Handel Record Time
   const handleRecordTime = useCallback(async () => {
+    // Convert to server timezone
+    const nowTime = Date.now()
+    const severOffsetMs = data?.time_zone_offset_ms || 0
+    const clientOffsetMs = new Date().getTimezoneOffset() * 60 * 1000
+    const timeZoneDiff = severOffsetMs - clientOffsetMs
+    const adjustedNowTime = nowTime + timeZoneDiff
+
     setRecordedTimes([
       ...recordedTimes,
       ...Array(Number(timesToAdd || 1)).fill({
-        time: Date.now(),
+        time: adjustedNowTime,
         checkpoint: currentCheckpoint
       })
     ])
@@ -191,8 +198,7 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
                   recordedTimes.map((record, index) => (
                     <RaceRecordTableRow
                       record={record}
-                      race={data.race}
-                      entries={data.entries}
+                      data={data}
                       key={`race-recorded-time-${data.race.id}-${index}`}
                     />
                   ))

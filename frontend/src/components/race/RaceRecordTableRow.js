@@ -3,10 +3,10 @@ import ResponsiveTable from '../displayElements/ResponsiveTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSave } from '@fortawesome/free-solid-svg-icons'
 
-export default function RaceRecordTableRow ({ race, entries, record }) {
-  console.log(entries)
+export default function RaceRecordTableRow ({ record, data }) {
+  console.log(data)
 
-  const raceStart = Number(race.start_time)
+  const raceStart = Number(data.race.start_time)
   const [diffTime, setDiffTime] = useState(record.time - raceStart)
 
   const [hours, setHours] = useState(parseInt((diffTime / (1000 * 60 * 60)) % 24))

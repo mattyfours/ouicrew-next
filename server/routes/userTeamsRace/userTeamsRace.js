@@ -185,6 +185,20 @@ export const getRaceOfficiate = async (req, res) => {
       }
     })
 
+    const nonStartedEntries = entries.filter(entry => {
+      const result = results.find(result => (
+        result.RaceEntryId === entry.id &&
+        result.start_time !== null &&
+        result.finish_time === null
+      ))
+      return result === undefined
+    })
+
+    const pendingResults = results.filter(result => (
+      result.start_time !== null &&
+      result.finish_time === null
+    ))
+
     return returnSuccess(res, {
       user: {
         email: user.email,
@@ -192,8 +206,10 @@ export const getRaceOfficiate = async (req, res) => {
       },
       team,
       race,
-      entries
-      // race
+      entries,
+      non_started_entries: nonStartedEntries,
+      pending_results: pendingResults,
+      time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
     })
   } catch (err) {
     console.error('Error Creating New Race')
