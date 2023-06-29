@@ -18,6 +18,7 @@ import Form from '@/components/formElements/Form'
 import Grid from '@/components/displayElements/Grid'
 import SingleLineInput from '@/components/formElements/SingleLineInput'
 import Select from '@/components/formElements/Select'
+import { getNowTimeInTimezone } from '@/helpers/dateFormater'
 
 const StyledDashboardTimeLogList = styled.nav`
   position: relative;
@@ -79,22 +80,10 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
 
   // Handel Record Time
   const handleRecordTime = useCallback(async () => {
-    const timeZoneAdjusted = new Date()
-      .toLocaleString('en-US', {
-        timeZone: process.env.NEXT_PUBLIC_TZ || 'America/Toronto'
-      })
-
-    const timeZoneDate = new Date(timeZoneAdjusted)
-    const nowTime = timeZoneDate.getTime()
-    const severOffsetMs = data?.time_zone_offset_ms || 0
-    const clientOffsetMs = timeZoneDate.getTimezoneOffset() * 60 * 1000
-    const timeZoneDiff = severOffsetMs - clientOffsetMs
-    const adjustedNowTime = nowTime + timeZoneDiff
-
     setRecordedTimes([
       ...recordedTimes,
       ...Array(Number(timesToAdd || 1)).fill({
-        time: adjustedNowTime,
+        time: getNowTimeInTimezone(data.time_zone_offset_ms),
         checkpoint: currentCheckpoint
       })
     ])
@@ -193,13 +182,14 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
                 ]}
               >
                 {
-                  recordedTimes.map((record, index) => (
-                    <RaceRecordTableRow
-                      record={record}
-                      data={data}
-                      key={`race-recorded-time-${data.race.id}-${index}`}
-                    />
-                  ))
+                  recordedTimes
+                    .map((record, index) => (
+                      <RaceRecordTableRow
+                        record={record}
+                        data={data}
+                        key={`race-recorded-time-${data.race.id}-${index}`}
+                      />
+                    ))
                 }
               </ResponsiveTable>
               )
