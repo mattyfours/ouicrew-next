@@ -10,6 +10,8 @@ import teamsRouter from './routes/teams/teamsRouter.js'
 import { userSessionValidation } from './middleware/userSessionValidation.js'
 import userTeamsRaceRouter from './routes/userTeamsRace/userTeamsRaceRouter.js'
 import { userTeamValidation } from './middleware/userTeamValidation.js'
+import { raceIdValidation } from './middleware/racesValidation.js'
+import raceResultsRouter from './routes/raceResultsRouter/raceResultsRouter.js'
 
 const {
   SERVER_PORT,
@@ -46,6 +48,12 @@ app.use(
   userSessionValidation,
   userTeamValidation,
   userTeamsRaceRouter
+)
+
+app.use(
+  '/user/:userId/teams/:teamId/race/:raceId/entry/:entryId/results',
+  raceIdValidation,
+  raceResultsRouter
 )
 
 app.use(

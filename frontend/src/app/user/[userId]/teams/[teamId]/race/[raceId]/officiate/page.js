@@ -79,10 +79,15 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
 
   // Handel Record Time
   const handleRecordTime = useCallback(async () => {
-    // Convert to server timezone
-    const nowTime = Date.now()
+    const timeZoneAdjusted = new Date()
+      .toLocaleString('en-US', {
+        timeZone: process.env.NEXT_PUBLIC_TZ || 'America/Toronto'
+      })
+
+    const timeZoneDate = new Date(timeZoneAdjusted)
+    const nowTime = timeZoneDate.getTime()
     const severOffsetMs = data?.time_zone_offset_ms || 0
-    const clientOffsetMs = new Date().getTimezoneOffset() * 60 * 1000
+    const clientOffsetMs = timeZoneDate.getTimezoneOffset() * 60 * 1000
     const timeZoneDiff = severOffsetMs - clientOffsetMs
     const adjustedNowTime = nowTime + timeZoneDiff
 
@@ -95,6 +100,7 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
     ])
     // return await refetch()
   }, [
+    data,
     recordedTimes,
     timesToAdd,
     currentCheckpoint,
@@ -163,13 +169,6 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
                   })),
                 { value: 'finish', label: t('forms.finish') }
               ]}
-                // Array(10)
-                //   .fill(null)
-                //   .map((_, index) => ({
-                //     value: index + 1,
-                //     label: index + 1
-                //   }))
-
             />
           </Grid>
           <Button
@@ -189,8 +188,7 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
                 maxheight='calc(100vh - 450px)'
                 headings={[
                   'Entry',
-                  'Checkpoint',
-                  'Recorded Time',
+                  'Time',
                   ''
                 ]}
               >

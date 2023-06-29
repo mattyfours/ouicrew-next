@@ -30,7 +30,7 @@ const StyledSelect = styled.div`
 
   select {
     appearance: none;
-    padding: 20px 0 3px;
+    padding: 20px 15px 3px 0;
     color: var(--text-color);
     opacity: 1;
     outline: none;
@@ -41,7 +41,7 @@ const StyledSelect = styled.div`
     background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     background-repeat: no-repeat;
     background-size: 24px;
-    background-position: 100% 15px;
+    background-position: calc(100% + 5px) 18px;
     cursor: pointer;
 
     &::placeholder {

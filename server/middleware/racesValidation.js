@@ -53,7 +53,6 @@ export const raceCreateNewValidation = (req, res, next) => {
       })
     }
 
-    console.log(Number(checkpoints))
     if (
       typeof checkpoints !== 'number' ||
       checkpoints < 0 ||

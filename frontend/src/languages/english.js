@@ -34,7 +34,8 @@ export default {
     times_to_add: 'Times to Add',
     checkpoint: 'Checkpoint',
     start: 'Start',
-    finish: 'Finish'
+    finish: 'Finish',
+    select_entry: 'Select'
   },
   dashboard: {
     metatitle: 'Account',
