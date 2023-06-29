@@ -35,7 +35,9 @@ export default {
     checkpoint: 'Checkpoint',
     start: 'Start',
     finish: 'Finish',
-    select_entry: 'Select'
+    select_entry: 'Select',
+    save: 'Save',
+    update: 'Update'
   },
   dashboard: {
     metatitle: 'Account',

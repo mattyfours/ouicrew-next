@@ -10,19 +10,17 @@ export default (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    racing_standard_id: {
-      type: Sequelize.UUID,
-      allowNull: true
     }
   })
 
   RaceEntry.associate = ({
     Race,
-    EntryResult
+    EntryResult,
+    TeamRacingStandard
   }) => {
     RaceEntry.belongsTo(Race)
     RaceEntry.hasMany(EntryResult, { onDelete: 'CASCADE', as: 'EntryResults' })
+    RaceEntry.hasOne(TeamRacingStandard)
   }
 
   return RaceEntry

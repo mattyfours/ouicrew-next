@@ -3,20 +3,24 @@ import { returnErrorStatusCode, returnSuccess } from '../../helpers/returnStatus
 import db from '../../models/database.js'
 
 /**
- * Create a new race
+ * Create a new result
  * @param {*} req : express req
  * @param {*} res : express res
  * @returns response
  */
 export const postCreateResult = async (req, res) => {
   try {
-    // const { team } = req
+    const { team, race } = req
+    const {
+      checkpoint,
+      recordId: entryId
+    } = req.params
 
     return returnSuccess(res, {
       message: 'Result has been saved'
     })
   } catch (err) {
-    console.error('Error Creating New Race')
+    console.error('Error saving result')
     return errorHandler(res, err)
   }
 }

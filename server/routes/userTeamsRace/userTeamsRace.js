@@ -62,7 +62,7 @@ export const getRaceInfo = async (req, res) => {
               SELECT name
                 FROM "TeamRacingStandards" AS standard
                 WHERE
-                    standard.id = "RaceEntry".racing_standard_id
+                    standard.id = "RaceEntry"."TeamRacingStandardId"
             )`),
             'racing_standard_name'
           ]

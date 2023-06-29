@@ -26,9 +26,11 @@ export default (sequelize) => {
   })
 
   TeamRacingStandard.associate = ({
-    Team
+    Team,
+    RaceEntry
   }) => {
     TeamRacingStandard.belongsTo(Team)
+    TeamRacingStandard.belongsToMany(RaceEntry, { through: 'TeamRacingStandardsRaceEntries' })
   }
 
   return TeamRacingStandard

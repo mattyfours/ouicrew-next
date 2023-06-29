@@ -51,7 +51,9 @@ app.use(
 )
 
 app.use(
-  '/user/:userId/teams/:teamId/race/:raceId/entry/:entryId/results',
+  '/user/:userId/teams/:teamId/race/:raceId/results',
+  userSessionValidation,
+  userTeamValidation,
   raceIdValidation,
   raceResultsRouter
 )

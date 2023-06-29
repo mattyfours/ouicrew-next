@@ -31,8 +31,7 @@ export const teamsCreateNewValidation = (req, res, next) => {
 
     if (
       typeof editorAccessCode === 'undefined' ||
-      editorAccessCode.length === 0 ||
-      !validator.isAlphanumeric(editorAccessCode)
+      editorAccessCode.length === 0
     ) {
       errors.push({
         path: 'editorAccessCode',
@@ -42,8 +41,7 @@ export const teamsCreateNewValidation = (req, res, next) => {
 
     if (
       typeof viewerAccessCode === 'undefined' ||
-      viewerAccessCode.length === 0 ||
-      !validator.isAlphanumeric(viewerAccessCode)
+      viewerAccessCode.length === 0
     ) {
       errors.push({
         path: 'viewerAccessCode',
