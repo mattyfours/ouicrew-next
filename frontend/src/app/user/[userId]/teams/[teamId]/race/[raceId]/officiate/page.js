@@ -55,6 +55,7 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
   const [timesToAdd, setTimesToAdd] = useState(1)
   const [currentCheckpoint, setCurrentCheckpoint] = useState('start')
   const [errorMessage, setErrorMessage] = useState('')
+  const [succesMessage, setSuccessMessage] = useState('')
 
   const {
     data,
@@ -87,7 +88,8 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
         checkpoint: currentCheckpoint
       })
     ])
-    // return await refetch()
+
+    await refetch()
   }, [
     data,
     recordedTimes,
@@ -187,6 +189,8 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
                       <RaceRecordTableRow
                         record={record}
                         data={data}
+                        setErrorMessage={setErrorMessage}
+                        setSuccessMessage={setSuccessMessage}
                         key={`race-recorded-time-${data.race.id}-${index}`}
                       />
                     ))
@@ -197,9 +201,9 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
 
         <Toast
           onClose={handleCloseToast}
-          message={errorMessage}
+          message={errorMessage || succesMessage}
           type='error'
-          active={errorMessage.length !== 0}
+          active={errorMessage.length !== 0 || succesMessage.length !== 0}
         />
 
       </StyledDashboardTimeLogList>

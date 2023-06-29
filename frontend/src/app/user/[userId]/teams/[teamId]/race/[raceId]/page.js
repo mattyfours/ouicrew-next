@@ -55,6 +55,7 @@ export default function UserTeamRacePage ({ children }) {
 
   // state
   const [errorMessage, setErrorMessage] = useState('')
+  const [succesMessage, setSuccessMessage] = useState('')
 
   const {
     data,
@@ -96,6 +97,7 @@ export default function UserTeamRacePage ({ children }) {
         : await refetch()
     } catch (err) {
       console.error(err)
+      setSuccessMessage('')
       return setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'
           ? t('general.unexpected_error')
@@ -104,7 +106,8 @@ export default function UserTeamRacePage ({ children }) {
     }
   }, [
     data,
-    setErrorMessage
+    setErrorMessage,
+    setSuccessMessage
   ])
 
   const team = data?.teams?.find(team => teamId === team.id) || {}
@@ -188,7 +191,14 @@ export default function UserTeamRacePage ({ children }) {
 
                             <ConfirmActionButton
                               className='icon-link'
-                              message={`Remove ${entry.name} entry from ${data.race.title}?`}
+                              message={(
+                                <>
+                                  Remove {entry.name} entry from {data.race.title}?<br /><br />
+                                  <strong>
+                                    Warning this will remove all results associated with this entry.
+                                  </strong>
+                                </>
+                              )}
                               onAction={() => handleRemoveRaceEntry(entry.id)}
                             >
                               <FontAwesomeIcon icon={faTrash} />

@@ -8,7 +8,12 @@ import { timeToHhMmSsMs } from '@/helpers/dateFormater'
 import { useParams } from 'next/navigation'
 import axios from 'axios'
 
-export default function RaceRecordTableRow ({ record, data, setErrorMessage }) {
+export default function RaceRecordTableRow ({
+  record,
+  data,
+  setErrorMessage,
+  setSuccessMessage
+}) {
   const { userId, teamId, raceId } = useParams()
 
   const raceStart = Number(data.race.start_time)
@@ -29,8 +34,10 @@ export default function RaceRecordTableRow ({ record, data, setErrorMessage }) {
         `/results/${createNew ? '' : recordId}`
       ].join('')
 
+      console.log(url)
       const { data } = await axios.post(url,
         {
+          recordedTimeFromStart: diffTime,
           checkpoint: record.checkpoint,
           recordId
         },
@@ -42,43 +49,88 @@ export default function RaceRecordTableRow ({ record, data, setErrorMessage }) {
         }
       )
 
-      console.log(data)
+      setCreateNew(false)
+      setHasBeenSaved(true)
+
+      setRecordId(data.result.id)
+
+      setHasBeenSaved(true)
+      if (typeof setErrorMessage !== 'undefined') {
+        setErrorMessage('')
+      }
+
+      if (typeof setSuccessMessage !== 'undefined') {
+        setSuccessMessage(data.message)
+      }
     } catch (err) {
       console.error(err)
-      // setErrorMessage(
-      //   typeof err.response?.data?.error?.[0] === 'undefined'
-      //     ? t('general.unexpected_error')
-      //     : err.response.data.error[0].message
-      // )
+
+      if (typeof setSuccessMessage !== 'undefined') {
+        setSuccessMessage('')
+      }
+
+      if (typeof setErrorMessage !== 'undefined') {
+        setErrorMessage(
+          typeof err.response?.data?.error?.[0] === 'undefined'
+            ? t('general.unexpected_error')
+            : err.response.data.error[0].message
+        )
+      }
     }
   }, [
+    data,
     record,
     createNew,
-    recordId
+    recordId,
+    setErrorMessage,
+    setSuccessMessage,
+    setCreateNew
   ])
 
-  console.log(data.non_started_entries.map(entry => ({
-    value: entry.id,
-    label: entry.name
-  })))
+  console.log(data)
   return (
     <ResponsiveTable.Row>
       <ResponsiveTable.Item>
-        <Select
-          label={t('forms.select_entry')}
-          value={recordId}
-          setter={setRecordId}
-          options={[
-            {
-              value: '',
-              label: ''
-            },
-            ...data.non_started_entries.map(entry => ({
-              value: entry.id,
-              label: entry.name
-            }))
-          ]}
-        />
+        {
+          (
+            record.checkpoint === 'start' &&
+            hasBeenSaved === false
+          )
+            ? (
+              <Select
+                label={t('forms.select_entry')}
+                value={recordId}
+                setter={setRecordId}
+                options={[
+                  {
+                    value: '',
+                    label: ''
+                  },
+                  ...data.non_started_entries.map(entry => ({
+                    value: entry.id,
+                    label: entry.name
+                  }))
+                ]}
+              />
+              )
+            : (
+              <Select
+                label={t('forms.select_entry')}
+                value={recordId}
+                setter={setRecordId}
+                options={[
+                  {
+                    value: '',
+                    label: ''
+                  },
+                  ...data.pending_results.map(result => ({
+                    value: result.result.id,
+                    label: result.entry?.name
+                  }))
+                ]}
+              />
+              )
+        }
       </ResponsiveTable.Item>
 
       <ResponsiveTable.Item>
@@ -94,8 +146,8 @@ export default function RaceRecordTableRow ({ record, data, setErrorMessage }) {
           <FontAwesomeIcon icon={faSave} />
           {
             hasBeenSaved
-              ? t('forms.save')
-              : t('forms.update')
+              ? t('forms.update')
+              : t('forms.save')
           }
         </button>
       </ResponsiveTable.Item>

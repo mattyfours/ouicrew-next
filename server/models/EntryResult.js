@@ -13,7 +13,13 @@ export default (sequelize) => {
     },
     finish_time: {
       type: DataTypes.BIGINT,
-      allowNull: false
+      allowNull: true,
+      defaultValue: null
+    },
+    total_time: {
+      type: DataTypes.BIGINT,
+      allowNull: true,
+      defaultValue: null
     },
     checkpoint_times: {
       type: DataTypes.JSON,

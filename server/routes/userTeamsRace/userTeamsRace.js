@@ -174,18 +174,29 @@ export const getRaceOfficiate = async (req, res) => {
     })
 
     const nonStartedEntries = entries.filter(entry => {
-      const result = results.find(result => (
+      const hasResultInProgress = results.some(result => (
         result.RaceEntryId === entry.id &&
         result.start_time !== null &&
         result.finish_time === null
       ))
-      return result === undefined
+
+      console.log(hasResultInProgress)
+      return hasResultInProgress
     })
 
-    const pendingResults = results.filter(result => (
-      result.start_time !== null &&
-      result.finish_time === null
-    ))
+    const pendingResults = results
+      .filter(result => (
+        result.start_time !== null &&
+        result.finish_time === null
+      ))
+      .map(result => {
+        const matchEntry = entries.find(entry => entry.id === result.RaceEntryId)
+
+        return {
+          entry: matchEntry || {},
+          result
+        }
+      })
 
     return returnSuccess(res, {
       user: {
