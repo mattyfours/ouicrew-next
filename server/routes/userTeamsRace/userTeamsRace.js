@@ -180,8 +180,7 @@ export const getRaceOfficiate = async (req, res) => {
         result.finish_time === null
       ))
 
-      console.log(hasResultInProgress)
-      return hasResultInProgress
+      return !hasResultInProgress
     })
 
     const pendingResults = results

@@ -55,6 +55,7 @@ export const postUpdateResult = async (req, res) => {
       checkpoint
     } = req.body
 
+    // TODO: add start and checkpont options
     const updatedResult = checkpoint === 'finish'
       ? await result.update({
         finish_time: recordedTimeFromStart,
