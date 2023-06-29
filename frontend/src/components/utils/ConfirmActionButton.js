@@ -14,9 +14,12 @@ const StyledConfirmModal = styled.div`
     font-size: 1.8rem;
   }
 
-  .action-buttons {
+  .confirm-action-buttons {
     width: fit-content;
     margin: 24px auto 0;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 8px;
   }
 `
 
@@ -56,7 +59,7 @@ export default function ConfirmActionButton ({
       >
         <StyledConfirmModal>
           <p>{message}</p>
-          <div className='action-buttons'>
+          <div className='confirm-action-buttons'>
             <Button
               secondary
               onClick={() => handleModalToggle(false)}

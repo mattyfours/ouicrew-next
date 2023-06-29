@@ -91,19 +91,19 @@ export default function UserTeamRacePage ({ children }) {
         }
       )
 
-      setErrorMessage('')
-      if (typeof refetch !== 'undefined') {
-        await refetch()
-      }
+      return typeof refetch === 'undefined'
+        ? null
+        : await refetch()
     } catch (err) {
       console.error(err)
-      setErrorMessage(
+      return setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'
           ? t('general.unexpected_error')
           : err.response.data.error[0].message
       )
     }
   }, [
+    data,
     setErrorMessage
   ])
 
@@ -179,7 +179,7 @@ export default function UserTeamRacePage ({ children }) {
                       </ResponsiveTable.Item>
 
                       <ResponsiveTable.Item>
-                        {entry.racing_standard_name}
+                        {entry.racing_standard_name || t('general.na')}
                       </ResponsiveTable.Item>
 
                       {

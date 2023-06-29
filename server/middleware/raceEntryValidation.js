@@ -33,8 +33,10 @@ export const raceEntryCreateNewValidation = async (req, res, next) => {
     }
 
     if (
-      typeof racingStandardId === 'undefined' ||
-      !validator.isUUID(racingStandardId)
+      racingStandardId.length !== 0 && (
+        typeof racingStandardId === 'undefined' ||
+       !validator.isUUID(racingStandardId)
+      )
     ) {
       errors.push({
         path: 'racingStandardId',
@@ -44,7 +46,7 @@ export const raceEntryCreateNewValidation = async (req, res, next) => {
 
     // Early return if errors
     if (errors.length !== 0) {
-      returnErrorStatusCode(422, res, errors)
+      return returnErrorStatusCode(422, res, errors)
     }
 
     const findEntryWithName = await db.RaceEntry.findOne({

@@ -62,7 +62,7 @@ export const getRaceInfo = async (req, res) => {
               SELECT name
                 FROM "TeamRacingStandards" AS standard
                 WHERE
-                    standard.id = "RaceEntry"."TeamRacingStandardId"
+                    standard.id = "RaceEntry".racing_standard_id
             )`),
             'racing_standard_name'
           ]
@@ -80,7 +80,7 @@ export const getRaceInfo = async (req, res) => {
       race
     })
   } catch (err) {
-    console.error('Error Creating New Race')
+    console.error('Error Getting Race Info')
     return errorHandler(res, err)
   }
 }
@@ -100,27 +100,15 @@ export const postRaceEntry = async (req, res) => {
       racingStandardId
     } = req.body
 
-    const racingStandard = await db.TeamRacingStandard.findOne({
-      where: {
-        id: racingStandardId
-      }
-    })
-
-    if (racingStandard === null) {
-      return returnErrorStatusCode(
-        422,
-        res,
-        [{
-          path: 'racingStandardId',
-          message: 'invalid racing standard'
-        }]
-      )
-    }
-
     const newEntry = await db.RaceEntry.create({
       RaceId: race.id,
-      name,
-      racing_standard_id: racingStandardId
+      racing_standard_id: (
+        typeof racingStandardId === 'undefined' ||
+        !racingStandardId
+      )
+        ? null
+        : racingStandardId,
+      name
     })
 
     return returnSuccess(res, {
@@ -128,7 +116,7 @@ export const postRaceEntry = async (req, res) => {
       message: `${name} entry has been added to the race`
     })
   } catch (err) {
-    console.error('Error Creating New Race')
+    console.error('Error Creating New Race Entry')
     return errorHandler(res, err)
   }
 }
@@ -158,7 +146,7 @@ export const deleteRaceEntry = async (req, res) => {
       message: `${deletedEntry.name} entry has been removed from the race`
     })
   } catch (err) {
-    console.error('Error Creating New Race')
+    console.error('Error Deleting Race')
     return errorHandler(res, err)
   }
 }
@@ -212,7 +200,7 @@ export const getRaceOfficiate = async (req, res) => {
       time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
     })
   } catch (err) {
-    console.error('Error Creating New Race')
+    console.error('Error Getting Race Officiate Info')
     return errorHandler(res, err)
   }
 }

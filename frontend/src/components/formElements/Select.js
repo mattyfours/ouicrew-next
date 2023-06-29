@@ -70,7 +70,7 @@ export default function Select ({
   }, [setIsFocused])
 
   return (
-    <StyledSelect className={`${(value.length !== 0 || isFocused) && 'active'}`}>
+    <StyledSelect className={`${(value?.length !== 0 || isFocused) && 'active'}`}>
       <label htmlFor={inputId}>{label || name}</label>
       <select
         id={inputId}

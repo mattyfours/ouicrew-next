@@ -5,7 +5,8 @@ export default {
     return_home: 'Return Home',
     log_out: 'Log Out',
     confirm: 'Confirm',
-    cancel: 'Cancel'
+    cancel: 'Cancel',
+    na: 'N/A'
   },
   forms: {
     email: 'Email Address',
