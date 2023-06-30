@@ -48,6 +48,23 @@ const StyledSelect = styled.div`
       display: none;
     }
   }
+
+  &.variation--inline {
+    select {
+      padding: 0;
+      background-position: calc(100% + 5px) -2px;
+    }
+
+    label {
+      transform: none;
+    }
+
+    &.active {
+      label {
+        display: none;
+      }
+    }
+  }
 `
 
 export default function Select ({
@@ -56,7 +73,8 @@ export default function Select ({
   name,
   setter,
   options,
-  onChange
+  onChange,
+  variation
 }) {
   const [isFocused, setIsFocused] = useState(false)
   const inputId = useId()
@@ -70,7 +88,12 @@ export default function Select ({
   }, [setIsFocused])
 
   return (
-    <StyledSelect className={`${(value?.length !== 0 || isFocused) && 'active'}`}>
+    <StyledSelect
+      className={`
+        ${(value?.length !== 0 || isFocused) && 'active'}
+        variation--${variation}
+      `}
+    >
       <label htmlFor={inputId}>{label || name}</label>
       <select
         id={inputId}

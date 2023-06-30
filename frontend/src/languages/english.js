@@ -38,6 +38,7 @@ export default {
     finish: 'Finish',
     select_entry: 'Select',
     save: 'Save',
+    saved: 'Saved',
     update: 'Update'
   },
   dashboard: {

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
 import ResponsiveTable from '../displayElements/ResponsiveTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSave } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faSave } from '@fortawesome/free-solid-svg-icons'
 import Select from '../formElements/Select'
 import { t } from '@/languages/languages'
 import { timeToHhMmSsMs } from '@/helpers/dateFormater'
@@ -22,6 +22,17 @@ export default function RaceRecordTableRow ({
   const [hasBeenSaved, setHasBeenSaved] = useState(false)
   const [createNew, setCreateNew] = useState(record.checkpoint === 'start')
   const [recordId, setRecordId] = useState('')
+  const [resultName, setResultName] = useState('')
+
+  const entryOrResultList = record.checkpoint === 'start'
+    ? data.non_started_entries.map(entry => ({
+      value: entry.id,
+      label: entry.name
+    }))
+    : data.pending_results.map(result => ({
+      value: result.result.id,
+      label: result.entry?.name
+    }))
 
   // Save Result
   const handleRecordSave = useCallback(async () => {
@@ -51,8 +62,8 @@ export default function RaceRecordTableRow ({
 
       setCreateNew(false)
       setHasBeenSaved(true)
-
       setRecordId(data.result.id)
+      setResultName(data.entry.name)
 
       setHasBeenSaved(true)
       if (typeof setErrorMessage !== 'undefined') {
@@ -84,49 +95,25 @@ export default function RaceRecordTableRow ({
     recordId,
     setErrorMessage,
     setSuccessMessage,
-    setCreateNew
+    setCreateNew,
+    setResultName
   ])
 
-  console.log(data)
   return (
     <ResponsiveTable.Row>
       <ResponsiveTable.Item>
         {
-          (
-            record.checkpoint === 'start' &&
-            hasBeenSaved === false
-          )
-            ? (
-              <Select
-                label={t('forms.select_entry')}
-                value={recordId}
-                setter={setRecordId}
-                options={[
-                  {
-                    value: '',
-                    label: ''
-                  },
-                  ...data.non_started_entries.map(entry => ({
-                    value: entry.id,
-                    label: entry.name
-                  }))
-                ]}
-              />
-              )
+          hasBeenSaved
+            ? resultName
             : (
               <Select
                 label={t('forms.select_entry')}
                 value={recordId}
                 setter={setRecordId}
+                variation='inline'
                 options={[
-                  {
-                    value: '',
-                    label: ''
-                  },
-                  ...data.pending_results.map(result => ({
-                    value: result.result.id,
-                    label: result.entry?.name
-                  }))
+                  { value: '', label: '' },
+                  ...entryOrResultList
                 ]}
               />
               )
@@ -139,17 +126,24 @@ export default function RaceRecordTableRow ({
       </ResponsiveTable.Item>
 
       <ResponsiveTable.Item>
-        <button
-          className='icon-link'
-          onClick={handleRecordSave}
-        >
-          <FontAwesomeIcon icon={faSave} />
-          {
-            hasBeenSaved
-              ? t('forms.update')
-              : t('forms.save')
-          }
-        </button>
+        {
+          hasBeenSaved
+            ? (
+              <span className='icon-link'>
+                <FontAwesomeIcon icon={faCheck} />
+                {t('forms.saved')}
+              </span>
+              )
+            : (
+              <button
+                className='icon-link'
+                onClick={handleRecordSave}
+              >
+                <FontAwesomeIcon icon={faSave} />
+                {t('forms.save')}
+              </button>
+              )
+        }
       </ResponsiveTable.Item>
     </ResponsiveTable.Row>
   )

@@ -27,7 +27,8 @@ export const postCreateResult = async (req, res) => {
 
     return returnSuccess(res, {
       result: newResult,
-      message: 'Result has been saved'
+      message: 'Result has been saved',
+      entry
     })
   } catch (err) {
     console.error('Error saving result')
@@ -55,17 +56,39 @@ export const postUpdateResult = async (req, res) => {
       checkpoint
     } = req.body
 
-    // TODO: add start and checkpont options
-    const updatedResult = checkpoint === 'finish'
-      ? await result.update({
-        finish_time: recordedTimeFromStart,
-        total_time: recordedTimeFromStart - result.start_time
+    // Update appropriate checkpoint
+    if (checkpoint === 'start') {
+      await result.update({
+        start_time: recordedTimeFromStart
       })
-      : null
+    } else if (checkpoint === 'finish') {
+      await result.update({
+        finish_time: recordedTimeFromStart
+      })
+    } else {
+      const updatedCheckpoints = { ...result.checkpoint_times }
+      updatedCheckpoints[checkpoint] = recordedTimeFromStart
+      await result.update({
+        checkpoint_times: updatedCheckpoints
+      })
+    }
+
+    // Update total time if possible
+    if (
+      result.finish_time !== null &&
+      result.start_time !== null
+    ) {
+      await result.update({
+        total_time: result.finish_time - result.start_time
+      })
+    }
+
+    // Update racing standard percentage if possible
 
     return returnSuccess(res, {
-      result: updatedResult,
-      message: 'Result has been saved'
+      message: 'Result has been saved',
+      result,
+      entry
     })
   } catch (err) {
     console.error('Error saving result')
