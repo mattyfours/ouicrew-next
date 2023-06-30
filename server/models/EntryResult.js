@@ -29,6 +29,11 @@ export default (sequelize) => {
     racing_standard_percentage: {
       type: DataTypes.DECIMAL,
       allowNull: true
+    },
+    set: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
     }
   })
 

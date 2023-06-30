@@ -10,11 +10,14 @@ import db from '../../models/database.js'
  */
 export const postCreateResult = async (req, res) => {
   try {
-    const { team, race, entry } = req
     const {
-      recordedTimeFromStart,
-      checkpoint,
-      recordId: entryId
+      team,
+      race,
+      entry
+    } = req
+
+    const {
+      recordedTimeFromStart
     } = req.body
 
     const newResult = await db.EntryResult.create({
@@ -51,6 +54,7 @@ export const postUpdateResult = async (req, res) => {
       result,
       racingStandard
     } = req
+
     const {
       recordedTimeFromStart,
       checkpoint
@@ -79,11 +83,33 @@ export const postUpdateResult = async (req, res) => {
       result.start_time !== null
     ) {
       await result.update({
-        total_time: result.finish_time - result.start_time
+        total_time: Number(result.finish_time) - Number(result.start_time)
       })
     }
 
     // Update racing standard percentage if possible
+    if (
+      racingStandard !== null &&
+      result.total_time !== null
+    ) {
+      const resultMeterPerSecond = (
+        Number(race.distance) /
+        (Number(result.total_time) / 1000)
+      )
+
+      const standardMeterPerSecond = (
+        Number(race.distance) /
+        (Number(racingStandard.time_in_ms) / 1000)
+      )
+
+      const racingStandardPercentage = parseFloat(
+        (resultMeterPerSecond / standardMeterPerSecond) * 100
+      ).toFixed(2)
+
+      await result.update({
+        racing_standard_percentage: racingStandardPercentage
+      })
+    }
 
     return returnSuccess(res, {
       message: 'Result has been saved',
