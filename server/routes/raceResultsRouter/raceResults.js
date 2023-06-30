@@ -20,6 +20,8 @@ export const postCreateResult = async (req, res) => {
       recordedTimeFromStart
     } = req.body
 
+    // TODO: Count results with entry id + 1 for set
+
     const newResult = await db.EntryResult.create({
       start_time: recordedTimeFromStart,
       finish_time: null,
@@ -48,7 +50,6 @@ export const postCreateResult = async (req, res) => {
 export const postUpdateResult = async (req, res) => {
   try {
     const {
-      team,
       race,
       entry,
       result,
