@@ -17,6 +17,7 @@ import NewRaceForm from '@/components/forms/NewRaceForm'
 import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 import StyledTeamBar from '@/components/styed/StyledTeamBar'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
+import LoadingPage from '@/components/pages/LoadingPage'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -77,7 +78,7 @@ export default function UserTeamPage ({ children }) {
   }, [setIsNewRaceModelOpen])
 
   if (data === null) {
-    return <h1>Loading</h1>
+    return <LoadingPage />
   }
 
   if (typeof data?.error !== 'undefined') {

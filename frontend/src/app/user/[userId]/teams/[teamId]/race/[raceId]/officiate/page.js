@@ -18,6 +18,7 @@ import Form from '@/components/formElements/Form'
 import Grid from '@/components/displayElements/Grid'
 import Select from '@/components/formElements/Select'
 import { getNowTimeInTimezone } from '@/helpers/dateFormater'
+import LoadingPage from '@/components/pages/LoadingPage'
 
 const StyledDashboardTimeLogList = styled.nav`
   position: relative;
@@ -104,7 +105,7 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
   }, [setErrorMessage, setSuccessMessage])
 
   if (data === null) {
-    return <h1>Loading</h1>
+    return <LoadingPage />
   }
 
   if (typeof data?.error !== 'undefined') {

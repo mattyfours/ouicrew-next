@@ -38,10 +38,17 @@ const StyledResponsiveTable = styled.div`
     }
   }
 
+  &.even-cells {
+    th, td {
+      min-width: 155px;
+    }
+  }
+
   th, td {
-    padding: 8px 16px;
+    padding: 8px 8px;
     border: 1px solid var(--text-color);
     font-size: 1.4rem;
+    white-space: nowrap;
 
     &:first-child {
       border-left: none;
@@ -70,7 +77,8 @@ function ResponsiveTable ({
   children,
   headings,
   maxheight,
-  autoScroll
+  autoScroll,
+  evenCells
 }) {
   const tableId = useId()
   const holderRef = useRef()
@@ -82,8 +90,18 @@ function ResponsiveTable ({
   }, [children])
 
   return (
-    <StyledResponsiveTable maxheight={maxheight} ref={holderRef}>
+    <StyledResponsiveTable
+      maxheight={maxheight}
+      ref={holderRef}
+      className={`${evenCells && 'even-cells'}`}
+    >
       <table>
+        {
+          evenCells && (
+            <col style={{ width: `${100 / headings.length}%` }} span={headings.length} />
+          )
+        }
+
         <thead>
           <tr>
             {

@@ -18,6 +18,7 @@ import Modal from '@/components/utils/Modal'
 import ResponsiveTable from '@/components/displayElements/ResponsiveTable'
 import NewTeamForm from '@/components/forms/NewTeamForm'
 import JoinTeamForm from '@/components/forms/JoinTeamForm'
+import LoadingPage from '@/components/pages/LoadingPage'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -82,7 +83,7 @@ export default function UserPage ({ children }) {
   }, [setIsJoinTeamModalOpen])
 
   if (data === null) {
-    return <h1>Loading</h1>
+    return <LoadingPage />
   }
 
   if (typeof data?.error !== 'undefined') {

@@ -6,7 +6,8 @@ export default {
     log_out: 'Log Out',
     confirm: 'Confirm',
     cancel: 'Cancel',
-    na: 'N/A'
+    na: 'N/A',
+    loading: 'Loading'
   },
   forms: {
     email: 'Email Address',
@@ -66,7 +67,10 @@ export default {
     no_times_recorded: 'No times recorded',
     unsaved_records: 'Unsaved records detected, are you sure you want to leave?',
     in_progress: 'In Progress',
-    no_ongoing_results: 'No ongoing results'
+    complete: 'Complete',
+    no_ongoing_results: 'No ongoing results',
+    no_finished_results: 'No finished results',
+    set: 'Set'
   },
   login_page: {
     metatitle: 'Log In',

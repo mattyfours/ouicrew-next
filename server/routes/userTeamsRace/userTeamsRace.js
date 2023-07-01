@@ -225,22 +225,34 @@ export const getRaceResults = async (req, res) => {
   try {
     const { user, team, race } = req
 
-    const results = await db.EntryResult.findAll({
+    const raceResults = await db.EntryResult.findAll({
       where: {
         RaceId: race.id
       }
     })
 
-    const resultsWithEntries = await Promise.all(
-      results.map(async result => ({
-        ...result.dataValues,
-        entry: await db.RaceEntry.findOne({
+    const resultsWithEntriesAndStandards = []
+    for (const result of raceResults) {
+      const entry = await db.RaceEntry.findOne({
+        where: {
+          id: result.RaceEntryId
+        }
+      })
+
+      const standard = entry.racing_standard_id === null
+        ? {}
+        : await db.TeamRacingStandard.findOne({
           where: {
-            id: result.RaceEntryId
+            id: entry.racing_standard_id
           }
         })
-      }))
-    )
+
+      resultsWithEntriesAndStandards.push({
+        ...result.dataValues,
+        entry,
+        standard
+      })
+    }
 
     return returnSuccess(res, {
       user: {
@@ -249,7 +261,7 @@ export const getRaceResults = async (req, res) => {
       },
       team,
       race,
-      results: resultsWithEntries,
+      results: resultsWithEntriesAndStandards,
       time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
     })
   } catch (err) {

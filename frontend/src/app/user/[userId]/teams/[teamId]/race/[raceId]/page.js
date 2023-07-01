@@ -19,6 +19,7 @@ import RaceMenuBar from '@/components/race/RaceMenuBar'
 import NewRaceEntryForm from '@/components/forms/NewRaceEntryForm'
 import ConfirmActionButton from '@/components/utils/ConfirmActionButton'
 import Toast from '@/components/utils/Toast'
+import LoadingPage from '@/components/pages/LoadingPage'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
@@ -124,7 +125,7 @@ export default function UserTeamRacePage ({ children }) {
   }, [setErrorMessage])
 
   if (data === null) {
-    return <h1>Loading</h1>
+    return <LoadingPage />
   }
 
   if (typeof data?.error !== 'undefined') {

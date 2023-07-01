@@ -2,6 +2,7 @@
 
 import DashboardNav from '@/components/dashboard/DashboardNav'
 import ErrorPage from '@/components/pages/ErrorPage'
+import LoadingPage from '@/components/pages/LoadingPage'
 import { minScreen, screenSizes } from '@/helpers/screen'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { useDynamicFetch } from '@/hooks/useDynamicFetch'
@@ -51,7 +52,7 @@ export default function UserLayout ({ children }) {
   useDocumentTitle(data?.user?.username || t('dashboard.metatitle'), [data])
 
   if (data === null) {
-    return <h1>Loading</h1>
+    return <LoadingPage />
   }
 
   if (typeof data?.error !== 'undefined') {

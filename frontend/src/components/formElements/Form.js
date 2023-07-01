@@ -1,6 +1,5 @@
 'use client'
 
-import { t } from '@/languages/languages'
 import Lottie from 'lottie-react'
 import { styled } from 'styled-components'
 import loadingAnimation from '../../lottie/loading.json'

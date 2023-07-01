@@ -109,7 +109,8 @@ export const postUpdateResult = async (req, res) => {
     if (
       racingStandard !== null &&
       result.total_time !== null &&
-      result.finish_time !== result.total_time
+      result.finish_time !== result.total_time &&
+      Number(result.total_time) !== 0
     ) {
       const resultMeterPerSecond = (
         Number(race.distance) /
