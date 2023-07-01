@@ -32,11 +32,16 @@ const StyledToast = styled.div`
     background-color: var(--error-color);
   }
 
+  &.style--success {
+    background-color: var(--success-color);
+  }
+
+
   &.active {
     visibility: visible;
     pointer-events: all;
     opacity: 1;
-    transition: all 0.4s ease;
+    transition: transform 0.4s ease, opacity 0.4s ease;
     transform: translateY(0) translateX(-50%);
   }
 
@@ -53,6 +58,20 @@ const StyledToast = styled.div`
 `
 
 export default function Toast ({ message, active, onClose, type }) {
+  const [timeOut, setTimeOut] = useState(null)
+
+  // Close after 3 seconds
+  useEffect(() => {
+    if (timeOut !== null) {
+      clearTimeout(timeOut)
+    }
+
+    const timeout = setTimeout(() => {
+      onClose()
+    }, 3000)
+    setTimeOut(timeout)
+  }, [active])
+
   return (
     <StyledToast
       className={`
@@ -60,7 +79,6 @@ export default function Toast ({ message, active, onClose, type }) {
         style--${type}
       `}
     >
-
       <p>{message}</p>
       <button
         className='close-button'

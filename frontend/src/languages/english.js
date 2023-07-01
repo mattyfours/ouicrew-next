@@ -39,7 +39,9 @@ export default {
     select_entry: 'Select',
     save: 'Save',
     saved: 'Saved',
-    update: 'Update'
+    update: 'Update',
+    dns: 'D.N.S',
+    dnf: 'D.N.F'
   },
   dashboard: {
     metatitle: 'Account',
@@ -61,7 +63,10 @@ export default {
     remove: 'Remove',
     record_time: 'Record Time',
     recorded_times: 'Recorded Times',
-    no_times_recorded: 'No times recorded'
+    no_times_recorded: 'No times recorded',
+    unsaved_records: 'Unsaved records detected, are you sure you want to leave?',
+    in_progress: 'In Progress',
+    no_ongoing_results: 'No ongoing results'
   },
   login_page: {
     metatitle: 'Log In',

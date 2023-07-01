@@ -16,7 +16,6 @@ import Toast from '@/components/utils/Toast'
 import RaceRecordTableRow from '@/components/race/RaceRecordTableRow'
 import Form from '@/components/formElements/Form'
 import Grid from '@/components/displayElements/Grid'
-import SingleLineInput from '@/components/formElements/SingleLineInput'
 import Select from '@/components/formElements/Select'
 import { getNowTimeInTimezone } from '@/helpers/dateFormater'
 
@@ -81,8 +80,8 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
 
   // Handel Record Time
   const handleRecordTime = useCallback(async () => {
-    setRecordedTimes([
-      ...recordedTimes,
+    setRecordedTimes(oldRecordTimes => [
+      ...oldRecordTimes,
       ...Array(Number(timesToAdd || 1)).fill({
         time: getNowTimeInTimezone(data.time_zone_offset_ms),
         checkpoint: currentCheckpoint
@@ -101,7 +100,8 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
   // Handle Close Toast
   const handleCloseToast = useCallback(() => {
     setErrorMessage('')
-  }, [setErrorMessage])
+    setSuccessMessage('')
+  }, [setErrorMessage, setSuccessMessage])
 
   if (data === null) {
     return <h1>Loading</h1>
@@ -158,7 +158,9 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
                     value: `checkpoint-${index + 1}`,
                     label: `Checkpoint ${index + 1}`
                   })),
-                { value: 'finish', label: t('forms.finish') }
+                { value: 'finish', label: t('forms.finish') },
+                { value: 'dns', label: t('forms.dns') },
+                { value: 'dnf', label: t('forms.dnf') }
               ]}
             />
           </Grid>
@@ -176,7 +178,8 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
             ? (<p className='no-log-notice'><small>{t('dashboard.no_times_recorded')}</small></p>)
             : (
               <ResponsiveTable
-                maxheight='calc(100vh - 450px)'
+                autoScroll
+                maxheight='calc(100vh - 550px)'
                 headings={[
                   'Entry',
                   'Time',
@@ -202,7 +205,11 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
         <Toast
           onClose={handleCloseToast}
           message={errorMessage || succesMessage}
-          type='error'
+          type={
+            errorMessage.length !== 0
+              ? 'error'
+              : 'success'
+          }
           active={errorMessage.length !== 0 || succesMessage.length !== 0}
         />
 

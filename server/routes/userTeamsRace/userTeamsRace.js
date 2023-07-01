@@ -152,7 +152,7 @@ export const deleteRaceEntry = async (req, res) => {
 }
 
 /**
- * Get Race Info
+ * Get Race For Officiate
  * @param {*} req : express req
  * @param {*} res : express res
  * @returns response
@@ -207,6 +207,49 @@ export const getRaceOfficiate = async (req, res) => {
       entries,
       non_started_entries: nonStartedEntries,
       pending_results: pendingResults,
+      time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
+    })
+  } catch (err) {
+    console.error('Error Getting Race Officiate Info')
+    return errorHandler(res, err)
+  }
+}
+
+/**
+ * Get Race Results
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const getRaceResults = async (req, res) => {
+  try {
+    const { user, team, race } = req
+
+    const results = await db.EntryResult.findAll({
+      where: {
+        RaceId: race.id
+      }
+    })
+
+    const resultsWithEntries = await Promise.all(
+      results.map(async result => ({
+        ...result.dataValues,
+        entry: await db.RaceEntry.findOne({
+          where: {
+            id: result.RaceEntryId
+          }
+        })
+      }))
+    )
+
+    return returnSuccess(res, {
+      user: {
+        email: user.email,
+        username: user.username
+      },
+      team,
+      race,
+      results: resultsWithEntries,
       time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
     })
   } catch (err) {

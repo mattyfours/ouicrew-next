@@ -1,30 +1,38 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import ResponsiveTable from '../displayElements/ResponsiveTable'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faSave } from '@fortawesome/free-solid-svg-icons'
 import Select from '../formElements/Select'
 import { t } from '@/languages/languages'
 import { timeToHhMmSsMs } from '@/helpers/dateFormater'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import axios from 'axios'
 
 export default function RaceRecordTableRow ({
-  record,
+  record: propsRecord,
   data,
   setErrorMessage,
   setSuccessMessage
 }) {
   const { userId, teamId, raceId } = useParams()
+  const router = useRouter()
 
+  const record = propsRecord
   const raceStart = Number(data.race.start_time)
   const diffTime = record.time - raceStart
 
   const [hasBeenSaved, setHasBeenSaved] = useState(false)
-  const [createNew, setCreateNew] = useState(record.checkpoint === 'start')
   const [recordId, setRecordId] = useState('')
   const [resultName, setResultName] = useState('')
+  const [createNew, setCreateNew] = useState(
+    record.checkpoint === 'start' ||
+    record.checkpoint === 'dns'
+  )
 
-  const entryOrResultList = record.checkpoint === 'start'
+  const entryOrResultList = (
+    record.checkpoint === 'start' ||
+    record.checkpoint === 'dns'
+  )
     ? data.non_started_entries.map(entry => ({
       value: entry.id,
       label: entry.name
@@ -45,7 +53,6 @@ export default function RaceRecordTableRow ({
         `/results/${createNew ? '' : recordId}`
       ].join('')
 
-      console.log(url)
       const { data } = await axios.post(url,
         {
           recordedTimeFromStart: diffTime,
@@ -95,9 +102,11 @@ export default function RaceRecordTableRow ({
     recordId,
     setErrorMessage,
     setSuccessMessage,
-    setCreateNew,
-    setResultName
+    setResultName,
+    setCreateNew
   ])
+
+  // TODO: add way to detect non aved results
 
   return (
     <ResponsiveTable.Row>

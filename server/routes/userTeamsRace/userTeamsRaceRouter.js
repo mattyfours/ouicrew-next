@@ -3,6 +3,7 @@ import {
   deleteRaceEntry,
   getRaceInfo,
   getRaceOfficiate,
+  getRaceResults,
   postCreateRace,
   postRaceEntry
 } from './userTeamsRace.js'
@@ -27,6 +28,11 @@ userTeamsRaceRouter.get('/:raceId',
 userTeamsRaceRouter.get('/:raceId/officiate',
   raceIdValidation,
   getRaceOfficiate
+)
+
+userTeamsRaceRouter.get('/:raceId/results',
+  raceIdValidation,
+  getRaceResults
 )
 
 userTeamsRaceRouter.post('/:raceId/entry',

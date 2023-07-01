@@ -1,6 +1,6 @@
 'use client'
 
-import { useId } from 'react'
+import { useEffect, useId, useRef } from 'react'
 import { styled } from 'styled-components'
 
 const StyledResponsiveTable = styled.div`
@@ -12,6 +12,30 @@ const StyledResponsiveTable = styled.div`
   table {
     width: fit-content;
     min-width: 100%;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+    th {
+      position: relative;
+      background-color: var(--primary-color-light);
+      font-weight: 700;
+      border-bottom: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-color: var(--text-color);
+      }
+    }
   }
 
   th, td {
@@ -37,21 +61,28 @@ const StyledResponsiveTable = styled.div`
     border-bottom: none;
   }
 
-  th {
-    background-color: var(--primary-color-light);
-    font-weight: 700;
-  }
-
   tr:hover td {
     background-color: var(--light-grey-color);
   }
 `
 
-function ResponsiveTable ({ children, headings, maxheight }) {
+function ResponsiveTable ({
+  children,
+  headings,
+  maxheight,
+  autoScroll
+}) {
   const tableId = useId()
+  const holderRef = useRef()
+
+  useEffect(() => {
+    if (!autoScroll) { return }
+    const holder = holderRef.current
+    holder.scrollTop = holder.scrollHeight
+  }, [children])
 
   return (
-    <StyledResponsiveTable maxheight={maxheight}>
+    <StyledResponsiveTable maxheight={maxheight} ref={holderRef}>
       <table>
         <thead>
           <tr>

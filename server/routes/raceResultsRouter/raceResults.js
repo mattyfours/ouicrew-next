@@ -1,5 +1,5 @@
 import errorHandler from '../../helpers/errorHandler.js'
-import { returnErrorStatusCode, returnSuccess } from '../../helpers/returnStatus.js'
+import { returnSuccess } from '../../helpers/returnStatus.js'
 import db from '../../models/database.js'
 
 /**
@@ -17,14 +17,24 @@ export const postCreateResult = async (req, res) => {
     } = req
 
     const {
-      recordedTimeFromStart
+      recordedTimeFromStart,
+      checkpoint
     } = req.body
 
-    // TODO: Count results with entry id + 1 for set
+    const setResultCount = await db.EntryResult.count({
+      where: {
+        RaceEntryId: entry.id
+      }
+    })
+
+    console.log(checkpoint)
 
     const newResult = await db.EntryResult.create({
       start_time: recordedTimeFromStart,
-      finish_time: null,
+      finish_time: checkpoint === 'dns'
+        ? recordedTimeFromStart
+        : null,
+      set: setResultCount + 1,
       TeamId: team.id,
       RaceId: race.id,
       RaceEntryId: entry.id
@@ -70,6 +80,13 @@ export const postUpdateResult = async (req, res) => {
       await result.update({
         finish_time: recordedTimeFromStart
       })
+    } else if (
+      checkpoint === 'dnf' &&
+      result.start_time !== null
+    ) {
+      await result.update({
+        finish_time: result.start_time
+      })
     } else {
       const updatedCheckpoints = { ...result.checkpoint_times }
       updatedCheckpoints[checkpoint] = recordedTimeFromStart
@@ -91,7 +108,8 @@ export const postUpdateResult = async (req, res) => {
     // Update racing standard percentage if possible
     if (
       racingStandard !== null &&
-      result.total_time !== null
+      result.total_time !== null &&
+      result.finish_time !== result.total_time
     ) {
       const resultMeterPerSecond = (
         Number(race.distance) /
