@@ -64,7 +64,7 @@ export default function DashboardNav ({ data }) {
   return (
     <StyledDashboardNav>
       <div className='container'>
-        <Link href='/dashboard' className='logo-link'>
+        <Link href={`/user/${userId}`} className='logo-link'>
           <h1 className='heading-logo'>{t('general.ouicrew')}</h1>
         </Link>
 

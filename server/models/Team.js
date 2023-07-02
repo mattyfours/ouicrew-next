@@ -11,6 +11,10 @@ export default (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    handle: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     editor_access_code: {
       type: DataTypes.STRING,
       allowNull: false

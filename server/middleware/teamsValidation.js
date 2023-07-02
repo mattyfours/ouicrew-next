@@ -21,11 +21,12 @@ export const teamsCreateNewValidation = (req, res, next) => {
 
     if (
       typeof name !== 'string' ||
-      name.length === 0
+      name.length === 0 ||
+      /^[a-zA-Z0-9 ]+$/.test(name) === false
     ) {
       errors.push({
         path: 'name',
-        message: 'Missing team name'
+        message: 'Invalid team name. Only letters or numbers are allowed'
       })
     }
 
@@ -69,7 +70,7 @@ export const teamsCreateNewValidation = (req, res, next) => {
 }
 
 /**
- * Create a new team
+ * Join a new team
  * @param {*} req : express req
  * @param {*} res : express res
  * @returns express next || error response

@@ -111,7 +111,7 @@ export default function UserPage ({ children }) {
                   data.teams.map((team, index) => (
                     <ResponsiveTable.Row key={`teamlist-${team.id}`}>
                       <ResponsiveTable.Item>
-                        <Link href={`/user/${userId}/teams/${team.id}`} className='icon-link'>
+                        <Link href={`/user/${userId}/teams/${team.handle}`} className='icon-link'>
                           {team.name} <FontAwesomeIcon icon={faRightLong} />
                         </Link>
                       </ResponsiveTable.Item>

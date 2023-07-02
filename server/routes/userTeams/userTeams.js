@@ -43,14 +43,19 @@ export const postCreateUserTeam = async (req, res) => {
       racingStandard
     } = req.body
 
+    const teamHandle = name
+      .toLowerCase()
+      .replace(/ /g, '-')
+
     const [team, createdNewTeam] = await db.Team.findOrCreate({
       where: {
-        name: {
-          [db.Sequelize.Op.iLike]: name
+        handle: {
+          [db.Sequelize.Op.iLike]: teamHandle
         }
       },
       defaults: {
         name,
+        handle: teamHandle,
         editor_access_code: editorAccessCode,
         viewer_access_code: viewerAccessCode
       }
@@ -96,7 +101,8 @@ export const postCreateUserTeam = async (req, res) => {
     return returnSuccess(res, {
       team: {
         id: team.id,
-        name: team.name
+        name: team.name,
+        handle: team.handle
       },
       message: `Team ${team.name} has been created`
     })

@@ -67,7 +67,7 @@ export default function NewTeamForm ({ refetch, refreshOnStateChange }) {
         await refetch()
       }
 
-      router.push(`/user/${userId}/teams/${data.team.id}`)
+      router.push(`/user/${userId}/teams/${data.team.handle}`)
     } catch (err) {
       setIsLoading(false)
       console.error(err)

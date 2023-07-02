@@ -12,7 +12,7 @@ import db from '../models/database.js'
 export const userTeamValidation = async (req, res, next) => {
   try {
     const {
-      teamId
+      teamId: teamHandle
     } = req.params
 
     const {
@@ -21,10 +21,10 @@ export const userTeamValidation = async (req, res, next) => {
 
     const errors = []
 
-    if (typeof teamId === 'undefined' || !validator.isUUID(teamId)) {
+    if (typeof teamHandle === 'undefined' || !validator.isSlug(teamHandle)) {
       errors.push({
-        path: 'teamId',
-        message: 'Path is missing a valid teamId'
+        path: 'teamHandle',
+        message: 'Path is missing a valid teamHandle'
       })
     }
 
@@ -33,7 +33,9 @@ export const userTeamValidation = async (req, res, next) => {
 
     const team = await db.Team.findOne({
       where: {
-        id: teamId
+        handle: {
+          [db.Sequelize.Op.like]: teamHandle
+        }
       }
     })
 
@@ -52,7 +54,8 @@ export const userTeamValidation = async (req, res, next) => {
       is_team_admin: teamInUserTeams.is_team_admin,
       is_team_editor: teamInUserTeams.is_team_editor,
       id: team.id,
-      name: team.name
+      name: team.name,
+      handle: teamInUserTeams.handle
     }
 
     return errors.length > 0

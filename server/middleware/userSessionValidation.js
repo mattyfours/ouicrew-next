@@ -17,7 +17,7 @@ export const userSessionValidation = async (req, res, next) => {
     } = req.headers
 
     const {
-      userId
+      userId: userHandle
     } = req.params
 
     const errors = []
@@ -29,10 +29,10 @@ export const userSessionValidation = async (req, res, next) => {
       })
     }
 
-    if (typeof userId === 'undefined' || !validator.isUUID(userId)) {
+    if (typeof userHandle === 'undefined') {
       errors.push({
-        path: 'userId',
-        message: 'Path is missing a valid userId'
+        path: 'userHandle',
+        message: 'Path is missing a valid userHandle'
       })
     }
 
@@ -41,9 +41,11 @@ export const userSessionValidation = async (req, res, next) => {
 
     const user = await db.User.findOne({
       where: {
-        id: userId,
+        username: {
+          [db.Sequelize.Op.like]: userHandle
+        },
         session_token: {
-          [db.Sequelize.Op.iLike]: userSessionToken
+          [db.Sequelize.Op.like]: userSessionToken
         },
         session_token_expiration: {
           [db.Sequelize.Op.gte]: Date.now()
@@ -84,7 +86,8 @@ export const userSessionValidation = async (req, res, next) => {
           id: team.id,
           is_team_admin: userTeam.is_admin,
           is_team_editor: userTeam.is_editor,
-          name: team.name
+          name: team.name,
+          handle: team.handle
         }
       })
     )

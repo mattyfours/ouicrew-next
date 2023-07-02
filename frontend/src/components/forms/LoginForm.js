@@ -42,8 +42,9 @@ export default function LoginForm () {
       localStorage.setItem('userEmail', data.user.email)
       localStorage.setItem('userUsername', data.user.username)
       localStorage.setItem('userId', data.user.userId)
-      router.push(`/user/${data.user.userId}`)
+      router.push(`/user/${data.user.username}`)
     } catch (err) {
+      setIsLoading(false)
       console.error(err)
       setErrorMessage(
         typeof err.response?.data?.error?.[0] === 'undefined'

@@ -26,10 +26,14 @@ export const userRegisterValidation = (req, res, next) => {
       })
     }
 
-    if (typeof username === 'undefined' || username.length > 120) {
+    if (
+      typeof username === 'undefined' ||
+      username.length > 120 ||
+      /^[a-z0-9-]+$/.test(username) === false
+    ) {
       errors.push({
         path: 'username',
-        message: 'Invalid Username'
+        message: 'Invalid Username. Must only contain lowercase letters, numbers, and dashes.'
       })
     }
 
