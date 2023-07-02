@@ -27,8 +27,6 @@ export const postCreateResult = async (req, res) => {
       }
     })
 
-    console.log(checkpoint)
-
     const newResult = await db.EntryResult.create({
       start_time: recordedTimeFromStart,
       finish_time: checkpoint === 'dns'

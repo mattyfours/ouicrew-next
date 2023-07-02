@@ -70,7 +70,8 @@ export default {
     complete: 'Complete',
     no_ongoing_results: 'No ongoing results',
     no_finished_results: 'No finished results',
-    set: 'Set'
+    set: 'Set',
+    refresh_results: 'Refresh Results'
   },
   login_page: {
     metatitle: 'Log In',

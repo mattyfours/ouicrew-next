@@ -18,8 +18,6 @@ export const createEntryResultValidation = async (req, res, next) => {
       recordId: entryId
     } = req.body
 
-    console.log(entryId)
-
     const errors = []
 
     if (

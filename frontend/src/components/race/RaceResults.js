@@ -3,6 +3,7 @@ import { t } from '@/languages/languages'
 import { useEffect, useState } from 'react'
 import ResponsiveTable from '@/components/displayElements/ResponsiveTable'
 import { getNowTimeInTimezone, timeToHhMmSsMs } from '@/helpers/dateFormater'
+import Button from '../formElements/Button'
 
 const StyledDashboardResultDisplay = styled.nav`
   position: relative;
@@ -21,6 +22,13 @@ const StyledDashboardResultDisplay = styled.nav`
   h2 {
     margin: 24px 0 8px;
   }
+`
+
+const StyledTopResults = styled.div`
+  margin: 32px auto -18px;
+  border-top: 1px solid var(--text-color);
+  text-align: center;
+  padding: 12px 0 0;
 `
 
 export default function RaceResults ({
@@ -53,6 +61,15 @@ export default function RaceResults ({
 
   return (
     <>
+      <StyledTopResults>
+        <Button
+          size='small'
+          onClick={refetch}
+        >
+          {t('dashboard.refresh_results')}
+        </Button>
+      </StyledTopResults>
+
       <StyledDashboardResultDisplay className='wide'>
         <h2 className='heading-small'>{t('dashboard.in_progress')}</h2>
         {

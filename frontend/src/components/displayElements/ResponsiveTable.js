@@ -96,19 +96,17 @@ function ResponsiveTable ({
       className={`${evenCells && 'even-cells'}`}
     >
       <table>
-        {
-          evenCells && (
-            <col style={{ width: `${100 / headings.length}%` }} span={headings.length} />
-          )
-        }
-
         <thead>
           <tr>
             {
               headings
                 .filter(heading => heading !== null)
                 .map((heading, index) => (
-                  <th key={`table-heading-${tableId}-${index}`}>
+                  <th
+                    key={`table-heading-${tableId}-${index}`}
+                    style={{ width: evenCells ? `${100 / headings.length}%` : 'initial' }}
+                    span={evenCells ? headings.length : 'auto'}
+                  >
                     {heading}
                   </th>
                 ))

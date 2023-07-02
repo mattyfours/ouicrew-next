@@ -66,7 +66,7 @@ export const raceCreateNewValidation = (req, res, next) => {
 
     if (
       typeof notes !== 'undefined' &&
-      (notes.length === 0 || notes.length > 1000)
+      (notes.length < 0 || notes.length > 1000)
     ) {
       errors.push({
         path: 'notes',
