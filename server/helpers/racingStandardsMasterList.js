@@ -21,16 +21,36 @@ export const RacingStandardsMasterList = {
       { name: 'LM 2-', d: 2000, t: { h: 0, m: 6, s: 22, ms: 910 } },
       { name: 'LM 2x', d: 2000, t: { h: 0, m: 6, s: 5, ms: 360 } },
       { name: 'LM 4-', d: 2000, t: { h: 0, m: 5, s: 43, ms: 160 } },
-      { name: 'LM 4x', d: 2000, t: { h: 0, m: 5, s: 42, ms: 750 } }
+      { name: 'LM 4x', d: 2000, t: { h: 0, m: 5, s: 42, ms: 750 } },
+      { name: 'LM 8+', d: 2000, t: { h: 0, m: 5, s: 30, ms: 240 } }
     ],
     'U23 Men': [
+      { name: 'BM 1X', d: 2000, t: { h: 0, m: 6, s: 46, ms: 610 } },
+      { name: 'BM 2-', d: 2000, t: { h: 0, m: 6, s: 20, ms: 60 } },
+      { name: 'BM 2x', d: 2000, t: { h: 0, m: 6, s: 7, ms: 570 } },
+      { name: 'BM 4-', d: 2000, t: { h: 0, m: 5, s: 44, ms: 380 } },
+      { name: 'BM 4+', d: 2000, t: { h: 0, m: 6, s: 3, ms: 10 } },
+      { name: 'BM 4X', d: 2000, t: { h: 0, m: 5, s: 39, ms: 620 } },
+      { name: 'BM8+', d: 2000, t: { h: 0, m: 5, s: 22, ms: 480 } }
 
     ],
     'U23 Lightweight Men': [
+      { name: 'BLM 1X', d: 2000, t: { h: 0, m: 6, s: 46, ms: 34 } },
+      { name: 'BLM2-', d: 2000, t: { h: 0, m: 6, s: 26, ms: 470 } },
+      { name: 'BLM 2x', d: 2000, t: { h: 0, m: 6, s: 13, ms: 620 } },
+      { name: 'BLM 4-', d: 2000, t: { h: 0, m: 5, s: 54, ms: 120 } },
+      { name: 'BLM 4x', d: 2000, t: { h: 0, m: 5, s: 47, ms: 260 } }
 
     ],
     'Jr Men': [
-
+      { name: 'JM 1X', d: 2000, t: { h: 0, m: 6, s: 45, ms: 450 } },
+      { name: 'JM 2-', d: 2000, t: { h: 0, m: 6, s: 27, ms: 910 } },
+      { name: 'JM 2+', d: 2000, t: { h: 0, m: 7, s: 10, ms: 10 } },
+      { name: 'JM2x', d: 2000, t: { h: 0, m: 6, s: 18, ms: 190 } },
+      { name: 'JM 4-', d: 2000, t: { h: 0, m: 5, s: 47, ms: 730 } },
+      { name: 'JM 4+', d: 2000, t: { h: 0, m: 6, s: 11, ms: 960 } },
+      { name: 'JM 4X', d: 2000, t: { h: 0, m: 5, s: 46, ms: 490 } },
+      { name: 'JM8+', d: 2000, t: { h: 0, m: 5, s: 35, ms: 930 } }
     ],
     Women: [
       { name: 'W 1X', d: 2000, t: { h: 0, m: 7, s: 7, ms: 710 } },
@@ -38,87 +58,61 @@ export const RacingStandardsMasterList = {
       { name: 'W 2x', d: 2000, t: { h: 0, m: 6, s: 37, ms: 310 } },
       { name: 'W 4-', d: 2000, t: { h: 0, m: 6, s: 14, ms: 360 } },
       { name: 'W 4+', d: 2000, t: { h: 0, m: 6, s: 43, ms: 860 } },
-      { name: 'W 4X', d: 2000, t: { h: 0, m: 6, s: 6, ms: 840 } }
+      { name: 'W 4X', d: 2000, t: { h: 0, m: 6, s: 6, ms: 840 } },
+      { name: 'W 8+', d: 2000, t: { h: 0, m: 5, s: 54, ms: 160 } }
     ],
     'Lightweight Women': [
       { name: 'LW 1X', d: 2000, t: { h: 0, m: 7, s: 24, ms: 460 } },
       { name: 'LW 2-', d: 2000, t: { h: 0, m: 7, s: 18, ms: 320 } },
       { name: 'LW 2x', d: 2000, t: { h: 0, m: 6, s: 47, ms: 690 } },
       { name: 'LW 4-', d: 2000, t: { h: 0, m: 6, s: 36, ms: 400 } },
-      { name: 'LW 4x', d: 2000, t: { h: 0, m: 6, s: 15, ms: 950 } }
+      { name: 'LW 4x', d: 2000, t: { h: 0, m: 6, s: 15, ms: 950 } },
+      { name: 'BW 4-', d: 2000, t: { h: 0, m: 6, s: 26, ms: 620 } }
     ],
     'U23 Women': [
+      { name: 'BW 1X', d: 2000, t: { h: 0, m: 7, s: 27, ms: 230 } },
+      { name: 'BW 2-', d: 2000, t: { h: 0, m: 7, s: 2, ms: 890 } },
+      { name: 'BW 2x', d: 2000, t: { h: 0, m: 6, s: 47, ms: 30 } },
+      { name: 'BW 4X', d: 2000, t: { h: 0, m: 6, s: 19, ms: 100 } },
+      { name: 'BW8+', d: 2000, t: { h: 0, m: 6, s: 0, ms: 130 } }
 
     ],
     'U23 Lightweight Women': [
+      { name: 'BLW 1X', d: 2000, t: { h: 0, m: 7, s: 28, ms: 340 } },
+      { name: 'BLW 2-', d: 2000, t: { h: 0, m: 7, s: 31, ms: 110 } },
+      { name: 'BLW 2x', d: 2000, t: { h: 0, m: 6, s: 54, ms: 410 } },
+      { name: 'BLW 4x', d: 2000, t: { h: 0, m: 6, s: 25, ms: 960 } }
 
     ],
     'Jr Women': [
+      { name: 'JW 1X', d: 2000, t: { h: 0, m: 7, s: 31, ms: 500 } },
+      { name: 'JW 2-', d: 2000, t: { h: 0, m: 7, s: 15, ms: 530 } },
+      { name: 'JW 2x', d: 2000, t: { h: 0, m: 7, s: 3, ms: 180 } },
+      { name: 'JW 4-', d: 2000, t: { h: 0, m: 6, s: 37, ms: 890 } },
+      { name: 'JW 4+', d: 2000, t: { h: 0, m: 7, s: 2, ms: 230 } },
+      { name: 'JW 4X', d: 2000, t: { h: 0, m: 6, s: 23, ms: 850 } },
+      { name: 'JW 8+', d: 2000, t: { h: 0, m: 6, s: 13, ms: 40 } }
 
     ],
     Para: [
-
+      { name: 'PR2 M 1X', d: 2000, t: { h: 0, m: 8, s: 28, ms: 400 } },
+      { name: 'PR2 W 1X', d: 2000, t: { h: 0, m: 9, s: 27, ms: 270 } },
+      { name: 'PR1 W 1X', d: 2000, t: { h: 0, m: 10, s: 13, ms: 630 } },
+      { name: 'PR1 M 1X', d: 2000, t: { h: 0, m: 9, s: 16, ms: 900 } },
+      { name: 'PR3 W 2-', d: 2000, t: { h: 0, m: 7, s: 39, ms: 300 } },
+      { name: 'PR2 MIX 2X', d: 2000, t: { h: 0, m: 8, s: 6, ms: 210 } },
+      { name: 'PR3 MIX 2X', d: 2000, t: { h: 0, m: 7, s: 28, ms: 950 } },
+      { name: 'PR3 MIX 4+', d: 2000, t: { h: 0, m: 6, s: 55, ms: 700 } },
+      { name: 'AS M 1X', d: 1000, t: { h: 0, m: 4, s: 34, ms: 710 } },
+      { name: 'AS W 1X', d: 1000, t: { h: 0, m: 5, s: 9, ms: 280 } },
+      { name: 'TA MIX 2X', d: 1000, t: { h: 0, m: 3, s: 52, ms: 160 } },
+      { name: 'LTA MIX 2X', d: 1000, t: { h: 0, m: 3, s: 27, ms: 980 } },
+      { name: 'LTA MIX 4+', d: 1000, t: { h: 0, m: 3, s: 13, ms: 760 } },
+      { name: 'LTA MIX 4+', d: 1000, t: { h: 0, m: 3, s: 55, ms: 700 } }
     ]
-
   }
 }
 
-//
-//
-//     {name:'W8+', d:2000, t:{h:0,m:5,s:54,ms:160}},
-//     {name:'LM8+', d:2000, t:{h:0,m:5,s:30,ms:240}},
-//     {name:'BLM1X', d:2000, t:{h:0,m:6,s:46,ms:34}},
-//     {name:'BLW1X', d:2000, t:{h:0,m:7,s:28,ms:340}},
-//     {name:'BM1X', d:2000, t:{h:0,m:6,s:46,ms:610}},
-//     {name:'BW1X', d:2000, t:{h:0,m:7,s:27,ms:230}},
-//     {name:'BLW2-', d:2000, t:{h:0,m:7,s:31,ms:110}},
-//     {name:'BW2-', d:2000, t:{h:0,m:7,s:02,ms:890}},
-//     {name:'BLM2-', d:2000, t:{h:0,m:6,s:26,ms:470}},
-//     {name:'BM2-', d:2000, t:{h:0,m:6,s:20,ms:060}},
-//     {name:'BLW2x', d:2000, t:{h:0,m:6,s:54,ms:410}},
-//     {name:'BW2x', d:2000, t:{h:0,m:6,s:47,ms:030}},
-//     {name:'BLM2x', d:2000, t:{h:0,m:6,s:13,ms:620}},
-//     {name:'BM2x', d:2000, t:{h:0,m:6,s:07,ms:570}},
-//     {name:'BM4-', d:2000, t:{h:0,m:5,s:44,ms:380}},
-//     {name:'BW4-', d:2000, t:{h:0,m:6,s:26,ms:620}},
-//     {name:'BLM4-', d:2000, t:{h:0,m:5,s:54,ms:120}},
-//     {name:'BM4+', d:2000, t:{h:0,m:6,s:03,ms:010}},
-//     {name:'BLW4x', d:2000, t:{h:0,m:6,s:25,ms:960}},
-//     {name:'BLM4x', d:2000, t:{h:0,m:5,s:47,ms:260}},
-//     {name:'BW4X', d:2000, t:{h:0,m:6,s:19,ms:100}},
-//     {name:'BM4X', d:2000, t:{h:0,m:5,s:39,ms:620}},
-//     {name:'BM8+', d:2000, t:{h:0,m:5,s:22,ms:480}},
-//     {name:'BW8+', d:2000, t:{h:0,m:6,s:00,ms:130}},
-//     {name:'JW1X', d:2000, t:{h:0,m:7,s:31,ms:500}},
-//     {name:'JM1X', d:2000, t:{h:0,m:6,s:45,ms:450}},
-//     {name:'JM2-', d:2000, t:{h:0,m:6,s:27,ms:910}},
-//     {name:'JW2-', d:2000, t:{h:0,m:7,s:15,ms:530}},
-//     {name:'JM2+', d:2000, t:{h:0,m:7,s:10,ms:010}},
-//     {name:'JM2x', d:2000, t:{h:0,m:6,s:18,ms:190}},
-//     {name:'JW2x', d:2000, t:{h:0,m:7,s:03,ms:180}},
-//     {name:'JM4-', d:2000, t:{h:0,m:5,s:47,ms:730}},
-//     {name:'JW4-', d:2000, t:{h:0,m:6,s:37,ms:890}},
-//     {name:'JW4+', d:2000, t:{h:0,m:7,s:02,ms:230}},
-//     {name:'JM4+', d:2000, t:{h:0,m:6,s:11,ms:960}},
-//     {name:'JM4X', d:2000, t:{h:0,m:5,s:46,ms:490}},
-//     {name:'JW4X', d:2000, t:{h:0,m:6,s:23,ms:850}},
-//     {name:'JW8+', d:2000, t:{h:0,m:6,s:13,ms:040}},
-//     {name:'JM8+', d:2000, t:{h:0,m:5,s:35,ms:930}},
-//     {name:'PR2 M1X', d:2000, t:{h:0,m:8,s:28,ms:400}},
-//     {name:'PR2 W1X', d:2000, t:{h:0,m:9,s:27,ms:270}},
-//     {name:'PR1 W1X', d:2000, t:{h:0,m:10,s:13,ms:630}},
-//     {name:'PR1 M1X', d:2000, t:{h:0,m:9,s:16,ms:900}},
-//     {name:'PR3 W2-', d:2000, t:{h:0,m:7,s:39,ms:300}},
-//     {name:'PR2 MIX2X', d:2000, t:{h:0,m:8,s:06,ms:210}},
-//     {name:'PR3 MIX2X', d:2000, t:{h:0,m:7,s:28,ms:950}},
-//     {name:'PR3 MIX4+', d:2000, t:{h:0,m:6,s:55,ms:700}},
-//     {name:'ASM1X', d:1000, t:{h:0,m:4,s:34,ms:710}},
-//     {name:'ASW1X', d:1000, t:{h:0,m:5,s:09,ms:280}},
-//     {name:'TAMIX2X', d:1000, t:{h:0,m:3,s:52,ms:160}},
-//     {name:'LTAMIX2X', d:1000, t:{h:0,m:3,s:27,ms:980}},
-//     {name:'LTAMIX4+', d:1000, t:{h:0,m:3,s:13,ms:760}},
-//     {name:'LTAID4+', d:1000, t:{h:0,m:3,s:55,ms:700}},
-//   ],
 //   'canoe-kayak': [
 //     {name:'MK1', d:200, t:{h:0,m:0,s:33,ms:380}},
 //     {name:'MK2', d:200, t:{h:0,m:0,s:30,ms:500}},
@@ -153,7 +147,7 @@ export const RacingStandardsMasterList = {
 //     {name:'WC1', d:200, t:{h:0,m:0,s:44,ms:504}},
 //     {name:'WC2', d:200, t:{h:0,m:0,s:42,ms:686}},
 //     {name:'WC1', d:500, t:{h:0,m:2,s:03,ms:053}},
-//     {name:'WC2', d:500,	t:{h:0,m:1,s:51,ms:428}},
+//     {name:'WC2', d:500, t:{h:0,m:1,s:51,ms:428}},
 //     {name:'WC1', d:5000, t:{h:0,m:25,s:58,ms:260}},
 //     {name:'JUN WC1', d:200, t:{h:0,m:0,s:46,ms:873}},
 //     {name:'JUN WC2', d:200, t:{h:0,m:0,s:46,ms:020}},

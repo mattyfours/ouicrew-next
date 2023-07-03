@@ -90,6 +90,10 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
     ])
 
     await refetch()
+
+    if (typeof navigator?.vibrate !== 'undefined') {
+      navigator.vibrate(200)
+    }
   }, [
     data,
     recordedTimes,
