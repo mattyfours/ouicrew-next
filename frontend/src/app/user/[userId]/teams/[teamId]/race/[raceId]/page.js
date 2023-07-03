@@ -171,18 +171,7 @@ export default function UserTeamRacePage ({ children }) {
                   data.entries.map((entry, index) => (
                     <ResponsiveTable.Row key={`entrylist-${entry.id}`}>
                       <ResponsiveTable.Item>
-                        {
-                          data.team.is_team_editor === true
-                            ? (
-                              <button
-                                className='icon-link'
-                              >
-                                <FontAwesomeIcon icon={faPencil} />
-                                {entry.name}
-                              </button>
-                              )
-                            : entry.name
-                        }
+                        {entry.name}
                       </ResponsiveTable.Item>
 
                       <ResponsiveTable.Item>

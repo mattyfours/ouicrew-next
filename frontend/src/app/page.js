@@ -6,7 +6,8 @@ import styled from 'styled-components'
 const StyledHome = styled.div`
   height: auto;
   display: flex;
-  margin: 24px;
+  padding: 24px;
+  width: 100%;
   max-width: var(--width-modal);
 
   p {
