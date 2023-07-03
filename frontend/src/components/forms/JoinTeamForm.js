@@ -29,7 +29,8 @@ export default function JoinTeamForm ({ refetch }) {
     const { data } = await axios.get(url,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-ouicrew-timestamp': Date.now()
         }
       }
     )
@@ -92,7 +93,7 @@ export default function JoinTeamForm ({ refetch }) {
         succesMessage={succesMessage}
         loading={isLoading}
       >
-        {/* <Select
+        <Select
           label={t('forms.select_team')}
           name='team'
           value={teamIdInput}
@@ -103,7 +104,7 @@ export default function JoinTeamForm ({ refetch }) {
               label: team.name, value: team.id
             }))
           ]}
-        /> */}
+        />
 
         <SingleLineInput
           label={t('forms.access_code')}
