@@ -3,7 +3,7 @@ NODE_ENV='development'
 FRONT_END_URL='https://ouicrew.com'
 
 #SERVER
-SERVER_PORT='3031'
+PORT='3031'
 
 #DATABASE
 DB_HOST='host'

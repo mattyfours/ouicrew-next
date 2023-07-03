@@ -14,7 +14,7 @@ import { raceIdValidation } from './middleware/racesValidation.js'
 import raceResultsRouter from './routes/raceResultsRouter/raceResultsRouter.js'
 
 const {
-  SERVER_PORT,
+  PORT,
   FRONT_END_URL
 } = process.env
 
@@ -67,8 +67,8 @@ app.use(
 db.sequelize
   .sync()
   .then(() => app.listen(
-    SERVER_PORT,
-    () => console.log(`Server Running On localhost:${SERVER_PORT}`)
+    PORT,
+    () => console.log(`Server Running On localhost:${PORT}`)
   ))
   .catch((error) => {
     console.error(error)
