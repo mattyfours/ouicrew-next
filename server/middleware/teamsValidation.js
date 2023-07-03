@@ -93,9 +93,8 @@ export const teamsJoinValidation = (req, res, next) => {
 
     if (
       typeof accessCode === 'undefined' ||
-    accessCode.length === 0 ||
-    !validator.isAlphanumeric(accessCode)
-
+      accessCode.length === 0 ||
+      !validator.isAlphanumeric(accessCode)
     ) {
       errors.push({
         path: 'accessCode',

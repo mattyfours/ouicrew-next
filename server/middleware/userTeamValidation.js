@@ -34,7 +34,7 @@ export const userTeamValidation = async (req, res, next) => {
     const team = await db.Team.findOne({
       where: {
         handle: {
-          [db.Sequelize.Op.like]: teamHandle
+          [db.Sequelize.Op.eq]: teamHandle
         }
       }
     })

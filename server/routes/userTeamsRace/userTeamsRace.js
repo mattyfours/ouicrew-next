@@ -1,6 +1,7 @@
 import errorHandler from '../../helpers/errorHandler.js'
 import { returnErrorStatusCode, returnSuccess } from '../../helpers/returnStatus.js'
 import db from '../../models/database.js'
+import findFullResults from '../../utils/findFullResults.js'
 
 /**
  * Create a new race
@@ -225,34 +226,7 @@ export const getRaceResults = async (req, res) => {
   try {
     const { user, team, race } = req
 
-    const raceResults = await db.EntryResult.findAll({
-      where: {
-        RaceId: race.id
-      }
-    })
-
-    const resultsWithEntriesAndStandards = []
-    for (const result of raceResults) {
-      const entry = await db.RaceEntry.findOne({
-        where: {
-          id: result.RaceEntryId
-        }
-      })
-
-      const standard = entry.racing_standard_id === null
-        ? {}
-        : await db.TeamRacingStandard.findOne({
-          where: {
-            id: entry.racing_standard_id
-          }
-        })
-
-      resultsWithEntriesAndStandards.push({
-        ...result.dataValues,
-        entry,
-        standard
-      })
-    }
+    const resultsWithEntriesAndStandards = await findFullResults(team, race)
 
     return returnSuccess(res, {
       user: {

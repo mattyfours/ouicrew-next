@@ -20,12 +20,15 @@ import NewRaceEntryForm from '@/components/forms/NewRaceEntryForm'
 import ConfirmActionButton from '@/components/utils/ConfirmActionButton'
 import Toast from '@/components/utils/Toast'
 import LoadingPage from '@/components/pages/LoadingPage'
+import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 
 const StyledDashboardTeamList = styled.nav`
   position: relative;
   text-align: left;
   max-width: var(--width-modal);
-  margin: 32px auto 0;
+  margin: 12px auto 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--text-color);
 
   h2 {
     margin: 0 0 8px;
@@ -48,6 +51,26 @@ const StyledDashboardTeamList = styled.nav`
     border: 1px solid var(--text-color);
     padding: 16px;
     margin: 0;
+  }
+
+  .team-list-race-details {
+    margin: 0;
+    display: grid;
+    gap: 8px;
+    grid-auto-flow: row;
+
+    li {
+      margin: 0;
+      font-size: 1.4rem;
+      text-align: left;
+    }
+
+    button {
+      display: inline-flex;
+      word-break: break-all;
+      white-space: pre-line;
+      text-align: left;
+    }
   }
 `
 
@@ -147,6 +170,29 @@ export default function UserTeamRacePage ({ children }) {
       </StyledTeamBar>
 
       <RaceMenuBar data={data} />
+
+      <StyledDashboardTeamList>
+        <h2 className='heading-small'>{t('dashboard.details')}</h2>
+
+        <ul className='team-list-race-details'>
+          <li><strong>{t('forms.race_title')}: </strong>{data.race.title}</li>
+          <li><strong>{t('forms.distance')}: </strong>{data.race.distance}m</li>
+          <li><strong>{t('forms.race_title')}: </strong>{serverDateTimeToReadable(data.race.event_time)}</li>
+          <li><strong>{t('forms.checkpoints')}: </strong>{data.race.checkpoints}</li>
+          {
+            data.race.is_public === true && (
+              <li>
+                <strong>Public Link: </strong>
+                <Link href={`/teams/${teamId}/races/${raceId}`}>
+                  {`${window.location.protocol}//${window.location.host}/teams/${teamId}/races/${raceId}`}
+                </Link>
+
+              </li>
+            )
+          }
+        </ul>
+
+      </StyledDashboardTeamList>
 
       <StyledDashboardTeamList>
         <h2 className='heading-small'>{t('dashboard.entries')}</h2>

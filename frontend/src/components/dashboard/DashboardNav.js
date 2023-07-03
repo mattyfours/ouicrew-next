@@ -4,7 +4,7 @@ import { t } from '@/languages/languages'
 import axios from 'axios'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 
 const StyledDashboardNav = styled.nav`
@@ -41,7 +41,12 @@ const StyledDashboardNav = styled.nav`
 
 export default function DashboardNav ({ data }) {
   const { userId } = useParams()
+  const [username, setUsername] = useState(null)
   const router = useRouter()
+
+  useEffect(() => {
+    setUsername(localStorage.getItem('userUsername'))
+  }, [setUsername])
 
   const handleLogOut = useCallback(async () => {
     try {
@@ -54,6 +59,11 @@ export default function DashboardNav ({ data }) {
           }
         }
       )
+
+      localStorage.removeItem('userSessionToken')
+      localStorage.removeItem('userUsername')
+      localStorage.removeItem('userId')
+      localStorage.removeItem('userEmail')
 
       router.push('/')
     } catch (err) {
@@ -69,16 +79,40 @@ export default function DashboardNav ({ data }) {
         </Link>
 
         <div className='nav-utils'>
-          <Link
-            href={`/user/${userId}`}
-          >
-            {t('dashboard.dashboard')}
-          </Link>
-          <button
-            onClick={handleLogOut}
-          >
-            {t('general.log_out')}
-          </button>
+          {
+            typeof data?.user === 'undefined'
+              ? (
+                <>
+                  <Link href='/'>
+                    {t('dashboard.home')}
+                  </Link>
+
+                  {
+                    username !== null && (
+                      <Link
+                        href={`/user/${localStorage.getItem('userUsername')}`}
+                      >
+                        {t('dashboard.dashboard')}
+                      </Link>
+                    )
+                  }
+                </>
+                )
+
+              : (
+                <>
+                  <Link
+                    href={`/user/${userId}`}
+                  >
+                    {t('dashboard.dashboard')}
+                  </Link>
+
+                  <button onClick={handleLogOut}>
+                    {t('general.log_out')}
+                  </button>
+                </>
+                )
+          }
         </div>
       </div>
     </StyledDashboardNav>

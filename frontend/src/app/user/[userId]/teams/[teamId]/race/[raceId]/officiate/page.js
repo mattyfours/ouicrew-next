@@ -24,7 +24,7 @@ const StyledDashboardTimeLogList = styled.nav`
   position: relative;
   text-align: left;
   max-width: var(--width-modal);
-  margin: 24px auto 0;
+  margin: 12px auto 0;
   border-top: 1px solid var(--text-color);
 
   h2 {

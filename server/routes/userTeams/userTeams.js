@@ -50,7 +50,7 @@ export const postCreateUserTeam = async (req, res) => {
     const [team, createdNewTeam] = await db.Team.findOrCreate({
       where: {
         handle: {
-          [db.Sequelize.Op.iLike]: teamHandle
+          [db.Sequelize.Op.eq]: teamHandle
         }
       },
       defaults: {

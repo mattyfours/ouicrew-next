@@ -55,6 +55,7 @@ export default {
     new_race: 'New Race',
     no_races_found: 'No races found',
     race_list: 'Race List',
+    public_race_list: 'Public Race List',
     entries: 'Entries',
     no_entries_found: 'No entries found',
     add_entry: 'Add Entry',
@@ -71,7 +72,9 @@ export default {
     no_ongoing_results: 'No ongoing results',
     no_finished_results: 'No finished results',
     set: 'Set',
-    refresh_results: 'Refresh Results'
+    refresh_results: 'Refresh Results',
+    details: 'Details',
+    home: 'Home'
   },
   login_page: {
     metatitle: 'Log In',

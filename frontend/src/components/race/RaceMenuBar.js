@@ -41,26 +41,39 @@ export default function RaceMenuBar ({ data }) {
   const { userId, teamId, raceId } = useParams()
   const path = usePathname()
 
+  const navItems = typeof data.user === 'undefined'
+    ? [
+        {
+          path: `/teams/${teamId}/races/${raceId}`,
+          title: t('dashboard.overview')
+        },
+        {
+          path: `/teams/${teamId}/races/${raceId}/results`,
+          title: t('dashboard.results')
+        }
+      ]
+    : [
+        {
+          path: `/user/${userId}/teams/${teamId}/race/${raceId}`,
+          title: t('dashboard.overview'),
+          editorOnly: false
+        },
+        {
+          path: `/user/${userId}/teams/${teamId}/race/${raceId}/officiate`,
+          title: t('dashboard.officiate'),
+          editorOnly: true
+        },
+        {
+          path: `/user/${userId}/teams/${teamId}/race/${raceId}/results`,
+          title: t('dashboard.results'),
+          editorOnly: false
+        }
+      ]
+
   return (
     <StyledRaceMenuBar>
       {
-        [
-          {
-            path: `/user/${userId}/teams/${teamId}/race/${raceId}`,
-            title: t('dashboard.overview'),
-            editorOnly: false
-          },
-          {
-            path: `/user/${userId}/teams/${teamId}/race/${raceId}/officiate`,
-            title: t('dashboard.officiate'),
-            editorOnly: true
-          },
-          {
-            path: `/user/${userId}/teams/${teamId}/race/${raceId}/results`,
-            title: t('dashboard.results'),
-            editorOnly: false
-          }
-        ].map((link, index) => (
+        navItems.map((link, index) => (
           link.editorOnly === true &&
           data.team.is_team_editor === false
         )
