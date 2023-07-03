@@ -9,6 +9,7 @@ export const racingStandardTimeToMs = (time) => {
 export const RacingStandardsMasterList = {
   rowing: {
     Men: [
+      { name: 'M 1X', d: 2000, t: { h: 0, m: 6, s: 30, ms: 740 } },
       { name: 'M 2+', d: 2000, t: { h: 0, m: 6, s: 33, ms: 260 } },
       { name: 'M 2x', d: 2000, t: { h: 0, m: 5, s: 59, ms: 720 } },
       { name: 'M 4-', d: 2000, t: { h: 0, m: 5, s: 37, ms: 860 } },
@@ -36,7 +37,7 @@ export const RacingStandardsMasterList = {
     ],
     'U23 Lightweight Men': [
       { name: 'BLM 1X', d: 2000, t: { h: 0, m: 6, s: 46, ms: 34 } },
-      { name: 'BLM2-', d: 2000, t: { h: 0, m: 6, s: 26, ms: 470 } },
+      { name: 'BLM 2-', d: 2000, t: { h: 0, m: 6, s: 26, ms: 470 } },
       { name: 'BLM 2x', d: 2000, t: { h: 0, m: 6, s: 13, ms: 620 } },
       { name: 'BLM 4-', d: 2000, t: { h: 0, m: 5, s: 54, ms: 120 } },
       { name: 'BLM 4x', d: 2000, t: { h: 0, m: 5, s: 47, ms: 260 } }
@@ -50,7 +51,7 @@ export const RacingStandardsMasterList = {
       { name: 'JM 4-', d: 2000, t: { h: 0, m: 5, s: 47, ms: 730 } },
       { name: 'JM 4+', d: 2000, t: { h: 0, m: 6, s: 11, ms: 960 } },
       { name: 'JM 4X', d: 2000, t: { h: 0, m: 5, s: 46, ms: 490 } },
-      { name: 'JM8+', d: 2000, t: { h: 0, m: 5, s: 35, ms: 930 } }
+      { name: 'JM 8+', d: 2000, t: { h: 0, m: 5, s: 35, ms: 930 } }
     ],
     Women: [
       { name: 'W 1X', d: 2000, t: { h: 0, m: 7, s: 7, ms: 710 } },
