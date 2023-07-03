@@ -38,13 +38,17 @@ export const getTeamPublicInfo = async (req, res) => {
   try {
     const { team } = req
 
+    // TODO: Add pagination
     const publicRaces = await db.Race.findAll({
       where: {
         TeamId: team.id,
         is_public: {
           [db.Sequelize.Op.eq]: true
         }
-      }
+      },
+      order: [
+        ['event_time', 'DESC']
+      ]
     })
 
     return returnSuccess(res, {

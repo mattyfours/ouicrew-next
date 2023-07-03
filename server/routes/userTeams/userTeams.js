@@ -188,7 +188,10 @@ export const getUserTeam = async (req, res) => {
     const races = await db.Race.findAll({
       where: {
         TeamId: team.id
-      }
+      },
+      order: [
+        ['event_time', 'DESC']
+      ]
     })
 
     return returnSuccess(res, {

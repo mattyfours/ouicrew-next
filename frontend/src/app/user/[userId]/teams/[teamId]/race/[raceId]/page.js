@@ -21,58 +21,7 @@ import ConfirmActionButton from '@/components/utils/ConfirmActionButton'
 import Toast from '@/components/utils/Toast'
 import LoadingPage from '@/components/pages/LoadingPage'
 import { serverDateTimeToReadable } from '@/helpers/dateFormater'
-
-const StyledDashboardTeamList = styled.nav`
-  position: relative;
-  text-align: left;
-  max-width: var(--width-modal);
-  margin: 12px auto 0;
-  padding: 12px 0 0;
-  border-top: 1px solid var(--text-color);
-
-  h2 {
-    margin: 0 0 8px;
-  }
-
-  .new-team-button {
-    display: flex;
-    margin: 10px 0 0 auto;
-  }
-
-  .action-buttons {
-    margin: 10px 0 0 auto;
-    display: grid;
-    width: fit-content;
-    grid-auto-flow: column;
-    gap: 16px;
-  }
-
-  .no-team-notice {
-    border: 1px solid var(--text-color);
-    padding: 16px;
-    margin: 0;
-  }
-
-  .team-list-race-details {
-    margin: 0;
-    display: grid;
-    gap: 8px;
-    grid-auto-flow: row;
-
-    li {
-      margin: 0;
-      font-size: 1.4rem;
-      text-align: left;
-    }
-
-    button {
-      display: inline-flex;
-      word-break: break-all;
-      white-space: pre-line;
-      text-align: left;
-    }
-  }
-`
+import StyledDashboardTeamList from '@/components/styed/StyledDashboardTeamList'
 
 export default function UserTeamRacePage ({ children }) {
   const { userId, teamId, raceId } = useParams()
@@ -179,6 +128,14 @@ export default function UserTeamRacePage ({ children }) {
           <li><strong>{t('forms.distance')}: </strong>{data.race.distance}m</li>
           <li><strong>{t('forms.race_title')}: </strong>{serverDateTimeToReadable(data.race.event_time)}</li>
           <li><strong>{t('forms.checkpoints')}: </strong>{data.race.checkpoints}</li>
+          {
+            (
+              typeof data.race?.notes !== 'undefined' &&
+              data.race?.notes?.length > 0
+            ) && (
+              <li><strong>{t('forms.notes')}: </strong>{data.race.notes}</li>
+            )
+          }
           {
             data.race.is_public === true && (
               <li>

@@ -9,6 +9,9 @@ import StyledTeamBar from '@/components/styed/StyledTeamBar'
 import RaceMenuBar from '@/components/race/RaceMenuBar'
 import RaceResults from '@/components/race/RaceResults'
 import LoadingPage from '@/components/pages/LoadingPage'
+import { t } from '@/languages/languages'
+import { serverDateTimeToReadable } from '@/helpers/dateFormater'
+import StyledDashboardTeamList from '@/components/styed/StyledDashboardTeamList'
 
 export default function UserTeamRaceResultsPage ({ children }) {
   const { userId, teamId, raceId } = useParams()
@@ -59,10 +62,33 @@ export default function UserTeamRaceResultsPage ({ children }) {
 
       <RaceMenuBar data={data} />
 
-      {/* <RaceResults
-        data={data}
-        refetch={refetch}
-      /> */}
+      <StyledDashboardTeamList>
+        <ul className='team-list-race-details'>
+          <li><strong>{t('forms.race_title')}: </strong>{data.race.title}</li>
+          <li><strong>{t('forms.distance')}: </strong>{data.race.distance}m</li>
+          <li><strong>{t('forms.race_title')}: </strong>{serverDateTimeToReadable(data.race.event_time)}</li>
+          <li><strong>{t('forms.checkpoints')}: </strong>{data.race.checkpoints}</li>
+          {
+            (
+              typeof data.race?.notes !== 'undefined' &&
+              data.race?.notes?.length > 0
+            ) && (
+              <li><strong>{t('forms.notes')}: </strong>{data.race.notes}</li>
+            )
+          }
+          {
+            data.race.is_public === true && (
+              <li>
+                <strong>Public Link: </strong>
+                <Link href={`/teams/${teamId}/races/${raceId}`}>
+                  {`${window.location.protocol}//${window.location.host}/teams/${teamId}/races/${raceId}`}
+                </Link>
+
+              </li>
+            )
+          }
+        </ul>
+      </StyledDashboardTeamList>
 
     </>
   )
