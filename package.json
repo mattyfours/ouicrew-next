@@ -24,7 +24,8 @@
       "Swiper",
       "HTMLElement",
       "IntersectionObserver",
-      "localStorage"
+      "localStorage",
+      "Audio"
     ],
     "ignore": [
       "node_modules/**",

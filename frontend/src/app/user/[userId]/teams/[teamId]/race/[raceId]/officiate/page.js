@@ -6,7 +6,7 @@ import { styled } from 'styled-components'
 import { useParams } from 'next/navigation'
 import { t } from '@/languages/languages'
 import { useDynamicFetch } from '@/hooks/useDynamicFetch'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import ResponsiveTable from '@/components/displayElements/ResponsiveTable'
 import Link from 'next/link'
 import Button from '@/components/formElements/Button'
@@ -50,6 +50,9 @@ const StyledDashboardTimeLogList = styled.nav`
 export default function UserTeamRaceOfficiatePage ({ children }) {
   const { userId, teamId, raceId } = useParams()
 
+  // Audo Object for ping
+  const audioPing = useMemo(() => new Audio('/assets/audio/ping.mp3'))
+
   // state
   const [recordedTimes, setRecordedTimes] = useState([])
   const [timesToAdd, setTimesToAdd] = useState(1)
@@ -90,6 +93,10 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
     ])
 
     await refetch()
+
+    if (typeof audioPing?.play !== 'undefined') {
+      audioPing.play()
+    }
 
     if (typeof navigator?.vibrate !== 'undefined') {
       navigator.vibrate(200)
