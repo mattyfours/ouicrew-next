@@ -27,7 +27,8 @@ export default function PasswordResetRequestForm () {
         },
         {
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-ouicrew-timestamp': Date.now()
           }
         }
       )
