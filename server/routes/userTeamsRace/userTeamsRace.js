@@ -160,7 +160,7 @@ export const deleteRaceEntry = async (req, res) => {
  */
 export const getRaceOfficiate = async (req, res) => {
   try {
-    const { user, team, race } = req
+    const { user, team, race, clientServerTimeDiff } = req
 
     const entries = await db.RaceEntry.findAll({
       where: {
@@ -208,7 +208,7 @@ export const getRaceOfficiate = async (req, res) => {
       entries,
       non_started_entries: nonStartedEntries,
       pending_results: pendingResults,
-      time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
+      client_server_time_diff: clientServerTimeDiff
     })
   } catch (err) {
     console.error('Error Getting Race Officiate Info')
@@ -224,7 +224,7 @@ export const getRaceOfficiate = async (req, res) => {
  */
 export const getRaceResults = async (req, res) => {
   try {
-    const { user, team, race } = req
+    const { user, team, race, clientServerTimeDiff } = req
 
     const resultsWithEntriesAndStandards = await findFullResults(team, race)
 
@@ -236,7 +236,7 @@ export const getRaceResults = async (req, res) => {
       team,
       race,
       results: resultsWithEntriesAndStandards,
-      time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
+      client_server_time_diff: clientServerTimeDiff
     })
   } catch (err) {
     console.error('Error Getting Race Officiate Info')

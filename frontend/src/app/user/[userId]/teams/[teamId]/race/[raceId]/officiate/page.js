@@ -17,7 +17,7 @@ import RaceRecordTableRow from '@/components/race/RaceRecordTableRow'
 import Form from '@/components/formElements/Form'
 import Grid from '@/components/displayElements/Grid'
 import Select from '@/components/formElements/Select'
-import { getNowTimeInTimezone } from '@/helpers/dateFormater'
+import { getAdjustedNowTime } from '@/helpers/dateFormater'
 import LoadingPage from '@/components/pages/LoadingPage'
 
 const StyledDashboardTimeLogList = styled.nav`
@@ -88,7 +88,7 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
     setRecordedTimes(oldRecordTimes => [
       ...oldRecordTimes,
       ...Array(Number(timesToAdd || 1)).fill({
-        time: getNowTimeInTimezone(data.time_zone_offset_ms),
+        time: getAdjustedNowTime(data.client_server_time_diff),
         checkpoint: currentCheckpoint
       })
     ])

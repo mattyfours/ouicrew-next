@@ -27,7 +27,7 @@ export const timeStampValidation = async (req, res, next) => {
       })
     }
 
-    req.client_server_time_diff = serverTime - Number(clientTime)
+    req.clientServerTimeDiff = serverTime - Number(clientTime)
 
     return errors.length > 0
       ? returnErrorStatusCode(422, res, errors)

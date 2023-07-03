@@ -59,13 +59,9 @@ export const timeToHhMmSsMs = (time) => {
  * @param {Number} serverOffset offset in ms
  * @returns adjusted time in ms
  */
-export const getNowTimeInTimezone = (serverOffset = 0) => {
-  const timeZoneDate = new Date()
-  const nowTime = new Date().getTime()
-  const severOffsetMs = serverOffset
-  const clientOffsetMs = timeZoneDate.getTimezoneOffset() * 60 * 1000
-  const timeZoneDiff = severOffsetMs - clientOffsetMs
-  const adjustedNowTime = nowTime + timeZoneDiff
+export const getAdjustedNowTime = (clientServerDiffTime = 0) => {
+  const nowTime = Date.now()
+  const adjustedNowTime = nowTime + clientServerDiffTime
 
   return adjustedNowTime
 }

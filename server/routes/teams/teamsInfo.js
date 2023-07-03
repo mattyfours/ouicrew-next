@@ -69,7 +69,7 @@ export const getTeamPublicInfo = async (req, res) => {
  */
 export const getPublicRaceInfo = async (req, res) => {
   try {
-    const { team, race } = req
+    const { team, race, clientServerTimeDiff } = req
 
     const results = await findFullResults(team, race)
 
@@ -77,7 +77,7 @@ export const getPublicRaceInfo = async (req, res) => {
       team,
       race,
       results,
-      time_zone_offset_ms: new Date().getTimezoneOffset() * 60 * 1000
+      client_server_time_diff: clientServerTimeDiff
     })
   } catch (err) {
     console.error('Error Viewing Results')

@@ -2,7 +2,7 @@ import { styled } from 'styled-components'
 import { t } from '@/languages/languages'
 import { useEffect, useState } from 'react'
 import ResponsiveTable from '@/components/displayElements/ResponsiveTable'
-import { getNowTimeInTimezone, timeToHhMmSsMs } from '@/helpers/dateFormater'
+import { getAdjustedNowTime, timeToHhMmSsMs } from '@/helpers/dateFormater'
 import Button from '../formElements/Button'
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -60,7 +60,7 @@ export default function RaceResults ({
   data,
   refetch
 }) {
-  const [nowTime, setNowTime] = useState(getNowTimeInTimezone())
+  const [nowTime, setNowTime] = useState(getAdjustedNowTime())
   const [ongoingResults, setOngoingResults] = useState([])
   const [finishedResults, setFinishedResults] = useState([])
   const [sets, setSets] = useState(0)
@@ -75,7 +75,7 @@ export default function RaceResults ({
 
     setSets(maxSets)
 
-    setNowTime(getNowTimeInTimezone(data.time_zone_offset_ms))
+    setNowTime(getAdjustedNowTime(data.client_server_time_diff))
 
     setOngoingResults(
       data?.results?.filter(result => result.finish_time === null)
