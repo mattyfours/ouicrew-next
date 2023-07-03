@@ -49,6 +49,7 @@ export default function JoinTeamForm ({ refetch }) {
         {
           headers: {
             'Content-Type': 'application/json',
+            'x-ouicrew-timestamp': Date.now(),
             'x-ouicrew-session-token': localStorage.getItem('userSessionToken')
           }
         }

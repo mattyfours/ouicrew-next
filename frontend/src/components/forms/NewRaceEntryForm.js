@@ -41,6 +41,7 @@ export default function NewRaceEntryForm ({ refetch, refreshOnStateChange }) {
       {
         headers: {
           'Content-Type': 'application/json',
+          'x-ouicrew-timestamp': Date.now(),
           'x-ouicrew-session-token': localStorage.getItem('userSessionToken')
         }
       }
@@ -83,6 +84,7 @@ export default function NewRaceEntryForm ({ refetch, refreshOnStateChange }) {
         {
           headers: {
             'Content-Type': 'application/json',
+            'x-ouicrew-timestamp': Date.now(),
             'x-ouicrew-session-token': localStorage.getItem('userSessionToken')
           }
         }

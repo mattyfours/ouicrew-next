@@ -42,6 +42,7 @@ export default function UserLayout ({ children }) {
       {
         headers: {
           'Content-Type': 'application/json',
+          'x-ouicrew-timestamp': Date.now(),
           'x-ouicrew-session-token': localStorage.getItem('userSessionToken')
         }
       }

@@ -60,6 +60,7 @@ export default function NewRaceForm ({ refetch, refreshOnStateChange }) {
         {
           headers: {
             'Content-Type': 'application/json',
+            'x-ouicrew-timestamp': Date.now(),
             'x-ouicrew-session-token': localStorage.getItem('userSessionToken')
           }
         }

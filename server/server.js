@@ -12,6 +12,7 @@ import userTeamsRaceRouter from './routes/userTeamsRace/userTeamsRaceRouter.js'
 import { userTeamValidation } from './middleware/userTeamValidation.js'
 import { raceIdValidation } from './middleware/racesValidation.js'
 import raceResultsRouter from './routes/raceResultsRouter/raceResultsRouter.js'
+import { timeStampValidation } from './middleware/timeStampValidation.js'
 
 const {
   PORT,
@@ -32,6 +33,9 @@ app.use(cors({
 }))
 
 // app.use('/auth', authRouter)
+
+app.use(timeStampValidation)
+
 app.use(
   '/user',
   userRouter
