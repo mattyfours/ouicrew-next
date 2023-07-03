@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "yarn server-dev & yarn frontend-dev",
-    "start": "yarn server-start",
+    "start": "cd ./server && yarn start",
     "server-dev": "cd ./server && yarn dev",
     "frontend-dev": "cd ./frontend && yarn dev"
   },
