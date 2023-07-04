@@ -112,7 +112,8 @@ export default function NewRacingStandardForm ({
 
   return (
     <>
-      <Form
+      COMING SOON
+      {/* <Form
         onSubmit={handleFormSubmit}
         errorMessage={errorMessage}
         succesMessage={succesMessage}
@@ -128,7 +129,7 @@ export default function NewRacingStandardForm ({
         />
 
         <Button type='submit' centered>{t('forms.add_standard')}</Button>
-      </Form>
+      </Form> */}
     </>
   )
 }
