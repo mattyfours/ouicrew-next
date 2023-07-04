@@ -8,21 +8,20 @@ import Button from '../formElements/Button'
 import axios from 'axios'
 import { useParams } from 'next/navigation'
 import Select from '../formElements/Select'
-import { useDynamicFetch } from '@/hooks/useDynamicFetch'
 
 export default function NewRacingStandardForm ({
   refetch,
   refreshOnStateChange,
   categoryList
 }) {
-  const { userId, teamId, raceId } = useParams()
+  const { userId, teamId } = useParams()
 
   // States
-  const [customCategoryInput, setCustomCategoryInput] = useState('other')
-  const [categoryInput, setCategoryInput] = useState('')
+  const [customCategoryInput, setCustomCategoryInput] = useState('')
+  const [categoryInput, setCategoryInput] = useState(categoryList?.[0] || 'other')
   const [nameInput, setNameInput] = useState('')
-  const [distanceInput, setdistanceInput] = useState(2000)
-  const [timeInput, setTimeInput] = useState('00:00:00:00')
+  const [distanceInput, setDistanceInput] = useState(2000)
+  const [timeInput, setTimeInput] = useState('00:00:00.00')
 
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccessMessage] = useState('')
@@ -30,11 +29,11 @@ export default function NewRacingStandardForm ({
 
   // Refresh On State Change State
   useEffect(() => {
-    setCustomCategoryInput('other')
-    setCategoryInput('')
+    setCustomCategoryInput('')
+    setCategoryInput(categoryList?.[0] || 'other')
     setNameInput('')
-    setdistanceInput(2000)
-    setTimeInput('00:00:00:00')
+    setDistanceInput(2000)
+    setTimeInput('00:00:00.00')
     setErrorMessage('')
     setSuccessMessage('')
   }, [refreshOnStateChange])
@@ -47,13 +46,17 @@ export default function NewRacingStandardForm ({
         process.env.NEXT_PUBLIC_SERVER_URL_BASE,
         `/user/${userId}`,
         `/teams/${teamId}`,
-        `/race/${raceId}`,
         '/racing-standards'
       ].join('')
 
       const { data } = await axios.post(url,
         {
-          name: nameInput
+          name: nameInput,
+          distance: distanceInput,
+          time: timeInput,
+          category: customCategoryInput === 'other'
+            ? customCategoryInput
+            : categoryInput
         },
         {
           headers: {
@@ -92,44 +95,70 @@ export default function NewRacingStandardForm ({
     setIsLoading
   ])
 
-  // Category Change Handler
-  // const handleCategoryChange = useCallback(({ target: { value: evtValue } }) => {
-  //   setRacingStandardCategoryInput(evtValue)
-  //   const list = racingStandardList.standards
-  //     .filter(standard => standard.category === evtValue)
-
-  //   setRacingStandardInput(list[0].id)
-  //   setStandardsList(list)
-  // }, [
-  //   racingStandardList,
-  //   racingStandardCategoryInput
-  // ])
-
-  // TODO: Build Add Standard Form
   if (!categoryList) {
     return <>{t('general.loading')}</>
   }
 
   return (
     <>
-      COMING SOON
-      {/* <Form
+      <Form
         onSubmit={handleFormSubmit}
         errorMessage={errorMessage}
         succesMessage={succesMessage}
         loading={isLoading}
       >
 
+        <Select
+          label={t('forms.category')}
+          name='category'
+          value={categoryInput}
+          setter={setCategoryInput}
+          options={[
+            ...categoryList.map(category => ({
+              value: category, label: category
+            })),
+            { value: 'other', label: 'Other' }
+          ]}
+        />
+
+        {
+          customCategoryInput === 'other' && (
+            <SingleLineInput
+              label={t('forms.category')}
+              name='categoryOther'
+              type='text'
+              value={customCategoryInput}
+              setter={setCategoryInput}
+            />
+          )
+        }
+
         <SingleLineInput
-          label={t('forms.entry_name')}
-          name='entryName'
+          label={t('forms.title')}
+          name='standardTitle'
           type='text'
           value={nameInput}
           setter={setNameInput}
         />
 
+        <SingleLineInput
+          label={t('forms.distance')}
+          name='distance'
+          type='number'
+          value={distanceInput}
+          setter={setDistanceInput}
+        />
+
+        <SingleLineInput
+          label={t('forms.standard_time')}
+          name='distance'
+          type='text'
+          value={timeInput}
+          setter={setTimeInput}
+        />
+
         <Button type='submit' centered>{t('forms.add_standard')}</Button>
-      </Form> */}
+      </Form>
     </>
   )
 }

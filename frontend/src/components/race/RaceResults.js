@@ -65,8 +65,6 @@ export default function RaceResults ({
   const [finishedResults, setFinishedResults] = useState([])
   const [sets, setSets] = useState(0)
 
-  console.log(data)
-
   useEffect(() => {
     const [maxSets] = data.results
       .map(result => result.set)

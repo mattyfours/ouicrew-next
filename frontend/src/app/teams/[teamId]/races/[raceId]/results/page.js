@@ -31,12 +31,8 @@ export default function PublicTeamRaceResultsPage ({ children }) {
       }
     )
 
-    console.log(data)
-
     return data
   }, [])
-
-  console.log(data)
 
   if (data === null) {
     return <LoadingPage />

@@ -44,7 +44,10 @@ export default {
     update: 'Update',
     dns: 'D.N.S',
     dnf: 'D.N.F',
-    add_standard: 'Add Standard'
+    add_standard: 'Add Standard',
+    category: 'Category',
+    title: 'Title',
+    standard_time: 'Time (HH:MM:SS.MS)'
   },
   dashboard: {
     metatitle: 'Account',
@@ -80,7 +83,7 @@ export default {
     public_link: 'Public Link',
     racing_standards: 'Racing Standards',
     new_racing_standard: 'New Racing Standard'
-   
+
   },
   login_page: {
     metatitle: 'Log In',

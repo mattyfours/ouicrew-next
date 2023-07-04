@@ -209,7 +209,7 @@ export const getUserTeam = async (req, res) => {
 }
 
 /**
- * Get Info For a Certain Team
+ * Get racing standards for a team
  * @param {*} req : express req
  * @param {*} res : express res
  * @returns response
@@ -224,7 +224,7 @@ export const getRacingStandards = async (req, res) => {
       },
       order: [
         ['category', 'ASC'],
-        ['name', 'DESC']
+        ['name', 'ASC']
       ]
     })
 
@@ -235,6 +235,49 @@ export const getRacingStandards = async (req, res) => {
       },
       standards,
       team
+    })
+  } catch (err) {
+    console.error('Error Viewing User Team')
+    return errorHandler(res, err)
+  }
+}
+
+/**
+ * Post create new racing standard
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const postRacingStandards = async (req, res) => {
+  try {
+    const {
+      user,
+      racingStandardTimeBreakdown,
+      team
+    } = req
+
+    const {
+      name,
+      category,
+      distance
+    } = req.body
+
+    const newStandard = await db.TeamRacingStandard.create({
+      TeamId: team.id,
+      name,
+      category,
+      distance,
+      time_in_ms: racingStandardTimeToMs(racingStandardTimeBreakdown)
+    })
+
+    return returnSuccess(res, {
+      user: {
+        email: user.email,
+        username: user.username
+      },
+      team,
+      standard: newStandard,
+      message: `Success! ${category} ${name} has been added as a racing standard`
     })
   } catch (err) {
     console.error('Error Viewing User Team')
