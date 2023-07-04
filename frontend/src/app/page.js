@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const StyledHome = styled.div`
@@ -27,12 +28,30 @@ const StyledHome = styled.div`
 `
 
 export default function Home () {
+  const [username, setUsername] = useState(null)
+
+  useEffect(() => {
+    setUsername(localStorage.getItem('userUsername'))
+  }, [setUsername])
+
   return (
     <StyledHome>
       <div className='container home-container'>
         <h1 className='heading-small'>OuiCrew V3 - Alpha</h1>
         <p>Main time trial functionality is working for rowing. However, there may is some missing features. Check back for the latest additions.</p>
-        <Link href='/login'>Log In</Link>/<Link href='/login/register'>Register</Link>
+        {
+          username === null
+            ? (
+              <>
+                <Link href='/login'>Log In</Link>/<Link href='/login/register'>Register</Link>
+              </>
+              )
+            : (
+              <>
+                <Link href={`/user/${username}`}>Dashboard</Link>
+              </>
+              )
+        }
       </div>
     </StyledHome>
   )

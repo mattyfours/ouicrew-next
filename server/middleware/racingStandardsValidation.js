@@ -1,5 +1,4 @@
 import errorHandler from '../helpers/errorHandler.js'
-import validator from 'validator'
 import { returnErrorStatusCode } from '../helpers/returnStatus.js'
 import db from '../models/database.js'
 
