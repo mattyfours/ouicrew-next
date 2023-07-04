@@ -10,7 +10,7 @@ import RaceMenuBar from '@/components/race/RaceMenuBar'
 import RaceResults from '@/components/race/RaceResults'
 import LoadingPage from '@/components/pages/LoadingPage'
 
-export default function UserTeamRaceResultsPage ({ children }) {
+export default function PublicTeamRaceResultsPage ({ children }) {
   const { userId, teamId, raceId } = useParams()
 
   const {
@@ -25,7 +25,8 @@ export default function UserTeamRaceResultsPage ({ children }) {
     const { data } = await axios.get(url,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-ouicrew-timestamp': Date.now()
         }
       }
     )

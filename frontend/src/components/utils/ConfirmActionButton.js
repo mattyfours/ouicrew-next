@@ -53,7 +53,7 @@ export default function ConfirmActionButton ({
       </button>
 
       <Modal
-        title={t('general.confirm')}
+        title={t('general.confirm_action')}
         active={modalOpen}
         onClose={() => handleModalToggle(false)}
       >

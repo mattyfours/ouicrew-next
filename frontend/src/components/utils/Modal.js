@@ -85,6 +85,8 @@ const StyledModal = styled.div`
     padding: 16px;
     max-height: 80vh;
     overflow: auto;
+    width: 100%;
+    white-space: normal;
   }
 `
 

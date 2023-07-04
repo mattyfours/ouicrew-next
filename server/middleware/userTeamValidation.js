@@ -53,6 +53,13 @@ export const userTeamValidation = async (req, res, next) => {
     req.team = {
       is_team_admin: teamInUserTeams.is_team_admin,
       is_team_editor: teamInUserTeams.is_team_editor,
+      editor_access_code: (
+        teamInUserTeams.is_team_editor === true ||
+        teamInUserTeams.is_team_editor === true
+      )
+        ? team.editor_access_code
+        : null,
+      viewer_access_code: team.viewer_access_code,
       id: team.id,
       name: team.name,
       handle: teamInUserTeams.handle

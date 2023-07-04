@@ -21,6 +21,7 @@ const StyledSelect = styled.div`
   label {
     position: absolute;
     top: 0;
+    width: 100%;
     margin: 0 0 5px;
     font-size: 1.6rem;
     transition: all 0.4s ease;
@@ -30,6 +31,7 @@ const StyledSelect = styled.div`
 
   select {
     appearance: none;
+    width: 100%;
     padding: 20px 15px 3px 0;
     color: var(--text-color);
     opacity: 1;

@@ -5,6 +5,7 @@ export default {
     return_home: 'Return Home',
     log_out: 'Log Out',
     confirm: 'Confirm',
+    confirm_action: 'Confirm Action!',
     cancel: 'Cancel',
     na: 'N/A',
     loading: 'Loading'
@@ -42,7 +43,8 @@ export default {
     saved: 'Saved',
     update: 'Update',
     dns: 'D.N.S',
-    dnf: 'D.N.F'
+    dnf: 'D.N.F',
+    add_standard: 'Add Standard'
   },
   dashboard: {
     metatitle: 'Account',
@@ -74,7 +76,11 @@ export default {
     set: 'Set',
     refresh_results: 'Refresh Results',
     details: 'Details',
-    home: 'Home'
+    home: 'Home',
+    public_link: 'Public Link',
+    racing_standards: 'Racing Standards',
+    new_racing_standard: 'New Racing Standard'
+   
   },
   login_page: {
     metatitle: 'Log In',

@@ -14,21 +14,28 @@ import Link from 'next/link'
 import Button from '@/components/formElements/Button'
 import Modal from '@/components/utils/Modal'
 import NewRaceForm from '@/components/forms/NewRaceForm'
-import { serverDateTimeToReadable } from '@/helpers/dateFormater'
+import { serverDateTimeToReadable, timeToHhMmSsMs } from '@/helpers/dateFormater'
 import StyledTeamBar from '@/components/styed/StyledTeamBar'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import LoadingPage from '@/components/pages/LoadingPage'
 import StyledDashboardTeamList from '@/components/styed/StyledDashboardTeamList'
 import TeamMenuBar from '@/components/team/TeamMenuBar'
+import NewRacingStandardForm from '@/components/forms/NewRacingStandardForm'
 
-export default function UserTeamPage ({ children }) {
+export default function UserTeamPageStandards ({ children }) {
   const { userId, teamId } = useParams()
+  const [categoryList, setCategoryList] = useState([])
 
   const {
     data,
     refetch
   } = useDynamicFetch(async () => {
-    const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/${userId}/teams/${teamId}`
+    const url = [
+      process.env.NEXT_PUBLIC_SERVER_URL_BASE,
+      `/user/${userId}`,
+      `/teams/${teamId}`,
+      '/racing-standards'
+    ].join('')
     const { data } = await axios.get(url,
       {
         headers: {
@@ -38,17 +45,27 @@ export default function UserTeamPage ({ children }) {
         }
       }
     )
+
+    const categoryDataList = [
+      ...new Set(
+        data.standards
+          .map(standard => standard.category)
+      )
+    ].sort()
+
+    setCategoryList(categoryDataList)
+
     return data
   })
 
   const team = data?.teams?.find(team => teamId === team.id) || {}
   useDocumentTitle(team.name || t('dashboard.metatitle'), [data])
 
-  const [isNewRaceModelOpen, setIsNewRaceModelOpen] = useState(false)
+  const [isNewStandardModelOpen, setIsNewStandardModelOpen] = useState(false)
 
-  const handleToogleNewRaceModal = useCallback((value) => {
-    setIsNewRaceModelOpen(value)
-  }, [setIsNewRaceModelOpen])
+  const handleToogleNewStandardModal = useCallback((value) => {
+    setIsNewStandardModelOpen(value)
+  }, [setIsNewStandardModelOpen])
 
   if (data === null) {
     return <LoadingPage />
@@ -67,59 +84,34 @@ export default function UserTeamPage ({ children }) {
       <TeamMenuBar data={data} />
 
       <StyledDashboardTeamList>
-        <h2 className='heading-small'>{t('dashboard.details')}</h2>
-
-        <ul className='team-list-race-details'>
-          <li>
-
-            <strong>{t('dashboard.public_link')}: </strong>
-            <Link href={`/teams/${data.team.handle}`}>
-              {`${window.location.protocol}//${window.location.host}/teams/${data.team.handle}`}
-            </Link>
-          </li>
-          {
-            data.team.editor_access_code && (
-              <li>
-                <strong>{t('forms.editor_access_code')}: </strong>
-                {data.team.editor_access_code}
-              </li>
-            )
-          }
-
-          <li>
-            <strong>{t('forms.viewer_access_code')}: </strong>
-            {data.team.viewer_access_code}
-          </li>
-        </ul>
-      </StyledDashboardTeamList>
-
-      <StyledDashboardTeamList>
-        <h2 className='heading-small'>{t('dashboard.race_list')}</h2>
+        <h2 className='heading-small'>{t('dashboard.racing_standards')}</h2>
 
         {
-          data.races?.length === 0
+          data.standards?.length === 0
             ? (<p className='no-team-notice'><small>{t('dashboard.no_races_found')}</small></p>)
             : (
               <ResponsiveTable
                 headings={[
-                  'Race Title',
-                  'Event Time',
-                  'Distance'
+                  'Category',
+                  'Name',
+                  'Distance',
+                  'Time'
                 ]}
               >
                 {
-                  data.races.map((race, index) => (
-                    <ResponsiveTable.Row key={`teamlist-${race.id}`}>
+                  data.standards.map((standard, index) => (
+                    <ResponsiveTable.Row key={`teamlist--standard-${standard.id}`}>
                       <ResponsiveTable.Item>
-                        <Link href={`/user/${userId}/teams/${teamId}/race/${race.id}`} className='icon-link'>
-                          {race.title} <FontAwesomeIcon icon={faRightLong} />
-                        </Link>
+                        {standard.category}
                       </ResponsiveTable.Item>
                       <ResponsiveTable.Item>
-                        {serverDateTimeToReadable(race.event_time)}
+                        {standard.name}
                       </ResponsiveTable.Item>
                       <ResponsiveTable.Item>
-                        {race.distance}m
+                        {standard.distance}m
+                      </ResponsiveTable.Item>
+                      <ResponsiveTable.Item>
+                        {timeToHhMmSsMs(standard.time_in_ms)}
                       </ResponsiveTable.Item>
                     </ResponsiveTable.Row>
                   ))
@@ -132,19 +124,20 @@ export default function UserTeamPage ({ children }) {
           data.team.is_team_editor === true &&
             <>
               <div className='action-buttons'>
-                <Button className='new-team-button' size='small' onClick={() => handleToogleNewRaceModal(true)}>
-                  {t('dashboard.new_race')}
+                <Button className='new-team-button' size='small' onClick={() => handleToogleNewStandardModal(true)}>
+                  {t('dashboard.new_racing_standard')}
                 </Button>
               </div>
 
               <Modal
-                title={t('dashboard.new_race')}
-                active={isNewRaceModelOpen}
-                onClose={() => handleToogleNewRaceModal(false)}
+                title={t('dashboard.new_racing_standard')}
+                active={isNewStandardModelOpen}
+                onClose={() => handleToogleNewStandardModal(false)}
               >
-                <NewRaceForm
+                <NewRacingStandardForm
                   refetch={refetch}
-                  refreshOnStateChange={isNewRaceModelOpen}
+                  refreshOnStateChange={isNewStandardModelOpen}
+                  categoryList={categoryList}
                 />
               </Modal>
             </>

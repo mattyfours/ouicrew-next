@@ -216,16 +216,25 @@ export const getUserTeam = async (req, res) => {
  */
 export const getRacingStandards = async (req, res) => {
   try {
-    const { team } = req
+    const { user, team } = req
 
     const standards = await db.TeamRacingStandard.findAll({
       where: {
         TeamId: team.id
-      }
+      },
+      order: [
+        ['category', 'ASC'],
+        ['name', 'DESC']
+      ]
     })
 
     return returnSuccess(res, {
-      standards
+      user: {
+        email: user.email,
+        username: user.username
+      },
+      standards,
+      team
     })
   } catch (err) {
     console.error('Error Viewing User Team')

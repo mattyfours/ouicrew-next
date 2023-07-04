@@ -21,6 +21,7 @@ const StyledSingleLineInput = styled.div`
   label {
     position: absolute;
     top: 0;
+    width: 100%;
     margin: 0 0 5px;
     font-size: 1.6rem;
     transition: all 0.4s ease;
@@ -32,6 +33,7 @@ const StyledSingleLineInput = styled.div`
     padding: 20px 0 3px;
     color: var(--text-color);
     opacity: 1;
+    width: 100%;
     outline: none;
     font-size: 1.6rem;
     border-radius: 0;

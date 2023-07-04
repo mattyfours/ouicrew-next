@@ -49,7 +49,7 @@ const StyledPublicTeam = styled.nav`
   }
 `
 
-export default function TeamPage ({ children }) {
+export default function PublicTeamPage ({ children }) {
   const { teamId } = useParams()
 
   const {
@@ -59,7 +59,8 @@ export default function TeamPage ({ children }) {
     const { data } = await axios.get(url,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-ouicrew-timestamp': Date.now()
         }
       }
     )

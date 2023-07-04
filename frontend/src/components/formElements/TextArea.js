@@ -10,11 +10,10 @@ const StyledTextArea = styled.div`
   display: flex;
   flex-direction: column;
 
-
-
   label {
     position: relative;
     top: 0;
+    width: 100%;
     margin: 0 0 5px;
     font-size: 1.2rem;
     transition: all 0.4s ease;
@@ -28,6 +27,7 @@ const StyledTextArea = styled.div`
     outline: none;
     font-size: 1.6rem;
     border-radius: 0;
+    width: 100%;
     background-color: transparent;
     border: 1px solid var(--text-color);
     cursor: pointer;

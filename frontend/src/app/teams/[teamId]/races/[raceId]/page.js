@@ -13,7 +13,7 @@ import { t } from '@/languages/languages'
 import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 import StyledDashboardTeamList from '@/components/styed/StyledDashboardTeamList'
 
-export default function UserTeamRaceResultsPage ({ children }) {
+export default function PublicTeamRaceResultsPage ({ children }) {
   const { userId, teamId, raceId } = useParams()
 
   const {
@@ -28,7 +28,8 @@ export default function UserTeamRaceResultsPage ({ children }) {
     const { data } = await axios.get(url,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-ouicrew-timestamp': Date.now()
         }
       }
     )

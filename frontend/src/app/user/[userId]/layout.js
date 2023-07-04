@@ -12,6 +12,7 @@ import { useParams } from 'next/navigation'
 import { styled } from 'styled-components'
 
 const StyledUserDashboardPage = styled.div`
+  padding: 0 0 48px;
   .breadcrumbs {
     max-width: var(--width-modal);
   }
