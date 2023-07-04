@@ -105,6 +105,7 @@ export default function NewRacingStandardForm ({
   //   racingStandardCategoryInput
   // ])
 
+  // TODO: Build Add Standard Form
   if (!categoryList) {
     return <>{t('general.loading')}</>
   }
