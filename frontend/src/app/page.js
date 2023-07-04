@@ -38,7 +38,7 @@ export default function Home () {
     <StyledHome>
       <div className='container home-container'>
         <h1 className='heading-small'>OuiCrew V3 - Alpha</h1>
-        <p>Main time trial functionality is working for rowing. However, there may is some missing features. Check back for the latest additions.</p>
+        <p>Main time trial functionality is working for rowing. However, there are some missing features. Check back for the latest additions.</p>
         {
           username === null
             ? (
