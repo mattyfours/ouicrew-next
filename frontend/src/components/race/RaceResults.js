@@ -31,6 +31,7 @@ const StyledDashboardResultDisplay = styled.nav`
     justify-content: space-between;
     margin: 0 0 0 8px;
     font-size: 1.2rem;
+    width: auto;
 
     &.negative {
       color: var(--error-color);
@@ -43,6 +44,7 @@ const StyledDashboardResultDisplay = styled.nav`
     svg {
       position: relative;
       top: 1px;
+      width: auto;
       font-size: 1.1rem;
       margin: 0 3px 0 0;
     }
