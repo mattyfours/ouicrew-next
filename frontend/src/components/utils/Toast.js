@@ -50,6 +50,10 @@ const StyledToast = styled.div`
     margin: 0 0 0 16px;
     font-size: 2.8rem;
 
+    svg {
+      width: auto;
+    }
+
     &:hover {
       color: var(--background-color);
       opacity: 0.8;
