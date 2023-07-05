@@ -27,8 +27,8 @@ export default async function errorHandler (res, error) {
     })
   } else {
     errors.push({
-      path: error.name || null,
-      message: error.message
+      path: null,
+      message: 'An error has occured'
     })
   }
 
