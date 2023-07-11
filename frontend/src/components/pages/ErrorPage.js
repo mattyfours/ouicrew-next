@@ -4,6 +4,7 @@ import { styled } from 'styled-components'
 import Button from '../formElements/Button'
 import Link from 'next/link'
 import { t } from '@/languages/languages'
+import { useEffect } from 'react'
 
 const StyledErrorPage = styled.div`
   position: fixed;
@@ -25,6 +26,15 @@ const StyledErrorPage = styled.div`
 `
 
 export default function ErrorPage ({ error }) {
+  useEffect(() => {
+    if (error?.path === 'ouicrewSession') {
+      localStorage.removeItem('userSessionToken')
+      localStorage.removeItem('userUsername')
+      localStorage.removeItem('userId')
+      localStorage.removeItem('userEmail')
+    }
+  }, [error])
+
   return (
     <StyledErrorPage>
       <h1 className='heading-large'>{error?.message || t('general.unexpected_error')}</h1>

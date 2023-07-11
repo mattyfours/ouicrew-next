@@ -54,7 +54,7 @@ export default function NewRacingStandardForm ({
           name: nameInput,
           distance: distanceInput,
           time: timeInput,
-          category: customCategoryInput === 'other'
+          category: categoryInput === 'other'
             ? customCategoryInput
             : categoryInput
         },
@@ -122,13 +122,13 @@ export default function NewRacingStandardForm ({
         />
 
         {
-          customCategoryInput === 'other' && (
+          categoryInput === 'other' && (
             <SingleLineInput
               label={t('forms.category')}
               name='categoryOther'
               type='text'
               value={customCategoryInput}
-              setter={setCategoryInput}
+              setter={setCustomCategoryInput}
             />
           )
         }

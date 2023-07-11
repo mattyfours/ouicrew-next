@@ -96,8 +96,6 @@ export const deleteRace = async (req, res) => {
   try {
     const { raceId } = req.params
 
-    console.log(raceId)
-
     const deletedRace = await db.Race.destroy({
       where: {
         id: raceId
@@ -109,7 +107,7 @@ export const deleteRace = async (req, res) => {
     }
 
     return returnSuccess(res, {
-      deleted_entry: deletedRace,
+      deleted_race: deletedRace,
       message: 'Race has been deleted'
     })
   } catch (err) {

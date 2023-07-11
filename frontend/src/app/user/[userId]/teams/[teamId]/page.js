@@ -49,6 +49,9 @@ export default function UserTeamPage ({ children }) {
     return data
   })
 
+  const team = data?.teams?.find(team => teamId === team.id) || {}
+  useDocumentTitle(team.name || t('dashboard.metatitle'), [data])
+
   // Remove Entry
   const handleDeleteRace = useCallback(async (raceId) => {
     try {
@@ -87,9 +90,6 @@ export default function UserTeamPage ({ children }) {
     setErrorMessage,
     setSuccessMessage
   ])
-
-  const team = data?.teams?.find(team => teamId === team.id) || {}
-  useDocumentTitle(team.name || t('dashboard.metatitle'), [data])
 
   // Handle New race modal
   const handleToogleNewRaceModal = useCallback((value) => {

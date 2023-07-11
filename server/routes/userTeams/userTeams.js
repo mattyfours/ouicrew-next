@@ -284,3 +284,33 @@ export const postRacingStandards = async (req, res) => {
     return errorHandler(res, err)
   }
 }
+
+/**
+ * Delete Team Racing Standard
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const deleteRacingStandard = async (req, res) => {
+  try {
+    const { racingStandardId } = req.params
+
+    const deletedRacingStandard = await db.TeamRacingStandard.destroy({
+      where: {
+        id: racingStandardId
+      }
+    })
+
+    if (deletedRacingStandard === 0) {
+      throw new Error('Racing standard could not be deleted')
+    }
+
+    return returnSuccess(res, {
+      deleted_standard: deletedRacingStandard,
+      message: 'Racing standard has been deleted'
+    })
+  } catch (err) {
+    console.error('Error Getting Race Info')
+    return errorHandler(res, err)
+  }
+}

@@ -1,5 +1,6 @@
 import express from 'express'
 import {
+  deleteRacingStandard,
   getRacingStandards,
   getUserTeam,
   getUserTeams,
@@ -31,6 +32,12 @@ userTeamsRouter.post(
   userTeamValidation,
   racingStandardCreateNewValidation,
   postRacingStandards
+)
+
+userTeamsRouter.delete(
+  '/:teamId/racing-standards/:racingStandardId',
+  userTeamValidation,
+  deleteRacingStandard
 )
 
 export default userTeamsRouter
