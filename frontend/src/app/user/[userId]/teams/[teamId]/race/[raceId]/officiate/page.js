@@ -105,7 +105,6 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
       audioPing.play()
     }
 
-    navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate
     if (typeof navigator?.vibrate !== 'undefined') {
       navigator.vibrate(200)
     }
