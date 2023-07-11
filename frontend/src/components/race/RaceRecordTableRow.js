@@ -5,7 +5,7 @@ import { faCheck, faSave } from '@fortawesome/free-solid-svg-icons'
 import Select from '../formElements/Select'
 import { t } from '@/languages/languages'
 import { timeToHhMmSsMs } from '@/helpers/dateFormater'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import axios from 'axios'
 
 export default function RaceRecordTableRow ({
@@ -15,7 +15,6 @@ export default function RaceRecordTableRow ({
   setSuccessMessage
 }) {
   const { userId, teamId, raceId } = useParams()
-  const router = useRouter()
 
   const record = propsRecord
   const raceStart = Number(data.race.start_time)
