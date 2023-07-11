@@ -7,7 +7,7 @@ import { styled } from 'styled-components'
 
 const StyledToast = styled.div`
   position: fixed;
-  bottom: 50px;
+  bottom: 25px;
   left: 50%;
   transform: ;
   z-index: 10000;

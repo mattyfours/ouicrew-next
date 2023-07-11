@@ -5,9 +5,14 @@ import { styled } from 'styled-components'
 
 const StyledResponsiveTable = styled.div`
   width: 100%;
-  overflow: auto;
-  max-height: ${props => props.maxheight || 'none'};
-  border: 1px solid var(--text-color);
+  padding-bottom: ${props => props.autoScroll ? '100px' : 0};
+
+  .table-container {
+    width: 100%;
+    overflow: auto;
+    max-height: ${props => props.maxheight || 'none'};
+    border: 1px solid var(--text-color);
+  }
 
   table {
     width: fit-content;
@@ -38,6 +43,7 @@ const StyledResponsiveTable = styled.div`
     }
   }
 
+
   &.even-cells {
     th, td {
       min-width: 155px;
@@ -45,7 +51,7 @@ const StyledResponsiveTable = styled.div`
   }
 
   th, td {
-    padding: 8px 8px;
+    padding: 12px 12px;
     border: 1px solid var(--text-color);
     font-size: 1.4rem;
     white-space: nowrap;
@@ -57,6 +63,10 @@ const StyledResponsiveTable = styled.div`
     &:last-child {
       border-right: none;
     }
+  }
+
+  th {
+    padding: 8px 12px;
   }
 
   tr:first-child td,
@@ -86,7 +96,7 @@ function ResponsiveTable ({
   useEffect(() => {
     if (!autoScroll) { return }
     const holder = holderRef.current
-    holder.scrollTop = holder.scrollHeight
+    holder.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }, [children])
 
   return (
@@ -94,29 +104,32 @@ function ResponsiveTable ({
       maxheight={maxheight}
       ref={holderRef}
       className={`${evenCells && 'even-cells'}`}
+      autoScroll={autoScroll}
     >
-      <table>
-        <thead>
-          <tr>
-            {
-              headings
-                .filter(heading => heading !== null)
-                .map((heading, index) => (
-                  <th
-                    key={`table-heading-${tableId}-${index}`}
-                    style={{ width: evenCells ? `${100 / headings.length}%` : 'initial' }}
-                    span={evenCells ? headings.length : 'auto'}
-                  >
-                    {heading}
-                  </th>
-                ))
-            }
-          </tr>
-        </thead>
-        <tbody>
-          {children}
-        </tbody>
-      </table>
+      <div className='table-container'>
+        <table>
+          <thead>
+            <tr>
+              {
+                headings
+                  .filter(heading => heading !== null)
+                  .map((heading, index) => (
+                    <th
+                      key={`table-heading-${tableId}-${index}`}
+                      style={{ width: evenCells ? `${100 / headings.length}%` : 'initial' }}
+                      span={evenCells ? headings.length : 'auto'}
+                    >
+                      {heading}
+                    </th>
+                  ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {children}
+          </tbody>
+        </table>
+      </div>
     </StyledResponsiveTable>
   )
 }

@@ -20,11 +20,12 @@ import Select from '@/components/formElements/Select'
 import { getAdjustedNowTime } from '@/helpers/dateFormater'
 import LoadingPage from '@/components/pages/LoadingPage'
 
-const StyledDashboardTimeLogList = styled.nav`
+const StyledDashboardTimeLogList = styled.div`
   position: relative;
   text-align: left;
   max-width: var(--width-modal);
   margin: 12px auto 0;
+  padding: 0 0 30px;
   border-top: 1px solid var(--text-color);
 
   h2 {
@@ -32,7 +33,12 @@ const StyledDashboardTimeLogList = styled.nav`
   }
 
   form {
-    margin: 12px auto 24px;
+    padding: 12px 0 24px;
+    margin: 0 auto;
+    position: sticky;
+    top: 50px;
+    z-index: 100000;
+    background-color: var(--background-color);
   }
 
   .new-log-button {
@@ -193,7 +199,7 @@ export default function UserTeamRaceOfficiatePage ({ children }) {
             : (
               <ResponsiveTable
                 autoScroll
-                maxheight='calc(100vh - 550px)'
+                // maxheight='calc(100vh - 550px)'
                 headings={[
                   'Entry',
                   'Time',
