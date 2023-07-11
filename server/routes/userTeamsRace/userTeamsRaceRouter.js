@@ -1,5 +1,6 @@
 import express from 'express'
 import {
+  deleteRace,
   deleteRaceEntry,
   getRaceInfo,
   getRaceOfficiate,
@@ -23,6 +24,11 @@ userTeamsRaceRouter.post('/',
 userTeamsRaceRouter.get('/:raceId',
   raceIdValidation,
   getRaceInfo
+)
+
+userTeamsRaceRouter.delete('/:raceId',
+  raceIdValidation,
+  deleteRace
 )
 
 userTeamsRaceRouter.get('/:raceId/officiate',

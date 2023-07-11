@@ -87,6 +87,38 @@ export const getRaceInfo = async (req, res) => {
 }
 
 /**
+ * Delete Race
+ * @param {*} req : express req
+ * @param {*} res : express res
+ * @returns response
+ */
+export const deleteRace = async (req, res) => {
+  try {
+    const { raceId } = req.params
+
+    console.log(raceId)
+
+    const deletedRace = await db.Race.destroy({
+      where: {
+        id: raceId
+      }
+    })
+
+    if (deletedRace === 0) {
+      throw new Error('Race could not be deleted')
+    }
+
+    return returnSuccess(res, {
+      deleted_entry: deletedRace,
+      message: 'Race has been deleted'
+    })
+  } catch (err) {
+    console.error('Error Getting Race Info')
+    return errorHandler(res, err)
+  }
+}
+
+/**
  * Create a new race entry
  * @param {*} req : express req
  * @param {*} res : express res
@@ -142,9 +174,13 @@ export const deleteRaceEntry = async (req, res) => {
       }
     })
 
+    if (deletedEntry === 0) {
+      throw new Error('Race Entry could not be deleted')
+    }
+
     return returnSuccess(res, {
       deleted_entry: deletedEntry,
-      message: `${deletedEntry.name} entry has been removed from the race`
+      message: 'Entry has been removed from the race'
     })
   } catch (err) {
     console.error('Error Deleting Race')

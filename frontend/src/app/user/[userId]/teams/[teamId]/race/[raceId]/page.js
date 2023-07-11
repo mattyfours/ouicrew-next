@@ -28,7 +28,7 @@ export default function UserTeamRacePage ({ children }) {
 
   // state
   const [errorMessage, setErrorMessage] = useState('')
-  const [succesMessage, setSuccessMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   const {
     data,
@@ -57,7 +57,7 @@ export default function UserTeamRacePage ({ children }) {
         `/race/${raceId}`,
         `/entry/${raceEntryId}`
       ].join('')
-      await axios.delete(url,
+      const { data: resData } = await axios.delete(url,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -67,6 +67,8 @@ export default function UserTeamRacePage ({ children }) {
         }
       )
 
+      setErrorMessage('')
+      setSuccessMessage(resData.message)
       return typeof refetch === 'undefined'
         ? null
         : await refetch()
@@ -96,7 +98,8 @@ export default function UserTeamRacePage ({ children }) {
 
   const handleCloseToast = useCallback(() => {
     setErrorMessage('')
-  }, [setErrorMessage])
+    setSuccessMessage('')
+  }, [setErrorMessage, setSuccessMessage])
 
   if (data === null) {
     return <LoadingPage />
@@ -183,7 +186,6 @@ export default function UserTeamRacePage ({ children }) {
                       {
                         data.team.is_team_editor === true && (
                           <ResponsiveTable.Item>
-
                             <ConfirmActionButton
                               className='icon-link'
                               message={(
@@ -233,9 +235,13 @@ export default function UserTeamRacePage ({ children }) {
 
         <Toast
           onClose={handleCloseToast}
-          message={errorMessage}
-          type='error'
-          active={errorMessage.length !== 0}
+          message={errorMessage || successMessage}
+          type={
+            errorMessage.length !== 0
+              ? 'error'
+              : 'success'
+          }
+          active={errorMessage?.length !== 0 || successMessage?.length !== 0}
         />
 
       </StyledDashboardTeamList>

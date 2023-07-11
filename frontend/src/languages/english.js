@@ -82,7 +82,8 @@ export default {
     home: 'Home',
     public_link: 'Public Link',
     racing_standards: 'Racing Standards',
-    new_racing_standard: 'New Racing Standard'
+    new_racing_standard: 'New Racing Standard',
+    delete: 'Delete'
 
   },
   login_page: {

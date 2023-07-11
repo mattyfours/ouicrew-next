@@ -1,5 +1,5 @@
 import errorHandler from '../../helpers/errorHandler.js'
-import { returnErrorStatusCode, returnSuccess } from '../../helpers/returnStatus.js'
+import { returnSuccess } from '../../helpers/returnStatus.js'
 import db from '../../models/database.js'
 import findFullResults from '../../utils/findFullResults.js'
 
