@@ -13,21 +13,24 @@ const StyledErrorPage = styled.div`
   z-index: 10000000;
   width: 100%;
   height: 100vh;
+  padding: var(--container-padding);
   overflow: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center;
   background-color: var(--background-color);
 
   h1 {
     margin: 0 0 32px;
+    text-align: center;
   }
 `
 
 export default function ErrorPage ({ error }) {
   useEffect(() => {
-    if (error?.path === 'ouicrewSession') {
+    if (error?.path === 'userSession') {
       localStorage.removeItem('userSessionToken')
       localStorage.removeItem('userUsername')
       localStorage.removeItem('userId')
