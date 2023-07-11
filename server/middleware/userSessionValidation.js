@@ -24,15 +24,15 @@ export const userSessionValidation = async (req, res, next) => {
 
     if (typeof userSessionToken === 'undefined') {
       errors.push({
-        path: 'x-ouicrew-session-token',
-        message: 'Missing header x-ouicrew-session-token'
+        path: 'userSession',
+        message: 'An error occurred. Please try again.'
       })
     }
 
     if (typeof userHandle === 'undefined') {
       errors.push({
-        path: 'userHandle',
-        message: 'Path is missing a valid userHandle'
+        path: 'userSession',
+        message: 'Invalid User'
       })
     }
 
@@ -56,7 +56,7 @@ export const userSessionValidation = async (req, res, next) => {
     // If user is not found, early return with invalid session error
     if (!user) {
       errors.push({
-        path: 'userSessionToken',
+        path: 'userSession',
         message: 'User session has expired'
       })
       return returnErrorStatusCode(422, res, errors)
