@@ -117,6 +117,14 @@ export default function RaceResults ({
                     <ResponsiveTable.Row key={`${data.race.id}--${result.id}`}>
                       <ResponsiveTable.Item>
                         {result.entry.name}
+                        {
+                          (
+                            result.standard.category !== null &&
+                            result.standard.name !== null
+                          )
+                            ? ` (${result.standard.category} | ${result.standard.name})`
+                            : t('general.na')
+                        }
                       </ResponsiveTable.Item>
 
                       <ResponsiveTable.Item>
