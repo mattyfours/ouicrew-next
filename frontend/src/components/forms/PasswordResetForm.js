@@ -25,7 +25,7 @@ export default function PasswordResetForm () {
   const handleFormSubmit = useCallback(async () => {
     try {
       setIsLoading(true)
-      const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/reset-password-request`
+      const url = `${process.env.NEXT_PUBLIC_SERVER_URL_BASE}/user/reset-password`
       await axios.post(url,
         {
           username: usernameInputValue,

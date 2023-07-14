@@ -12,13 +12,13 @@ import LoadingPage from '@/components/pages/LoadingPage'
 import { t } from '@/languages/languages'
 import { serverDateTimeToReadable } from '@/helpers/dateFormater'
 import StyledDashboardTeamList from '@/components/styed/StyledDashboardTeamList'
+import ResponsiveTable from '@/components/displayElements/ResponsiveTable'
 
 export default function PublicTeamRaceResultsPage ({ children }) {
   const { userId, teamId, raceId } = useParams()
 
   const {
-    data,
-    refetch
+    data
   } = useDynamicFetch(async () => {
     const url = [
       process.env.NEXT_PUBLIC_SERVER_URL_BASE,
@@ -50,7 +50,7 @@ export default function PublicTeamRaceResultsPage ({ children }) {
       <StyledTeamBar>
         <h2>
           <Link
-            href={`/user/${userId}/teams/${teamId}`}
+            href={`/teams/${teamId}`}
           >
             {data.team.name}
           </Link>
@@ -87,6 +87,43 @@ export default function PublicTeamRaceResultsPage ({ children }) {
             )
           }
         </ul>
+      </StyledDashboardTeamList>
+
+      <StyledDashboardTeamList>
+        <h2 className='heading-small'>{t('dashboard.entries')}</h2>
+        {
+          data.entries?.length === 0
+            ? (<p className='no-team-notice'><small>{t('dashboard.no_entries_found')}</small></p>)
+            : (
+              <ResponsiveTable
+                headings={[
+                  'Entry Name',
+                  'Standard'
+                ]}
+              >
+                {
+                  data.entries.map((entry, index) => (
+                    <ResponsiveTable.Row key={`entrylist-${entry.id}`}>
+                      <ResponsiveTable.Item>
+                        {entry.name}
+                      </ResponsiveTable.Item>
+
+                      <ResponsiveTable.Item>
+                        {
+                          (
+                            entry.racing_standard_category !== null &&
+                            entry.racing_standard_name !== null
+                          )
+                            ? `${entry.racing_standard_category} | ${entry.racing_standard_name}`
+                            : t('general.na')
+                        }
+                      </ResponsiveTable.Item>
+                    </ResponsiveTable.Row>
+                  ))
+                }
+              </ResponsiveTable>
+              )
+        }
       </StyledDashboardTeamList>
 
     </>

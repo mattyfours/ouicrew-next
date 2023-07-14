@@ -73,10 +73,39 @@ export const getPublicRaceInfo = async (req, res) => {
 
     const results = await findFullResults(team, race)
 
+    const entries = await db.RaceEntry.findAll({
+      where: {
+        RaceId: race.id
+      },
+      attributes: {
+        include: [
+          [
+            db.sequelize.literal(`(
+              SELECT name
+                FROM "TeamRacingStandards" AS standard
+                WHERE
+                    standard.id = "RaceEntry".racing_standard_id
+            )`),
+            'racing_standard_name'
+          ],
+          [
+            db.sequelize.literal(`(
+              SELECT category
+                FROM "TeamRacingStandards" AS standard
+                WHERE
+                    standard.id = "RaceEntry".racing_standard_id
+            )`),
+            'racing_standard_category'
+          ]
+        ]
+      }
+    })
+
     return returnSuccess(res, {
       team,
       race,
       results,
+      entries,
       client_server_time_diff: clientServerTimeDiff
     })
   } catch (err) {

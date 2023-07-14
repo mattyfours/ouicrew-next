@@ -26,7 +26,7 @@ export const postUserLogin = async (req, res) => {
     const userToLogIn = await db.User.findOne({
       where: {
         username: {
-          [db.Sequelize.Op.iLike]: username
+          [db.Sequelize.Op.eq]: username
         }
       }
     })
@@ -183,12 +183,12 @@ export const postUserResetPasswordRequest = async (req, res) => {
       where: db.Sequelize.or(
         {
           email: {
-            [db.Sequelize.Op.iLike]: email
+            [db.Sequelize.Op.eq]: email
           }
         },
         {
           username: {
-            [db.Sequelize.Op.iLike]: username
+            [db.Sequelize.Op.eq]: username
           }
         }
       )
@@ -240,13 +240,15 @@ export const postUserResetPassword = async (req, res) => {
       password
     } = req.body
 
+    console.log('username', username)
+
     const userToResetPassword = await db.User.findOne({
       where: {
         username: {
-          [db.Sequelize.Op.iLike]: username
+          [db.Sequelize.Op.eq]: username
         },
         reset_password_token: {
-          [db.Sequelize.Op.iLike]: resetToken
+          [db.Sequelize.Op.eq]: resetToken
         },
         reset_password_token_expiration: {
           [db.Sequelize.Op.gte]: Date.now()

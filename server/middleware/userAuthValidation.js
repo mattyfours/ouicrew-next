@@ -161,24 +161,24 @@ export const userResetPasswordRequestValidation = (req, res, next) => {
 export const userResetPasswordValidation = (req, res, next) => {
   try {
     const {
-      email,
+      username,
       resetToken,
       password
     } = req.body
 
     const errors = []
 
-    if (typeof email === 'undefined' || !validator.isEmail(email)) {
+    if (typeof username === 'undefined' || username.length === 0) {
       errors.push({
-        path: 'email',
-        message: 'Invalid Email'
+        path: 'username',
+        message: 'Invalid User'
       })
     }
 
     if (typeof resetToken === 'undefined' || resetToken.length === 0) {
       errors.push({
         path: 'resetToken',
-        message: 'Empty Reset Token'
+        message: 'Invalid User'
       })
     }
 
@@ -207,6 +207,8 @@ export const userResetPasswordValidation = (req, res, next) => {
         message: 'Password must be a min of 8 characters with 1 special character and 1 number'
       })
     }
+
+    console.log(errors)
 
     return errors.length > 0
       ? returnErrorStatusCode(422, res, errors)
