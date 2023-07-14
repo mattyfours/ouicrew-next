@@ -126,19 +126,17 @@ export const userLoginValidation = (req, res, next) => {
 export const userResetPasswordRequestValidation = (req, res, next) => {
   try {
     const {
-      username,
-      email
+      username
     } = req.body
 
     const errors = []
 
     if (
-      (typeof username === 'undefined' || username.length === 0) &&
-      (typeof email === 'undefined' || !validator.isEmail(email))
-
+      typeof username === 'undefined' ||
+      username.length === 0
     ) {
       errors.push({
-        path: 'username | email',
+        path: 'username',
         message: 'Empty Username'
       })
     }

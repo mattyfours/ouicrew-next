@@ -175,17 +175,11 @@ export const postUserRegister = async (req, res) => {
 export const postUserResetPasswordRequest = async (req, res) => {
   try {
     const {
-      email,
       username
     } = req.body
 
     const userToResetPassword = await db.User.findOne({
       where: db.Sequelize.or(
-        {
-          email: {
-            [db.Sequelize.Op.eq]: email
-          }
-        },
         {
           username: {
             [db.Sequelize.Op.eq]: username
@@ -195,7 +189,7 @@ export const postUserResetPasswordRequest = async (req, res) => {
     })
 
     if (userToResetPassword === null) {
-      return returnErrorStatusCode(422, res, [{ path: 'username or email', message: 'No account exists with the entered username or email' }])
+      return returnErrorStatusCode(422, res, [{ path: 'username', message: 'No account exists with the entered username' }])
     }
 
     await userToResetPassword.update({
