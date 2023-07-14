@@ -66,6 +66,15 @@ export const getRaceInfo = async (req, res) => {
                     standard.id = "RaceEntry".racing_standard_id
             )`),
             'racing_standard_name'
+          ],
+          [
+            db.sequelize.literal(`(
+              SELECT category
+                FROM "TeamRacingStandards" AS standard
+                WHERE
+                    standard.id = "RaceEntry".racing_standard_id
+            )`),
+            'racing_standard_category'
           ]
         ]
       }

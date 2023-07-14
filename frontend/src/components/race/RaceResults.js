@@ -97,6 +97,7 @@ export default function RaceResults ({
         </Button>
       </StyledTopResults>
 
+      {/* In Progress Results */}
       <StyledDashboardResultDisplay className='wide'>
         <h2 className='heading-small'>{t('dashboard.in_progress')}</h2>
         {
@@ -137,6 +138,7 @@ export default function RaceResults ({
 
       </StyledDashboardResultDisplay>
 
+      {/* Finished Results */}
       {
         Array(sets)
           .fill(null)
@@ -152,8 +154,7 @@ export default function RaceResults ({
                     'GMS',
                     'Total Time HH:MM:SS.MS',
                     'Start Time HH:MM:SS.MS',
-                    'Finish Time HH:MM:SS.MS',
-                    'Set'
+                    'Finish Time HH:MM:SS.MS'
                   ]}
                 >
                   {
@@ -164,7 +165,6 @@ export default function RaceResults ({
                           key={`${data.race.id}--${result.id}`}
                           result={result}
                           finishedResults={finishedResults}
-                          set={index + 1}
                         />
                       ))
                     }
@@ -215,7 +215,15 @@ function ResultRow ({ result, finishedResults, set }) {
   return (
     <ResponsiveTable.Row>
       <ResponsiveTable.Item>
-        {result.entry.name} ({result.standard.name})
+        {result.entry.name}
+        {
+          (
+            result.standard.category !== null &&
+            result.standard.name !== null
+          )
+            ? ` (${result.standard.category} | ${result.standard.name})`
+            : t('general.na')
+        }
       </ResponsiveTable.Item>
 
       <ResponsiveTable.Item>
@@ -254,10 +262,6 @@ function ResultRow ({ result, finishedResults, set }) {
 
       <ResponsiveTable.Item>
         {timeToHhMmSsMs(result.finish_time)}
-      </ResponsiveTable.Item>
-
-      <ResponsiveTable.Item>
-        {result.set}
       </ResponsiveTable.Item>
     </ResponsiveTable.Row>
   )

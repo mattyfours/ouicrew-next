@@ -180,7 +180,14 @@ export default function UserTeamRacePage ({ children }) {
                       </ResponsiveTable.Item>
 
                       <ResponsiveTable.Item>
-                        {entry.racing_standard_name || t('general.na')}
+                        {
+                          (
+                            entry.racing_standard_category !== null &&
+                            entry.racing_standard_name !== null
+                          )
+                            ? `${entry.racing_standard_category} | ${entry.racing_standard_name}`
+                            : t('general.na')
+                        }
                       </ResponsiveTable.Item>
 
                       {
